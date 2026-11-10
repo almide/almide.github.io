@@ -243,6 +243,20 @@ certificate and did not accept it (exit 1)
           <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">拒否</text><text class="s" x="810.0" y="207" text-anchor="middle">証拠のつじつまが合わない</text>
           </svg>
       </div>
+      <div class="spine-real">
+        <p class="real-h">具体的にはこういうもの</p>
+<pre data-title="MemorySafe.v"><code><span class="c">(* proofs/MemorySafe.v *)</span>
+<span class="k">Definition</span> safe_ev (h : Heap) (e : Ev) : Prop :=
+  spatial_ev h e /\ temporal_ev h e /\ init_ev h e /\ type_ev h e.
+
+<span class="k">Definition</span> MemorySafe (t : list Ev) : Prop := holds safe_ev empty_heap t.
+
+<span class="k">Theorem</span> rc_check_gives_temporal : forall t,
+  holds fresh_alloc_ev empty_heap t ->
+  (forall b, check (gproj b t) = true) ->
+  <span class="g">Temporal t</span>.</code></pre>
+        <p class="cap">これが実際の文面です。メモリ安全とは、メモリへの操作一つ一つについての4つの条件のことです。定理が言っているのは、参照カウントの検査がすべてのブロックを受理したなら、解放済みのメモリには何も触れない、ということです。証明は Rocq が検査するので、誰かを信じる必要はありません。</p>
+      </div>
       <div class="spine-foot">
         <p>検査器は、証明支援系 Rocq の中で定義され、証明されています。その判定は、証明を検査するカーネル自身に計算させることができます。</p>
         <p class="guards"><b>守るもの</b>検査器そのもののロジックの誤り。証明されているのは規則そのものです。受理したなら、その性質は成り立ちます。</p>
@@ -279,6 +293,23 @@ certificate and did not accept it (exit 1)
           <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">拒否</text><text class="s" x="810.0" y="207" text-anchor="middle">CI で捕まる</text>
           <text class="wl" x="282" y="58" text-anchor="middle">抽出</text>
           </svg>
+      </div>
+      <div class="spine-real">
+        <p class="real-h">具体的にはこういうもの</p>
+<pre data-title="orders.bundle"><code><span class="c">witness ownership 8 large</span>
+ibd
+
+im
+
+<span class="c">witness bounds 5 (program)</span>
+e0 a0
+
+<span class="c">witness init 53 (program)</span>
+h12 w4 n2 r1 s0 s1;h12 w4 n2 r0 s0 s1;h12 w4 n1 r0 s0
+
+<span class="c">witness call-modes 25 (program)</span>
+1;1 1;1 1|2 1 1;0 1;1 1 1</code></pre>
+        <p class="cap">これが証拠そのものです。上の注文の例から出たものです。ただのテキストで、所有権については、値ごとに1行、その値にしたことごとに1文字です。検査器が読むのはこれだけです。ソースも、コンパイラの内部も読みません。</p>
       </div>
       <div class="spine-foot">
         <p>同じ証明済みの検査器を、Rocq の外へ独立したプログラムとして送り出したものです。テスト全体にかけられる速さで動きます。</p>
@@ -330,6 +361,27 @@ certificate and did not accept it (exit 1)
           <rect class="pill no" x="834" y="200" width="118" height="48" rx="24"/><text class="pt no" x="893.0" y="220" text-anchor="middle">拒否</text><text class="s" x="893.0" y="237" text-anchor="middle">何も書かない</text>
           </svg>
       </div>
+      <div class="spine-real">
+        <p class="real-h">具体的にはこういうもの</p>
+<pre data-title="zsh"><code><span class="c">$ almide verify orders.almd --artifact orders.wasm</span>
+ARTIFACT  sha256 8d407d7b…273e9356  orders.wasm: <span class="g">MATCH</span>
+ACCEPT  ownership        large
+ACCEPT  ownership        main
+ACCEPT  call-modes       (program)
+ACCEPT  bounds           (program)
+ACCEPT  init             (program)
+ACCEPT  fields           (program)
+ACCEPT  names            (module:funcs)
+ACCEPT  caps             main
+ACCEPT  caps-transitive  (program)
+<span class="c">  … 35 more lines</span>
+almide-verify 0.2.0: 44 witness(es), 44 accepted, 0 rejected, 0 uncertified -> <span class="g">CERTIFIED</span>
+
+<span class="c"># the same check after flipping one bit of orders.wasm</span>
+ARTIFACT  sha256 99a2b283…e4078e57  orders.wasm: <span class="e">MISMATCH</span> (the bundle names 8d407d7b…)
+almide-verify 0.2.0: 44 witness(es), 44 accepted, 0 rejected, 0 uncertified -> <span class="e">REJECTED</span></code></pre>
+        <p class="cap">16行の注文の例での実際の出力です（一部省略）。コンパイラは44個の証拠を記録し、44個すべてが受理されました。ファイルを1ビット書き換えると、同じ証拠は拒否されます。別のファイルについて記録されたものだからです。</p>
+      </div>
       <div class="spine-foot">
         <p><code>almide-verify</code>。独立して書いたコードで、証明はされていません。コンパイラと一緒に配布され、あなたのビルドを実際に止めるのはこれです。</p>
         <p class="guards"><b>守るもの</b>悪いビルドがディスクに届くこと。別のファイルについて記録された証拠も、ハッシュで見分けて拒否します。</p>
@@ -367,6 +419,22 @@ certificate and did not accept it (exit 1)
           <text class="wl" x="282" y="58" text-anchor="middle">デコード</text>
           </svg>
       </div>
+      <div class="spine-real">
+        <p class="real-h">具体的にはこういうもの</p>
+<pre data-title="rule"><code><span class="c">;; 記録された境界チェックは、ファイルの中でちょうどこの形でなければならない</span>
+i64.ge_u          <span class="c">;; 添字 >= 長さ ?</span>
+<span class="k">if</span>
+  i32.const …     <span class="c">;; 証拠はこの命令に留められている</span>
+  …
+  unreachable     <span class="c">;; 中断</span>
+<span class="k">end</span>               <span class="c">;; この if に else はない</span>
+
+<span class="c">;; 記録された確保は、ちょうどこの形でなければならない</span>
+i32.const N*W
+<span class="k">call</span> $alloc
+local.set B       <span class="c">;; 続く書き込みはすべて local.get B を通る</span></code></pre>
+        <p class="cap">ツール自身のソースから取った規則です。できあがったファイルをデコードし、記録された操作の一つ一つが、このような命令の並びの上に乗っていることを求めます。記録だけされて出力されなかった検査には、乗る場所がありません。</p>
+      </div>
       <div class="spine-foot">
         <p>最終的な <code>.wasm</code> をデコードし、記録された境界チェック・初期化・フィールド操作の一つ一つを、それが指している命令と突き合わせます。そこにないコードについての証拠は通りません。</p>
         <p class="guards"><b>守るもの</b>そこにないコードについての証拠。記録はされたが実際には出力されなかった境界チェックは、ここで見つかります。</p>
@@ -394,7 +462,7 @@ certificate and did not accept it (exit 1)
     </div>
   </div>
   <div class="wrap">
-    <p class="aside">これらは、証拠が覆っているコードについて成り立ちます。Byteanchor は bounds・init・fields の証拠を、実際のバイト列と突き合わせます。ownership については、その対応はまだ信頼に置いています。</p>
+    <p class="aside">これらは、証拠が覆っているコードについて成り立ちます。Byteanchor は bounds・init・fields の証拠を実際のバイト列と突き合わせ、記録された参照カウントの操作を、ファイルの中の呼び出しと照らし合わせます。命令に結びつけられなかった操作は、黙って通すのではなく、「位置を特定できなかったもの」として数えます。</p>
   </div>
 </section>
 
@@ -511,7 +579,7 @@ this value is a Result
       <li><b>ネイティブのビルドは検証器を実行しません。</b>認証つきのレンダラを通り、テスト用のプログラムは今はすべてそこを通ります。ただし、証拠を判定するのはプロジェクトの検証の中で、手元のビルドのときではありません。レンダラが扱えないプログラムは、今も通常のコード生成に戻ります。</li>
       <li><b>手元のマシンで動くのは、4つの検査器のうち1つだけです。</b>ほかの3つは、CIでテスト用のプログラムに対して動きます。検証器が入っていなければ、Wasmのビルドは検査なしで通ります。</li>
       <li><b>証拠が部分的な場合があります。</b>プログラムの一部しか覆っていない証明書も通します。component 出力はこの方法では検査されません。</li>
-      <li><b>所有権の証拠が、生成されたバイト列と対応しているかは、まだ信頼に置いています。</b>境界チェックと初期化の証拠は、バイト列と突き合わせています。所有権はまだです。</li>
+      <li><b>記録された操作のすべてが、命令に結びつけられているわけではありません。</b>Byteanchor は、位置を特定できなかったものを数として報告します。その数は、どこでもゼロというわけではありません。</li>
       <li><b>すべての検査を通ったプログラムでも、計算結果が間違っていることはあります。</b>この仕組みは、ロジックが正しいかどうかを見るものではありません。</li>
       <li><b>エージェントがRustやTypeScriptよりAlmideをうまく書ける、とは示せていません。</b>最初の計測は、強いモデルではどの言語でもほぼ100%になり、何も分かりませんでした。</li>
       <li><b>1.0 より前です。</b>既知のバグがあり、これからも変わります。</li>

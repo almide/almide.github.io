@@ -268,6 +268,10 @@ pre .g { color: #7fe6b4; }
 .spine-head .tag.here { color: var(--accent-2); border-color: color-mix(in srgb, var(--accent-2) 45%, transparent); background: color-mix(in srgb, var(--accent-2) 8%, transparent); }
 .spine-head .tag.here::before { background: var(--accent-2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-2) 25%, transparent); }
 .spine .diagram { margin: 0; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); border-radius: 0; padding: 30px 18px 22px; }
+.spine-real { padding: 22px 24px 6px; border-bottom: 1px solid var(--line); }
+.spine-real .real-h { font: 500 10.5px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 0 0 14px; }
+.spine-real pre { margin: 0 0 14px; box-shadow: none; }
+.spine-real .cap { margin: 0 0 16px; font: 400 14px/1.7 var(--sans); color: var(--muted); max-width: 62em; }
 .spine-foot { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; padding: 20px 24px 22px; }
 .spine-foot p { margin: 0; font-size: 14.5px; line-height: 1.7; color: var(--muted); }
 .spine-foot .guards { color: var(--ink); padding-left: 24px; border-left: 1px dashed var(--line-2); }

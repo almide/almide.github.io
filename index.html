@@ -243,6 +243,20 @@ certificate and did not accept it (exit 1)
           <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">reject</text><text class="s" x="810.0" y="207" text-anchor="middle">the evidence does not add up</text>
           </svg>
       </div>
+      <div class="spine-real">
+        <p class="real-h">In concrete terms</p>
+<pre data-title="MemorySafe.v"><code><span class="c">(* proofs/MemorySafe.v *)</span>
+<span class="k">Definition</span> safe_ev (h : Heap) (e : Ev) : Prop :=
+  spatial_ev h e /\ temporal_ev h e /\ init_ev h e /\ type_ev h e.
+
+<span class="k">Definition</span> MemorySafe (t : list Ev) : Prop := holds safe_ev empty_heap t.
+
+<span class="k">Theorem</span> rc_check_gives_temporal : forall t,
+  holds fresh_alloc_ev empty_heap t ->
+  (forall b, check (gproj b t) = true) ->
+  <span class="g">Temporal t</span>.</code></pre>
+        <p class="cap">This is the actual text. Memory safety is four conditions on every memory event. The theorem says that if the reference-count check accepts every block, nothing touches freed memory. Rocq checks the proof, so nobody has to take it on trust.</p>
+      </div>
       <div class="spine-foot">
         <p>The checker is defined and proven inside the Rocq proof assistant. Its verdict can be computed by the proof kernel itself.</p>
         <p class="guards"><b>Guards against</b>The checker's own logic being wrong. What is proven is the rule itself: if it accepts, the property holds.</p>
@@ -279,6 +293,23 @@ certificate and did not accept it (exit 1)
           <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">reject</text><text class="s" x="810.0" y="207" text-anchor="middle">caught in CI</text>
           <text class="wl" x="282" y="58" text-anchor="middle">extract</text>
           </svg>
+      </div>
+      <div class="spine-real">
+        <p class="real-h">In concrete terms</p>
+<pre data-title="orders.bundle"><code><span class="c">witness ownership 8 large</span>
+ibd
+
+im
+
+<span class="c">witness bounds 5 (program)</span>
+e0 a0
+
+<span class="c">witness init 53 (program)</span>
+h12 w4 n2 r1 s0 s1;h12 w4 n2 r0 s0 s1;h12 w4 n1 r0 s0
+
+<span class="c">witness call-modes 25 (program)</span>
+1;1 1;1 1|2 1 1;0 1;1 1 1</code></pre>
+        <p class="cap">This is the evidence itself, from the order example above. It is plain text: for ownership, one line per value and one letter per thing done to it. The checker reads this and nothing else. No source, no compiler internals.</p>
       </div>
       <div class="spine-foot">
         <p>The same proven checker, sent out of Rocq as a standalone program so it is fast enough to run over the whole corpus.</p>
@@ -330,6 +361,27 @@ certificate and did not accept it (exit 1)
           <rect class="pill no" x="834" y="200" width="118" height="48" rx="24"/><text class="pt no" x="893.0" y="220" text-anchor="middle">reject</text><text class="s" x="893.0" y="237" text-anchor="middle">nothing written</text>
           </svg>
       </div>
+      <div class="spine-real">
+        <p class="real-h">In concrete terms</p>
+<pre data-title="zsh"><code><span class="c">$ almide verify orders.almd --artifact orders.wasm</span>
+ARTIFACT  sha256 8d407d7b…273e9356  orders.wasm: <span class="g">MATCH</span>
+ACCEPT  ownership        large
+ACCEPT  ownership        main
+ACCEPT  call-modes       (program)
+ACCEPT  bounds           (program)
+ACCEPT  init             (program)
+ACCEPT  fields           (program)
+ACCEPT  names            (module:funcs)
+ACCEPT  caps             main
+ACCEPT  caps-transitive  (program)
+<span class="c">  … 35 more lines</span>
+almide-verify 0.2.0: 44 witness(es), 44 accepted, 0 rejected, 0 uncertified -> <span class="g">CERTIFIED</span>
+
+<span class="c"># the same check after flipping one bit of orders.wasm</span>
+ARTIFACT  sha256 99a2b283…e4078e57  orders.wasm: <span class="e">MISMATCH</span> (the bundle names 8d407d7b…)
+almide-verify 0.2.0: 44 witness(es), 44 accepted, 0 rejected, 0 uncertified -> <span class="e">REJECTED</span></code></pre>
+        <p class="cap">Real output for the 16-line order example, abridged. The compiler recorded 44 pieces of evidence and all 44 were accepted. Flip one bit of the file and the same evidence is refused, because it was recorded for a different file.</p>
+      </div>
       <div class="spine-foot">
         <p><code>almide-verify</code>. Independent code, not proven. It ships next to the compiler and is the one that stops your build.</p>
         <p class="guards"><b>Guards against</b>A bad build reaching your disk. It also refuses evidence that was recorded for a different file, by hash.</p>
@@ -367,6 +419,22 @@ certificate and did not accept it (exit 1)
           <text class="wl" x="282" y="58" text-anchor="middle">decode</text>
           </svg>
       </div>
+      <div class="spine-real">
+        <p class="real-h">In concrete terms</p>
+<pre data-title="rule"><code><span class="c">;; a recorded bounds check must be exactly this, in the file</span>
+i64.ge_u          <span class="c">;; index >= length ?</span>
+<span class="k">if</span>
+  i32.const …     <span class="c">;; the evidence is anchored at this instruction</span>
+  …
+  unreachable     <span class="c">;; abort</span>
+<span class="k">end</span>               <span class="c">;; and the if has no else</span>
+
+<span class="c">;; a recorded allocation must be exactly this</span>
+i32.const N*W
+<span class="k">call</span> $alloc
+local.set B       <span class="c">;; every store that follows goes through local.get B</span></code></pre>
+        <p class="cap">Taken from the tool's own source. It decodes the finished file and requires each recorded event to sit on an instruction pattern like these. A check that was recorded but not emitted has nothing to sit on.</p>
+      </div>
       <div class="spine-foot">
         <p>It decodes the final <code>.wasm</code> and holds each recorded bounds, initialization and field event to the instruction it names. Evidence about code that isn't there does not pass.</p>
         <p class="guards"><b>Guards against</b>Evidence about code that isn't there. A bounds check that was recorded but never emitted is caught here.</p>
@@ -394,7 +462,7 @@ certificate and did not accept it (exit 1)
     </div>
   </div>
   <div class="wrap">
-    <p class="aside">These hold for the code the evidence covers. Byteanchor re-checks the bounds, init and fields events against the bytes. For ownership, that link is still trusted.</p>
+    <p class="aside">These hold for the code the evidence covers. Byteanchor re-checks the bounds, init and fields events against the bytes, and matches the recorded reference-count events against the calls in the file. Events it cannot tie to an instruction are counted as unlocated, not passed silently.</p>
   </div>
 </section>
 
@@ -511,7 +579,7 @@ this value is a Result
       <li><b>Native builds don't run the verifier.</b> They go through a certified renderer, and the whole test corpus now does. But the evidence is judged in the project's verification, not at your build, and a program the renderer can't handle still falls back to the standard code generator.</li>
       <li><b>On your machine only one of the four checkers runs.</b> The other three run in CI, on the test corpus. If the verifier isn't installed, a Wasm build goes through unchecked.</li>
       <li><b>Some evidence is partial.</b> A certificate that covers only part of a program is let through. Component output is not checked this way.</li>
-      <li><b>That the ownership evidence matches the generated bytes is still trusted.</b> Bounds and initialization evidence are checked against the bytes. Ownership is not yet.</li>
+      <li><b>Not every recorded event is tied to an instruction yet.</b> Byteanchor reports the ones it cannot locate as unlocated. That number is not zero everywhere.</li>
       <li><b>A program can pass every check and still compute the wrong thing.</b> None of this is about whether the logic is right.</li>
       <li><b>I can't show that agents write Almide better than Rust or TypeScript.</b> My first measurement was about 100% in every language with a strong model, so it told me nothing.</li>
       <li><b>It is pre-1.0.</b> There are known bugs and things will change.</li>
