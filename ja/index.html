@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Almide — AIが書いたコードをより安全にするために作っている言語</title>
+<meta name="description" content="AIエージェントが書くコードは、もう誰にも全部は読めません。Almideは安全性をコンパイラの側に移し、そのコンパイラにも自分の採点をさせません。">
+<meta property="og:title" content="Almide — AIが書いたコードをより安全にするために作っている言語">
+<meta property="og:description" content="AIエージェントが書くコードは、もう誰にも全部は読めません。Almideは安全性をコンパイラの側に移し、そのコンパイラにも自分の採点をさせません。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://almide.github.io/ja/">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="alternate" hreflang="en" href="https://almide.github.io/">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="./"><img src="../favicon.svg" alt="">Almide</a>
+  <nav aria-label="サイト">
+    <a href="https://almide.github.io/playground/">Playground</a>
+    <a href="https://almide.github.io/docs/">ドキュメント</a>
+    <a href="https://github.com/almide/almide">GitHub</a>
+    <a href="../" lang="en">EN</a>
+    <a href="./" aria-current="true" lang="ja">日本語</a>
+  </nav>
+</header>
+
+<main>
+
+<div class="wide">
+  <div class="hero">
+    <p class="eyebrow">Almide · プログラミング言語 · 1.0 より前</p>
+    <h1><em>AIが書いたコード</em>を、より安全にするために作っている言語。</h1>
+    <p class="sub">AIエージェントが書くコードは、もう自分には全部は読めません。だから安全性はコンパイラの側から出したい。<strong>そして、そのコンパイラにも自分の採点はさせません。</strong></p>
+    <div class="cta">
+      <a class="btn primary" href="https://almide.github.io/playground/">ブラウザで試す</a>
+      <a class="btn ghost" href="https://github.com/almide/almide">GitHub でソースを見る</a>
+    </div>
+
+    <div class="facts">
+      <div><b>4</b><span>コンパイラの証拠を判定する検査器の数。作り方はそれぞれ別</span></div>
+      <div><b>1033 / 1034</b><span>Wasm のテスト用プログラムのうち、すべての関数が認証つきでビルドされる数</span></div>
+      <div><b>454</b><span>書き出された振る舞いの約束の数。一つ一つが実行できる証拠に結びついている</span></div>
+      <div><b>325 B</b><span>hello world を WebAssembly にしたファイルの大きさ。LLVM を通さず直接出力</span></div>
+    </div>
+    <p class="asof">数字は公開リポジトリのコミット <code>8ce6254</code>（台帳の日付は 2026-11-08）時点のものです。325 バイトは 0.69.0 で <code>wasm-opt</code> なしの値です。これからも動きます。</p>
+  </div>
+</div>
+
+<section id="why">
+  <div class="wrap">
+    <p class="num">01 — なぜ作っているか</p>
+    <h2>エージェントが書いたものを、もう全部は読めません。</h2>
+    <p class="big">今は、自分のコードの多くをAIエージェントが書いています。近いうちに多くの人がそうなると思いますし、レビューはその量に追いつきません。</p>
+    <p>だから、安全性のより多くの部分がコンパイラから出てきて、誰かが丁寧に読むことに頼る部分が減る言語が欲しかった。自分で書いていないコードでも、頼れるものが欲しかったのです。</p>
+    <p>AIに書いてほしい言語はRustだと思います。でも正直、自分はRustが得意ではなく、所有権には最後まで慣れませんでした。Almideは、あの種類の安全性を保ったまま、人にもエージェントにも所有権の部分を書かせない、という試みです。</p>
+    <p class="aside">静的型付きで、ネイティブコードへはRustを経由してコンパイルし、WebAssemblyは直接出力します。Option と Result、網羅的なパターンマッチ、明示的なエフェクト宣言があります。</p>
+  </div>
+</section>
+
+<section id="ownership">
+  <div class="wrap">
+    <p class="num">02 — 間違えようがない</p>
+    <h2>所有権は書きません。コンパイラが推論します。</h2>
+<pre><code><span class="k">type</span> Order = { id: Int, items: List[String], total: Int }
+
+<span class="k">fn</span> large(orders: List[Order]) -> List[Order] =
+  orders |> list.filter((o) => o.total > 500)
+
+<span class="k">fn</span> main() -> Unit = {
+  <span class="k">let</span> orders: List[Order] = [
+    { id: 1, items: ["pen", "ink"], total: 260 },
+    { id: 2, items: ["desk"], total: 900 },
+  ]
+  <span class="k">let</span> big = large(orders)
+  println("${list.len(orders)} orders, ${list.len(big)} large")
+  <span class="k">for</span> o <span class="k">in</span> orders {
+    println("${o.id}: ${list.join(o.items, ", ")}")
+  }
+}</code></pre>
+<pre><code><span class="c">$ almide run orders.almd --target wasm</span>
+2 orders, 1 large
+1: pen, ink
+2: desk</code></pre>
+    <p><code>orders</code> は <code>large</code> に渡したあと、ループでもう一度使っています。ソースのどこにも、ムーブ・借用・コピーのどれなのかは書かれていません。ライフタイムも <code>free</code> もありません。</p>
+    <p>ヒープ上の値がどこで作られ、共有され、消費されるかは、コンパイラがPerceus式の推論で割り出します。2つのターゲットは、その結果を別々のやり方で実行します。ネイティブの出力はRustで、解放はRust自身のdropが行います。Wasmは参照カウントを使います。</p>
+    <div class="callout">
+      <p><b>代償。</b>コピーも参照カウントの操作も、実際には起きています。ソースのどこで起きるのかが見えないだけです。Rustなら <code>.clone()</code> が目に見えます。ここでは見えません。これについて、まだ良い答えを持っていません。</p>
+    </div>
+  </div>
+</section>
+
+<section id="evidence">
+  <div class="wrap">
+    <p class="num">03 — いちばん大事にしている部分</p>
+    <h2>コンパイラに、自分の採点はさせません。</h2>
+    <p class="big">自分は、自分のコンパイラを信用していません。AIエージェントと一緒に作ったものを、どうして信用できるでしょうか。</p>
+    <p>Wasmをビルドするたびに、コンパイラは自分がやったことの証拠を書き出さなければなりません。値を共有したり解放したりしたすべての場所、検査したすべての配列の添字です。その証拠を別のプログラムが読みます。つじつまが合わなければ、出力ファイルはできません。</p>
+  </div>
+
+  <div class="wide">
+    <div class="diagram" role="img" aria-label="コンパイラはWasmのバイト列と証拠を出力する。別のプログラムである検証器が両方を読む。受理すればファイルが書き出される。拒否すれば何も書き出されず、ビルドはコンパイラのバグを報告する。">
+      <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker>
+        </defs>
+        <rect class="box" x="10" y="92" width="130" height="66" rx="10"/>
+        <text class="t" x="75" y="121" text-anchor="middle">ソース</text>
+        <text class="m" x="75" y="142" text-anchor="middle">app.almd</text>
+
+        <path class="arrow" d="M140 125 H186" marker-end="url(#ah)"/>
+
+        <rect class="box" x="190" y="92" width="130" height="66" rx="10"/>
+        <text class="t" x="255" y="121" text-anchor="middle">コンパイラ</text>
+        <text class="s" x="255" y="142" text-anchor="middle">信用しない</text>
+
+        <path class="arrow" d="M320 110 C350 110 350 62 386 62" marker-end="url(#ah)"/>
+        <path class="arrow" d="M320 140 C350 140 350 188 386 188" marker-end="url(#ah)"/>
+
+        <rect class="box" x="390" y="32" width="150" height="60" rx="10"/>
+        <text class="t" x="465" y="58" text-anchor="middle">Wasm のバイト列</text>
+        <text class="s" x="465" y="78" text-anchor="middle">作ったもの</text>
+
+        <rect class="box" x="390" y="158" width="150" height="60" rx="10"/>
+        <text class="t" x="465" y="184" text-anchor="middle">証拠</text>
+        <text class="s" x="465" y="204" text-anchor="middle">やったと主張する内容</text>
+
+        <path class="arrow" d="M540 62 C572 62 572 110 606 110" marker-end="url(#ah)"/>
+        <path class="arrow" d="M540 188 C572 188 572 140 606 140" marker-end="url(#ah)"/>
+
+        <rect class="box hot" x="610" y="92" width="130" height="66" rx="10"/>
+        <text class="t" x="675" y="121" text-anchor="middle">検証器</text>
+        <text class="s" x="675" y="142" text-anchor="middle">別のプログラム</text>
+
+        <path class="okline" d="M740 110 C766 110 766 62 790 62" marker-end="url(#ah)"/>
+        <path class="noline" d="M740 140 C766 140 766 188 790 188" marker-end="url(#ah)"/>
+
+        <text class="t ok" x="798" y="58">受理</text>
+        <text class="s" x="798" y="78">ファイルを書く</text>
+        <text class="t no" x="798" y="184">拒否</text>
+        <text class="s" x="798" y="204">何も書かない</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <p>拒否は、あなたのバグではありません。コンパイラのバグです。ビルドはそう報告します。</p>
+<pre><code><span class="e">error[certificate-rejected]</span>: app.almd: almide-verify judged this build's
+certificate and did not accept it (exit 1)
+  app.wasm was not written: the build's own certificate does not hold,
+  which is a compiler bug — please report it</code></pre>
+    <p class="cap">一部を省略しています。1行目のあとに、検証器自身の報告が続きます。</p>
+  </div>
+</section>
+
+<section id="checkers">
+  <div class="wrap">
+    <p class="num">04 — そこで考えた</p>
+    <h2>検査器にもバグはありえます。だから4つあります。</h2>
+    <p>検査器が1つだけなら、信頼の置き場所が移るだけです。この4つは作り方がそれぞれ違うので、同じ間違いがすべてに入り込むことは起きにくくなっています。</p>
+  </div>
+  <div class="wide">
+    <div class="cards">
+      <div class="card">
+        <div class="n">1</div>
+        <h3>Rocq のカーネル</h3>
+        <p>検査器は、証明支援系 Rocq の中で定義され、証明されています。その判定は、証明を検査するカーネル自身に計算させることができます。</p>
+        <span class="tag">CI で動く</span>
+      </div>
+      <div class="card">
+        <div class="n">2</div>
+        <h3>証明から生成した検査器</h3>
+        <p>同じ証明済みの検査器を、Rocq から独立したプログラムとして取り出したものです。テスト全体にかけられる速さで動きます。</p>
+        <span class="tag">CI で動く</span>
+      </div>
+      <div class="card">
+        <div class="n">3</div>
+        <h3>Rust で手書きした検証器</h3>
+        <p><code>almide-verify</code>。独立して書いたコードで、証明はされていません。コンパイラと一緒に配布され、あなたのビルドを実際に止めるのはこれです。</p>
+        <span class="tag here">手元のマシンで動く</span>
+      </div>
+      <div class="card">
+        <div class="n">4</div>
+        <h3>できあがったファイルを開くツール</h3>
+        <p>最終的な <code>.wasm</code> をデコードし、記録された境界チェックと初期化の一つ一つを、それが指している命令と突き合わせます。そこにないコードについての証拠は通りません。</p>
+        <span class="tag">CI で動く</span>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <p>CIでは、最初の3つが、テスト用のすべてのプログラムのすべての証拠について、同じ判定を出さなければなりません。この仕組みでの拒否は、自分のコンパイラの実際のミスコンパイルをすでに1つ捕まえています。</p>
+    <p class="aside">証明は、リポジトリにある46個のRocqファイルです。対象は検査器とそのモデルで、コンパイラではありません。</p>
+  </div>
+</section>
+
+<section id="repair">
+  <div class="wrap">
+    <p class="num">05 — コードが間違っていたとき</p>
+    <h2>エラーが、何を直せばいいかを教えます。</h2>
+    <p>エージェントは間違えます。大事なのは、そのあと何が起きるかです。ほかの言語を学んだエージェントは <code>items.length</code> と書きます。</p>
+<pre><code><span class="e">error[E013]</span>: no field 'length' on list
+  --> app.almd:3:14
+  in field access .length
+  here: println("${items.length}")
+  hint: Almide values have no fields — use the `list` stdlib module.
+  try: <span class="g">(machine-applicable — `almide fix` applies it)</span>
+      list.len(items)</code></pre>
+<pre><code><span class="c">$ almide fix app.almd</span>
+  Applied 1 machine-applicable fix-it(s) from diagnostics: E013 at line 3</code></pre>
+    <p>これは機械的に直せるので、ツールが適用します。関数名の打ち間違いは違います。</p>
+<pre><code><span class="e">error[E002]</span>: undefined function 'string.lenn'
+  hint: Did you mean `string.len`?
+
+<span class="c">$ almide fix app.almd</span>
+1 diagnostic(s) have `try:` snippets that need manual application:
+  [E002] app.almd:3:14  undefined function 'string.lenn' <span class="g">(maybe-incorrect)</span></code></pre>
+    <p class="cap">0.69.0 のコンパイラ出力です。一部を省略しています。</p>
+    <p>こちらは、書き手が何を意図したかについての推測です。だから候補のままにします。機械的な修復と、意図についての判断との境目を、ツールの中で見えるようにしておきたいと考えています。</p>
+  </div>
+</section>
+
+<section id="mistakes">
+  <div class="wrap">
+    <p class="num">06 — 出荷されない間違い</p>
+    <h2>場合分けの書き忘れは、コンパイルエラーです。失敗の無視も同じです。</h2>
+    <p>エージェントの編集でいちばんよく見る間違いは、型にバリアントを足して、それを処理すべき場所を1つ見落とすことです。</p>
+<pre><code><span class="k">type</span> Shape =
+  | Circle(Float)
+  | Rect(Float, Float)
+  | Triangle(Float, Float)      <span class="c">// 追加した</span>
+
+<span class="k">fn</span> area(s: Shape) -> Float = <span class="k">match</span> s {
+  Circle(r) => 3.14159 * r * r,
+  Rect(w, h) => w * h,
+}                               <span class="c">// 直し忘れた</span></code></pre>
+<pre><code><span class="e">error[E010]</span>: non-exhaustive match: missing Triangle(_, _)
+  --> shape.almd:6:36
+  hint: add arms for Triangle(_, _):
+  <span class="g">Triangle(arg1, arg2) => _</span></code></pre>
+    <p>失敗の扱いも同じです。失敗しうる呼び出しは Result を返し、それをどうするかを書かなければなりません。黙って捨てるのは、警告ではなくエラーです。</p>
+<pre><code><span class="k">effect fn</span> load(path: String) -> String = {
+  <span class="k">let</span> text = fs.read_text(path)     <span class="c">// 失敗しうるのに、どこにもそう書いていない</span>
+  text
+}</code></pre>
+<pre><code><span class="e">error[E041]</span>: implicit propagation of this binding's value was removed —
+this value is a Result
+  --> load.almd:4:14
+  hint: Write `expr!` to propagate, or consume the Result as a value
+  (`??`, `?`, match ok/err).</code></pre>
+    <p class="cap">0.69.0 のコンパイラ出力です。一部を省略しています。</p>
+    <p>直すのは1文字です：<code>fs.read_text(path)!</code>。大事なのは、書き手が決めなければならなかったこと、そしてその決定がソースに見える形で残ることです。</p>
+  </div>
+</section>
+
+<section id="targets">
+  <div class="wrap">
+    <p class="num">07 — 1つのソース、2つのターゲット</p>
+    <h2>同じソースからネイティブと WebAssembly を作り、同じ出力を求めます。</h2>
+    <p>ネイティブのビルドはRustを経由します。WebAssemblyは、LLVMを挟まずにコンパイラが直接出力します。hello world は 325 バイトの <code>.wasm</code> ファイルになります。</p>
+    <p>バックエンドが2つあれば、食い違うことがあります。だから、外から観測できる約束はすべて「契約」として書き出してあります。今は454個あり、一つ一つが実行できる証拠に結びついています。CIは1,038本のプログラムを両方のターゲットで実行し、標準出力・標準エラー・終了コードを比べます。3つ目の実行系として、コード生成の前の段階でプログラムを実行するインタプリタも判定に加わります。</p>
+    <p class="aside">この比較は、文書に書かれた条件のもとで成り立ちます。乱数、時計、プラットフォームの細部には、それぞれ範囲を区切った契約があります。インタプリタは、実行できない17本については判定を棄権します。</p>
+  </div>
+</section>
+
+<section id="box">
+  <div class="wrap">
+    <p class="num">08 — ほかに入っているもの</p>
+    <h2>デモではなく、ひとそろいの言語です。</h2>
+  </div>
+  <div class="wide">
+    <div class="cards three">
+      <div class="card">
+        <h3>標準ライブラリ</h3>
+        <p>51モジュール、1,324関数。Almide 自身で書かれています。今ある中でいちばん大きな Almide プログラムです。</p>
+      </div>
+      <div class="card">
+        <h3>ツールは1つのバイナリに</h3>
+        <p><code>almide test</code>、<code>fmt</code>、<code>check</code>、<code>fix</code>、<code>explain</code>。テストは <code>test</code> ブロックとして、コードのすぐ隣に書きます。</p>
+      </div>
+      <div class="card">
+        <h3>明示的なエフェクト</h3>
+        <p><code>effect fn</code> は、外の世界に触れるコードの印です。失敗の伝搬は、必ず <code>!</code> で書きます。</p>
+      </div>
+      <div class="card">
+        <h3>構造化された並行処理</h3>
+        <p><code>fan</code> は、ネイティブではスレッドで処理を走らせ、Wasm でも同じ出力順になります。</p>
+      </div>
+      <div class="card">
+        <h3>検証できるリリース</h3>
+        <p>リリースの配布物はすべて Sigstore で署名されています。インストーラはチェックサムを確かめ、署名を確認できなければインストールしません。</p>
+      </div>
+      <div class="card">
+        <h3>実際のプログラムに使われている</h3>
+        <p>コーディングエージェント、パーサ、2D/3D レンダラ、ターミナルエミュレータ。2026年9月の時点で、144の公開リポジトリに Almide のソースがありました。<a href="https://github.com/almide/almide/blob/develop/docs/written-in-almide.md">一覧を見る</a>（英語）。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="limits">
+  <div class="wrap">
+    <p class="num">09 — まだできていないこと</p>
+    <h2>完成していません。そこははっきり言っておきます。</h2>
+    <ul class="plain">
+      <li><b>コンパイラ全体は証明されていません。</b>証明が覆っているのは、検査器とそのモデルです。</li>
+      <li><b>ネイティブのビルドは検証器を実行しません。</b>既定では検証済みのレンダラをまず試し、それがまだ扱えないプログラムは通常のコード生成に戻ります。</li>
+      <li><b>手元のマシンで動くのは、4つの検査器のうち1つだけです。</b>ほかの3つは、CIでテスト用のプログラムに対して動きます。検証器が入っていなければ、Wasmのビルドは検査なしで通ります。</li>
+      <li><b>証拠が部分的な場合があります。</b>プログラムの一部しか覆っていない証明書も通します。component 出力はこの方法では検査されません。</li>
+      <li><b>所有権の証拠が、生成されたバイト列と対応しているかは、まだ信頼に置いています。</b>境界チェックと初期化の証拠は、バイト列と突き合わせています。所有権はまだです。</li>
+      <li><b>すべての検査を通ったプログラムでも、計算結果が間違っていることはあります。</b>この仕組みは、ロジックが正しいかどうかを見るものではありません。</li>
+      <li><b>エージェントがRustやTypeScriptよりAlmideをうまく書ける、とは示せていません。</b>最初の計測は、強いモデルではどの言語でもほぼ100%になり、何も分かりませんでした。</li>
+      <li><b>1.0 より前です。</b>既知のバグがあり、これからも変わります。</li>
+    </ul>
+    <p style="margin-top:26px">何が証明済みで、何が信頼に置かれているだけなのかの全体は、リポジトリにあります：<a href="https://github.com/almide/almide/blob/develop/docs/contracts/proven-vs-trusted.md">proven vs trusted</a>（英語）。</p>
+  </div>
+</section>
+
+<section id="ai">
+  <div class="wrap">
+    <p class="num">10 — どう作ったか</p>
+    <h2>AIエージェントと一緒に作りました。それが出発点です。</h2>
+    <p>コンパイラはRustで書かれていて、書くのにAIエージェントをたくさん使いました。先にそう言っておきます。そうやって作られたものは見たくない、という人もいるはずで、それはもっともだと思うからです。</p>
+    <p>ただ、このプロジェクトがこういう形をしている理由も、そこにあります。エージェントがコンパイラを書くのなら、自分が読んだことを根拠に保証することはできません。だからコンパイラは証拠を出さなければならず、別の何かがその証拠を検査しなければならない。これは、エージェントを使う人すべてが、自分のコードについてこれから抱える問題と同じです。Almideは、その問題に公開の場で取り組んでいるものです。</p>
+  </div>
+</section>
+
+<section id="try" style="border-bottom:0">
+  <div class="wrap">
+    <p class="num">11 — 試す</p>
+    <h2>どこで壊れるか、見てください。</h2>
+    <p>Playground はブラウザで動き、インストールは要りません。macOS か Linux にコンパイラと検証器を入れるには：</p>
+<pre><code>curl --proto '=https' --tlsv1.2 -fsSL \
+  https://raw.githubusercontent.com/almide/almide/main/tools/install.sh | sh</code></pre>
+    <p class="cap">インストーラは、リリースの署名を確かめるために GitHub CLI（<code>gh</code>）を必要とします。Windows とソースからのビルドは <a href="https://github.com/almide/almide#quick-start">README</a> にあります。</p>
+  </div>
+  <div class="wide">
+    <div class="links">
+      <a href="https://almide.github.io/playground/"><b>Playground →</b><span>ブラウザで Almide を書いて実行する。</span></a>
+      <a href="https://github.com/almide/almide"><b>GitHub →</b><span>コンパイラ、証明、テスト、issue。</span></a>
+      <a href="https://almide.github.io/docs/"><b>ドキュメント →</b><span>言語ガイドと標準ライブラリ。</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wide">
+    <p>Almide はオープンソースです。試してみて何か壊れたら、<a href="https://github.com/almide/almide/issues">issue</a> を送ってもらえるのがいちばん助かります。</p>
+    <p>このページの文章は、AIアシスタントで下書きし、リポジトリと照らして確かめたものです。</p>
+  </div>
+</footer>
+
+</body>
+</html>
