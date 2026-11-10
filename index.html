@@ -101,51 +101,7 @@
     <h2>The compiler doesn't get to grade its own work.</h2>
     <p class="big">I don't trust my own compiler. I built it with AI agents, so why would I?</p>
     <p>Every time it builds Wasm, the compiler has to write down evidence of what it did: every place it shares or frees a value, every array index it checked. A separate program reads that evidence. If it doesn't add up, there is no output file.</p>
-  </div>
 
-  <div class="wide">
-    <div class="diagram" role="img" aria-label="The compiler produces Wasm bytes and evidence. A separate verifier reads both. If it accepts, the file is written. If it rejects, nothing is written and the build reports a compiler bug.">
-      <svg viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg">
-        <path id="w1" class="wire" d="M152 150 H199"/>
-        <path id="w2" class="wire" d="M338 138 H363 Q373 138 373 128 V86 Q373 76 383 76 H405"/>
-        <path id="w3" class="wire" d="M338 162 H363 Q373 162 373 172 V214 Q373 224 383 224 H405"/>
-        <path id="w4" class="wire" d="M572 76 H601 Q611 76 611 86 V128 Q611 138 621 138 H639"/>
-        <path id="w5" class="wire" d="M572 224 H601 Q611 224 611 214 V172 Q611 162 621 162 H639"/>
-        <path id="w6" class="wire ok" d="M786 138 H801 Q811 138 811 128 V86 Q811 76 821 76 H829"/>
-        <path id="w7" class="wire no" d="M786 162 H801 Q811 162 811 172 V214 Q811 224 821 224 H829"/>
-        <path class="flow" d="M152 150 H199"/>
-        <path class="flow" d="M338 138 H363 Q373 138 373 128 V86 Q373 76 383 76 H405"/>
-        <path class="flow" d="M338 162 H363 Q373 162 373 172 V214 Q373 224 383 224 H405"/>
-        <path class="flow" d="M572 76 H601 Q611 76 611 86 V128 Q611 138 621 138 H639"/>
-        <path class="flow" d="M572 224 H601 Q611 224 611 214 V172 Q611 162 621 162 H639"/>
-        <path class="flow ok" d="M786 138 H801 Q811 138 811 128 V86 Q811 76 821 76 H829"/>
-        <path class="flow no" d="M786 162 H801 Q811 162 811 172 V214 Q811 224 821 224 H829"/>
-        <path class="head" d="M194 145.5 L199 150 L194 154.5"/>
-        <path class="head" d="M400 71.5 L405 76 L400 80.5"/>
-        <path class="head" d="M400 219.5 L405 224 L400 228.5"/>
-        <path class="head" d="M634 133.5 L639 138 L634 142.5"/>
-        <path class="head" d="M634 157.5 L639 162 L634 166.5"/>
-        <path class="head ok" d="M824 71.5 L829 76 L824 80.5"/>
-        <path class="head no" d="M824 219.5 L829 224 L824 228.5"/>
-        <circle class="dot" cx="152" cy="150" r="3"/>
-        <circle class="dot" cx="338" cy="138" r="3"/>
-        <circle class="dot" cx="338" cy="162" r="3"/>
-        <circle class="dot" cx="572" cy="76" r="3"/>
-        <circle class="dot" cx="572" cy="224" r="3"/>
-        <circle class="dot" cx="786" cy="138" r="3"/>
-        <circle class="dot" cx="786" cy="162" r="3"/>
-        <rect class="node" x="20" y="118" width="132" height="64" rx="10"/><text class="tag" x="22" y="108">SOURCE</text><text class="t" x="86.0" y="147.0" text-anchor="middle">your code</text><text class="s" x="86.0" y="166.0" text-anchor="middle">app.almd</text>
-        <rect class="node" x="206" y="118" width="132" height="64" rx="10"/><text class="tag" x="208" y="108">COMPILER</text><text class="t" x="272.0" y="147.0" text-anchor="middle">almide</text><text class="s" x="272.0" y="166.0" text-anchor="middle">not trusted</text>
-        <rect class="node" x="412" y="44" width="160" height="64" rx="10"/><text class="tag" x="414" y="34">OUTPUT</text><text class="t" x="492.0" y="73.0" text-anchor="middle">Wasm bytes</text><text class="s" x="492.0" y="92.0" text-anchor="middle">what it built</text>
-        <rect class="node" x="412" y="192" width="160" height="64" rx="10"/><text class="tag" x="414" y="182">CLAIMS</text><text class="t" x="492.0" y="221.0" text-anchor="middle">evidence</text><text class="s" x="492.0" y="240.0" text-anchor="middle">what it says it did</text>
-        <rect class="halo" x="641" y="103" width="150" height="94" rx="15"/><rect class="node hot" x="646" y="108" width="140" height="84" rx="10"/><text class="tag" x="648" y="98">CHECKER</text><text class="t" x="716.0" y="147.0" text-anchor="middle">Buildgate</text><text class="s" x="716.0" y="166.0" text-anchor="middle">separate program</text>
-        <rect class="pill ok" x="836" y="54" width="112" height="44" rx="22"/><text class="pt ok" x="892" y="72" text-anchor="middle">accept</text><text class="s" x="892" y="88" text-anchor="middle">file written</text>
-        <rect class="pill no" x="836" y="202" width="112" height="44" rx="22"/><text class="pt no" x="892" y="220" text-anchor="middle">reject</text><text class="s" x="892" y="236" text-anchor="middle">nothing written</text>
-        </svg>
-    </div>
-  </div>
-
-  <div class="wrap">
     <p>A rejection is not your bug. It is the compiler's, and the build says so:</p>
 <pre data-title="zsh"><code><span class="e">error[certificate-rejected]</span>: app.almd: almide-verify judged this build's
 certificate and did not accept it (exit 1)
@@ -157,45 +113,171 @@ certificate and did not accept it (exit 1)
 
 <section id="checkers">
   <div class="wrap">
-    <p class="num">04 — AND THEN</p>
+    <p class="num">04 — TRUST SPINE</p>
     <h2>The checker can have bugs too. So there are four.</h2>
     <p>One checker would just move the trust somewhere else. These four are built in different ways, so the same mistake is unlikely to be in all of them. Together with the evidence they check, the project calls this the Trust Spine.</p>
   </div>
   <div class="wide">
-    <div class="cards">
-      <div class="card">
-        <div class="n">1</div>
-        <h3>Proofcore</h3>
-        <p class="role">The Rocq proof kernel</p>
+    <article class="spine">
+      <header class="spine-head">
+        <span class="n">1</span>
+        <div><h3>Proofcore</h3><p class="role">The Rocq proof kernel</p></div>
+        <span class="tag">runs in CI</span>
+      </header>
+      <div class="diagram" role="img" aria-label="Evidence from a build and the proven rule both go into Proofcore, where the Rocq kernel computes the verdict: accept means the property holds, reject means the evidence does not add up.">
+          <svg viewBox="0 0 960 262" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="wire" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="wire ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="wire no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="flow" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="flow" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="flow ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="flow no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="head" d="M368 110.5 L373 115 L368 119.5"/>
+          <path class="head" d="M368 134.5 L373 139 L368 143.5"/>
+          <path class="head ok" d="M688 63.5 L693 68 L688 72.5"/>
+          <path class="head no" d="M688 189.5 L693 194 L688 198.5"/>
+          <circle class="dot" cx="250" cy="68" r="3"/>
+          <circle class="dot" cx="250" cy="194" r="3"/>
+          <circle class="dot" cx="580" cy="115" r="3"/>
+          <circle class="dot" cx="580" cy="139" r="3"/>
+          <rect class="node" x="40" y="36" width="210" height="64" rx="10"/><text class="tag" x="42" y="26">CLAIMS</text><text class="t" x="145.0" y="65.0" text-anchor="middle">evidence</text><text class="s" x="145.0" y="84.0" text-anchor="middle">from a build</text>
+          <rect class="node" x="40" y="162" width="210" height="64" rx="10"/><text class="tag" x="42" y="152">PROOFS</text><text class="t" x="145.0" y="191.0" text-anchor="middle">the rule</text><text class="s" x="145.0" y="210.0" text-anchor="middle">proven: accept ⇒ it holds</text>
+          <rect class="halo" x="375" y="80" width="210" height="94" rx="15"/><rect class="node hot" x="380" y="85" width="200" height="84" rx="10"/><text class="tag" x="382" y="75">KERNEL</text><text class="t" x="480.0" y="124.0" text-anchor="middle">Proofcore</text><text class="s" x="480.0" y="143.0" text-anchor="middle">Rocq computes the verdict</text>
+          <rect class="pill ok" x="700" y="44" width="220" height="48" rx="24"/><text class="pt ok" x="810.0" y="64" text-anchor="middle">accept</text><text class="s" x="810.0" y="81" text-anchor="middle">the property holds</text>
+          <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">reject</text><text class="s" x="810.0" y="207" text-anchor="middle">the evidence does not add up</text>
+          </svg>
+      </div>
+      <div class="spine-foot">
         <p>The checker is defined and proven inside the Rocq proof assistant. Its verdict can be computed by the proof kernel itself.</p>
         <p class="guards"><b>Guards against</b>The checker's own logic being wrong. What is proven is the rule itself: if it accepts, the property holds.</p>
-        <span class="tag">runs in CI</span>
       </div>
-      <div class="card">
-        <div class="n">2</div>
-        <h3>Proofcast</h3>
-        <p class="role">A checker generated from the proofs</p>
+    </article>
+    <article class="spine">
+      <header class="spine-head">
+        <span class="n">2</span>
+        <div><h3>Proofcast</h3><p class="role">A checker generated from the proofs</p></div>
+        <span class="tag">runs in CI</span>
+      </header>
+      <div class="diagram" role="img" aria-label="The proven rule is extracted from Rocq into the Proofcast program, which judges the evidence from every program in the test corpus.">
+          <svg viewBox="0 0 960 262" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="wire" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="wire ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="wire no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="flow" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="flow" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="flow ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="flow no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="head" d="M368 110.5 L373 115 L368 119.5"/>
+          <path class="head" d="M368 134.5 L373 139 L368 143.5"/>
+          <path class="head ok" d="M688 63.5 L693 68 L688 72.5"/>
+          <path class="head no" d="M688 189.5 L693 194 L688 198.5"/>
+          <circle class="dot" cx="250" cy="68" r="3"/>
+          <circle class="dot" cx="250" cy="194" r="3"/>
+          <circle class="dot" cx="580" cy="115" r="3"/>
+          <circle class="dot" cx="580" cy="139" r="3"/>
+          <rect class="node" x="40" y="36" width="210" height="64" rx="10"/><text class="tag" x="42" y="26">PROOFS</text><text class="t" x="145.0" y="65.0" text-anchor="middle">the rule</text><text class="s" x="145.0" y="84.0" text-anchor="middle">proven in Rocq</text>
+          <rect class="node back" x="50" y="172" width="210" height="64" rx="10"/><rect class="node back" x="45" y="167" width="210" height="64" rx="10"/><rect class="node" x="40" y="162" width="210" height="64" rx="10"/><text class="tag" x="42" y="152">CORPUS</text><text class="t" x="145.0" y="191.0" text-anchor="middle">1,034 programs</text><text class="s" x="145.0" y="210.0" text-anchor="middle">evidence from each one</text>
+          <rect class="halo" x="375" y="80" width="210" height="94" rx="15"/><rect class="node hot" x="380" y="85" width="200" height="84" rx="10"/><text class="tag" x="382" y="75">PROGRAM</text><text class="t" x="480.0" y="124.0" text-anchor="middle">Proofcast</text><text class="s" x="480.0" y="143.0" text-anchor="middle">the rule, as a binary</text>
+          <rect class="pill ok" x="700" y="44" width="220" height="48" rx="24"/><text class="pt ok" x="810.0" y="64" text-anchor="middle">accept</text><text class="s" x="810.0" y="81" text-anchor="middle">1,033 fully certified</text>
+          <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">reject</text><text class="s" x="810.0" y="207" text-anchor="middle">caught in CI</text>
+          <text class="wl" x="282" y="58" text-anchor="middle">extract</text>
+          </svg>
+      </div>
+      <div class="spine-foot">
         <p>The same proven checker, sent out of Rocq as a standalone program so it is fast enough to run over the whole corpus.</p>
         <p class="guards"><b>Guards against</b>A proof that only exists on paper. This is the proven rule actually run, on every program in the corpus.</p>
-        <span class="tag">runs in CI</span>
       </div>
-      <div class="card">
-        <div class="n">3</div>
-        <h3>Buildgate</h3>
-        <p class="role">A verifier written by hand in Rust</p>
+    </article>
+    <article class="spine">
+      <header class="spine-head">
+        <span class="n">3</span>
+        <div><h3>Buildgate</h3><p class="role">A verifier written by hand in Rust</p></div>
+        <span class="tag here">runs on your machine</span>
+      </header>
+      <div class="diagram" role="img" aria-label="The compiler produces Wasm bytes and evidence. Buildgate, a separate program, reads both. If it accepts, the file is written. If it rejects, nothing is written.">
+          <svg viewBox="0 0 960 290" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M152 150 H199"/>
+          <path class="wire" d="M338 138 H363 Q373 138 373 128 V86 Q373 76 383 76 H405"/>
+          <path class="wire" d="M338 162 H363 Q373 162 373 172 V214 Q373 224 383 224 H405"/>
+          <path class="wire" d="M572 76 H601 Q611 76 611 86 V128 Q611 138 621 138 H639"/>
+          <path class="wire" d="M572 224 H601 Q611 224 611 214 V172 Q611 162 621 162 H639"/>
+          <path class="wire ok" d="M786 138 H801 Q811 138 811 128 V86 Q811 76 821 76 H829"/>
+          <path class="wire no" d="M786 162 H801 Q811 162 811 172 V214 Q811 224 821 224 H829"/>
+          <path class="flow" d="M152 150 H199"/>
+          <path class="flow" d="M338 138 H363 Q373 138 373 128 V86 Q373 76 383 76 H405"/>
+          <path class="flow" d="M338 162 H363 Q373 162 373 172 V214 Q373 224 383 224 H405"/>
+          <path class="flow" d="M572 76 H601 Q611 76 611 86 V128 Q611 138 621 138 H639"/>
+          <path class="flow" d="M572 224 H601 Q611 224 611 214 V172 Q611 162 621 162 H639"/>
+          <path class="flow ok" d="M786 138 H801 Q811 138 811 128 V86 Q811 76 821 76 H829"/>
+          <path class="flow no" d="M786 162 H801 Q811 162 811 172 V214 Q811 224 821 224 H829"/>
+          <path class="head" d="M194 145.5 L199 150 L194 154.5"/>
+          <path class="head" d="M400 71.5 L405 76 L400 80.5"/>
+          <path class="head" d="M400 219.5 L405 224 L400 228.5"/>
+          <path class="head" d="M634 133.5 L639 138 L634 142.5"/>
+          <path class="head" d="M634 157.5 L639 162 L634 166.5"/>
+          <path class="head ok" d="M824 71.5 L829 76 L824 80.5"/>
+          <path class="head no" d="M824 219.5 L829 224 L824 228.5"/>
+          <circle class="dot" cx="152" cy="150" r="3"/>
+          <circle class="dot" cx="338" cy="138" r="3"/>
+          <circle class="dot" cx="338" cy="162" r="3"/>
+          <circle class="dot" cx="572" cy="76" r="3"/>
+          <circle class="dot" cx="572" cy="224" r="3"/>
+          <circle class="dot" cx="786" cy="138" r="3"/>
+          <circle class="dot" cx="786" cy="162" r="3"/>
+          <rect class="node" x="20" y="118" width="132" height="64" rx="10"/><text class="tag" x="22" y="108">SOURCE</text><text class="t" x="86.0" y="147.0" text-anchor="middle">your code</text><text class="s" x="86.0" y="166.0" text-anchor="middle">app.almd</text>
+          <rect class="node" x="206" y="118" width="132" height="64" rx="10"/><text class="tag" x="208" y="108">COMPILER</text><text class="t" x="272.0" y="147.0" text-anchor="middle">almide</text><text class="s" x="272.0" y="166.0" text-anchor="middle">not trusted</text>
+          <rect class="node" x="412" y="44" width="160" height="64" rx="10"/><text class="tag" x="414" y="34">OUTPUT</text><text class="t" x="492.0" y="73.0" text-anchor="middle">Wasm bytes</text><text class="s" x="492.0" y="92.0" text-anchor="middle">what it built</text>
+          <rect class="node" x="412" y="192" width="160" height="64" rx="10"/><text class="tag" x="414" y="182">CLAIMS</text><text class="t" x="492.0" y="221.0" text-anchor="middle">evidence</text><text class="s" x="492.0" y="240.0" text-anchor="middle">what it says it did</text>
+          <rect class="halo" x="641" y="103" width="150" height="94" rx="15"/><rect class="node hot" x="646" y="108" width="140" height="84" rx="10"/><text class="tag" x="648" y="98">CHECKER</text><text class="t" x="716.0" y="147.0" text-anchor="middle">Buildgate</text><text class="s" x="716.0" y="166.0" text-anchor="middle">separate program</text>
+          <rect class="pill ok" x="834" y="52" width="118" height="48" rx="24"/><text class="pt ok" x="893.0" y="72" text-anchor="middle">accept</text><text class="s" x="893.0" y="89" text-anchor="middle">file written</text>
+          <rect class="pill no" x="834" y="200" width="118" height="48" rx="24"/><text class="pt no" x="893.0" y="220" text-anchor="middle">reject</text><text class="s" x="893.0" y="237" text-anchor="middle">nothing written</text>
+          </svg>
+      </div>
+      <div class="spine-foot">
         <p><code>almide-verify</code>. Independent code, not proven. It ships next to the compiler and is the one that stops your build.</p>
         <p class="guards"><b>Guards against</b>A bad build reaching your disk. It also refuses evidence that was recorded for a different file, by hash.</p>
-        <span class="tag here">runs on your machine</span>
       </div>
-      <div class="card">
-        <div class="n">4</div>
-        <h3>Byteanchor</h3>
-        <p class="role">A tool that opens the finished file</p>
+    </article>
+    <article class="spine">
+      <header class="spine-head">
+        <span class="n">4</span>
+        <div><h3>Byteanchor</h3><p class="role">A tool that opens the finished file</p></div>
+        <span class="tag">runs in CI</span>
+      </header>
+      <div class="diagram" role="img" aria-label="Byteanchor decodes the finished Wasm file and compares each recorded event with the instruction at that place. A match passes. Evidence that points at nothing fails.">
+          <svg viewBox="0 0 960 262" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="wire" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="wire ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="wire no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="flow" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="flow" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="flow ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="flow no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="head" d="M368 110.5 L373 115 L368 119.5"/>
+          <path class="head" d="M368 134.5 L373 139 L368 143.5"/>
+          <path class="head ok" d="M688 63.5 L693 68 L688 72.5"/>
+          <path class="head no" d="M688 189.5 L693 194 L688 198.5"/>
+          <circle class="dot" cx="250" cy="68" r="3"/>
+          <circle class="dot" cx="250" cy="194" r="3"/>
+          <circle class="dot" cx="580" cy="115" r="3"/>
+          <circle class="dot" cx="580" cy="139" r="3"/>
+          <rect class="node" x="40" y="36" width="210" height="64" rx="10"/><text class="tag" x="42" y="26">OUTPUT</text><text class="t" x="145.0" y="65.0" text-anchor="middle">app.wasm</text><text class="s" x="145.0" y="84.0" text-anchor="middle">the file that ships</text>
+          <rect class="node" x="40" y="162" width="210" height="64" rx="10"/><text class="tag" x="42" y="152">CLAIMS</text><text class="t" x="145.0" y="191.0" text-anchor="middle">recorded events</text><text class="s" x="145.0" y="210.0" text-anchor="middle">bounds · init · fields</text>
+          <rect class="halo" x="375" y="80" width="210" height="94" rx="15"/><rect class="node hot" x="380" y="85" width="200" height="84" rx="10"/><text class="tag" x="382" y="75">TOOL</text><text class="t" x="480.0" y="124.0" text-anchor="middle">Byteanchor</text><text class="s" x="480.0" y="143.0" text-anchor="middle">opens the file</text>
+          <rect class="pill ok" x="700" y="44" width="220" height="48" rx="24"/><text class="pt ok" x="810.0" y="64" text-anchor="middle">match</text><text class="s" x="810.0" y="81" text-anchor="middle">the instruction is there</text>
+          <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">mismatch</text><text class="s" x="810.0" y="207" text-anchor="middle">evidence points at nothing</text>
+          <text class="wl" x="282" y="58" text-anchor="middle">decode</text>
+          </svg>
+      </div>
+      <div class="spine-foot">
         <p>It decodes the final <code>.wasm</code> and holds each recorded bounds, initialization and field event to the instruction it names. Evidence about code that isn't there does not pass.</p>
         <p class="guards"><b>Guards against</b>Evidence about code that isn't there. A bounds check that was recorded but never emitted is caught here.</p>
-        <span class="tag">runs in CI</span>
       </div>
-    </div>
+    </article>
   </div>
   <div class="wrap">
     <p>In CI, Proofcore, Proofcast and Buildgate have to reach the same verdict on every piece of evidence, for every program in the test corpus. A rejection from this setup has already caught a real miscompile in my compiler.</p>

@@ -237,6 +237,31 @@ pre .g { color: #7fe6b4; }
 .diagram .pt.ok { fill: var(--good); }
 .diagram .pt.no { fill: var(--bad); }
 
+.diagram .node.back { fill: var(--panel); stroke: var(--line); }
+.diagram .wl { font: 500 10px var(--mono); letter-spacing: .12em; fill: var(--accent); text-transform: uppercase; }
+
+/* ---------- trust spine panels ---------- */
+.spine { position: relative; margin: 18px 0; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); overflow: hidden; }
+.spine:first-child { margin-top: 36px; }
+.spine-head { display: flex; align-items: center; gap: 18px; padding: 22px 24px 18px; }
+.spine-head .n { font: 500 12px/1 var(--mono); letter-spacing: .1em; color: var(--accent); border: 1px solid var(--line-2); border-radius: 8px; padding: 9px 10px; }
+.spine-head .n::before { content: "0"; }
+.spine-head h3 { font: 600 25px/1.15 var(--mono); letter-spacing: -.045em; margin: 0 0 5px; }
+.spine-head .role { font: 500 12px/1.4 var(--mono); letter-spacing: .02em; color: var(--muted); margin: 0; }
+.spine-head .tag {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
+  font: 500 11px/1 var(--mono); letter-spacing: .04em; color: var(--faint);
+  padding: 7px 11px; border-radius: 999px; border: 1px solid var(--line);
+}
+.spine-head .tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--faint); }
+.spine-head .tag.here { color: var(--accent-2); border-color: color-mix(in srgb, var(--accent-2) 45%, transparent); background: color-mix(in srgb, var(--accent-2) 8%, transparent); }
+.spine-head .tag.here::before { background: var(--accent-2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-2) 25%, transparent); }
+.spine .diagram { margin: 0; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); border-radius: 0; padding: 30px 18px 22px; }
+.spine-foot { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; padding: 20px 24px 22px; }
+.spine-foot p { margin: 0; font-size: 14.5px; line-height: 1.7; color: var(--muted); }
+.spine-foot .guards { color: var(--ink); padding-left: 24px; border-left: 1px dashed var(--line-2); }
+.spine-foot .guards b { display: block; font: 500 10.5px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent-2); margin-bottom: 8px; }
+
 /* ---------- cards ---------- */
 .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 34px 0 26px; }
 .card {
@@ -321,6 +346,10 @@ footer p { margin: 0 0 8px; }
   .top nav a { padding: 7px 7px; }
   pre { font-size: 12.5px; padding: 50px 16px 16px; }
   .card .tag { position: static; margin-top: 16px; }
+  .spine-head { flex-wrap: wrap; gap: 14px; padding: 18px; }
+  .spine-head .tag { margin-left: 0; }
+  .spine-foot { grid-template-columns: 1fr; gap: 16px; padding: 18px; }
+  .spine-foot .guards { padding-left: 0; border-left: 0; padding-top: 14px; border-top: 1px dashed var(--line-2); }
   .prop { grid-template-columns: 1fr; gap: 6px; padding: 16px 18px; }
   .prop.head { display: none; }
 }

@@ -101,51 +101,7 @@
     <h2>コンパイラに、自分の採点はさせません。</h2>
     <p class="big">自分は、自分のコンパイラを信用していません。AIエージェントと一緒に作ったものを、どうして信用できるでしょうか。</p>
     <p>Wasmをビルドするたびに、コンパイラは自分がやったことの証拠を書き出さなければなりません。値を共有したり解放したりしたすべての場所、検査したすべての配列の添字です。その証拠を別のプログラムが読みます。つじつまが合わなければ、出力ファイルはできません。</p>
-  </div>
 
-  <div class="wide">
-    <div class="diagram" role="img" aria-label="コンパイラはWasmのバイト列と証拠を出力する。別のプログラムである検証器が両方を読む。受理すればファイルが書き出される。拒否すれば何も書き出されず、ビルドはコンパイラのバグを報告する。">
-      <svg viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg">
-        <path id="w1" class="wire" d="M152 150 H199"/>
-        <path id="w2" class="wire" d="M338 138 H363 Q373 138 373 128 V86 Q373 76 383 76 H405"/>
-        <path id="w3" class="wire" d="M338 162 H363 Q373 162 373 172 V214 Q373 224 383 224 H405"/>
-        <path id="w4" class="wire" d="M572 76 H601 Q611 76 611 86 V128 Q611 138 621 138 H639"/>
-        <path id="w5" class="wire" d="M572 224 H601 Q611 224 611 214 V172 Q611 162 621 162 H639"/>
-        <path id="w6" class="wire ok" d="M786 138 H801 Q811 138 811 128 V86 Q811 76 821 76 H829"/>
-        <path id="w7" class="wire no" d="M786 162 H801 Q811 162 811 172 V214 Q811 224 821 224 H829"/>
-        <path class="flow" d="M152 150 H199"/>
-        <path class="flow" d="M338 138 H363 Q373 138 373 128 V86 Q373 76 383 76 H405"/>
-        <path class="flow" d="M338 162 H363 Q373 162 373 172 V214 Q373 224 383 224 H405"/>
-        <path class="flow" d="M572 76 H601 Q611 76 611 86 V128 Q611 138 621 138 H639"/>
-        <path class="flow" d="M572 224 H601 Q611 224 611 214 V172 Q611 162 621 162 H639"/>
-        <path class="flow ok" d="M786 138 H801 Q811 138 811 128 V86 Q811 76 821 76 H829"/>
-        <path class="flow no" d="M786 162 H801 Q811 162 811 172 V214 Q811 224 821 224 H829"/>
-        <path class="head" d="M194 145.5 L199 150 L194 154.5"/>
-        <path class="head" d="M400 71.5 L405 76 L400 80.5"/>
-        <path class="head" d="M400 219.5 L405 224 L400 228.5"/>
-        <path class="head" d="M634 133.5 L639 138 L634 142.5"/>
-        <path class="head" d="M634 157.5 L639 162 L634 166.5"/>
-        <path class="head ok" d="M824 71.5 L829 76 L824 80.5"/>
-        <path class="head no" d="M824 219.5 L829 224 L824 228.5"/>
-        <circle class="dot" cx="152" cy="150" r="3"/>
-        <circle class="dot" cx="338" cy="138" r="3"/>
-        <circle class="dot" cx="338" cy="162" r="3"/>
-        <circle class="dot" cx="572" cy="76" r="3"/>
-        <circle class="dot" cx="572" cy="224" r="3"/>
-        <circle class="dot" cx="786" cy="138" r="3"/>
-        <circle class="dot" cx="786" cy="162" r="3"/>
-        <rect class="node" x="20" y="118" width="132" height="64" rx="10"/><text class="tag" x="22" y="108">SOURCE</text><text class="t" x="86.0" y="147.0" text-anchor="middle">あなたのコード</text><text class="s" x="86.0" y="166.0" text-anchor="middle">app.almd</text>
-        <rect class="node" x="206" y="118" width="132" height="64" rx="10"/><text class="tag" x="208" y="108">COMPILER</text><text class="t" x="272.0" y="147.0" text-anchor="middle">almide</text><text class="s" x="272.0" y="166.0" text-anchor="middle">信用しない</text>
-        <rect class="node" x="412" y="44" width="160" height="64" rx="10"/><text class="tag" x="414" y="34">OUTPUT</text><text class="t" x="492.0" y="73.0" text-anchor="middle">Wasm のバイト列</text><text class="s" x="492.0" y="92.0" text-anchor="middle">作ったもの</text>
-        <rect class="node" x="412" y="192" width="160" height="64" rx="10"/><text class="tag" x="414" y="182">CLAIMS</text><text class="t" x="492.0" y="221.0" text-anchor="middle">証拠</text><text class="s" x="492.0" y="240.0" text-anchor="middle">やったと主張する内容</text>
-        <rect class="halo" x="641" y="103" width="150" height="94" rx="15"/><rect class="node hot" x="646" y="108" width="140" height="84" rx="10"/><text class="tag" x="648" y="98">CHECKER</text><text class="t" x="716.0" y="147.0" text-anchor="middle">Buildgate</text><text class="s" x="716.0" y="166.0" text-anchor="middle">別のプログラム</text>
-        <rect class="pill ok" x="836" y="54" width="112" height="44" rx="22"/><text class="pt ok" x="892" y="72" text-anchor="middle">受理</text><text class="s" x="892" y="88" text-anchor="middle">ファイルを書く</text>
-        <rect class="pill no" x="836" y="202" width="112" height="44" rx="22"/><text class="pt no" x="892" y="220" text-anchor="middle">拒否</text><text class="s" x="892" y="236" text-anchor="middle">何も書かない</text>
-        </svg>
-    </div>
-  </div>
-
-  <div class="wrap">
     <p>拒否は、あなたのバグではありません。コンパイラのバグです。ビルドはそう報告します。</p>
 <pre data-title="zsh"><code><span class="e">error[certificate-rejected]</span>: app.almd: almide-verify judged this build's
 certificate and did not accept it (exit 1)
@@ -157,45 +113,171 @@ certificate and did not accept it (exit 1)
 
 <section id="checkers">
   <div class="wrap">
-    <p class="num">04 — そこで考えた</p>
+    <p class="num">04 — TRUST SPINE</p>
     <h2>検査器にもバグはありえます。だから4つあります。</h2>
     <p>検査器が1つだけなら、信頼の置き場所が移るだけです。この4つは作り方がそれぞれ違うので、同じ間違いがすべてに入り込むことは起きにくくなっています。検査される証拠とあわせて、このプロジェクトではこれを Trust Spine（信頼の背骨）と呼んでいます。</p>
   </div>
   <div class="wide">
-    <div class="cards">
-      <div class="card">
-        <div class="n">1</div>
-        <h3>Proofcore</h3>
-        <p class="role">Rocq の証明カーネル</p>
+    <article class="spine">
+      <header class="spine-head">
+        <span class="n">1</span>
+        <div><h3>Proofcore</h3><p class="role">Rocq の証明カーネル</p></div>
+        <span class="tag">CI で動く</span>
+      </header>
+      <div class="diagram" role="img" aria-label="ビルドが出した証拠と、証明済みの規則の両方が Proofcore に入り、Rocq のカーネルが判定を計算する。受理ならその性質は成り立ち、拒否なら証拠のつじつまが合っていない。">
+          <svg viewBox="0 0 960 262" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="wire" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="wire ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="wire no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="flow" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="flow" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="flow ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="flow no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="head" d="M368 110.5 L373 115 L368 119.5"/>
+          <path class="head" d="M368 134.5 L373 139 L368 143.5"/>
+          <path class="head ok" d="M688 63.5 L693 68 L688 72.5"/>
+          <path class="head no" d="M688 189.5 L693 194 L688 198.5"/>
+          <circle class="dot" cx="250" cy="68" r="3"/>
+          <circle class="dot" cx="250" cy="194" r="3"/>
+          <circle class="dot" cx="580" cy="115" r="3"/>
+          <circle class="dot" cx="580" cy="139" r="3"/>
+          <rect class="node" x="40" y="36" width="210" height="64" rx="10"/><text class="tag" x="42" y="26">CLAIMS</text><text class="t" x="145.0" y="65.0" text-anchor="middle">証拠</text><text class="s" x="145.0" y="84.0" text-anchor="middle">ビルドが出したもの</text>
+          <rect class="node" x="40" y="162" width="210" height="64" rx="10"/><text class="tag" x="42" y="152">PROOFS</text><text class="t" x="145.0" y="191.0" text-anchor="middle">規則</text><text class="s" x="145.0" y="210.0" text-anchor="middle">証明済み：受理 ⇒ 成り立つ</text>
+          <rect class="halo" x="375" y="80" width="210" height="94" rx="15"/><rect class="node hot" x="380" y="85" width="200" height="84" rx="10"/><text class="tag" x="382" y="75">KERNEL</text><text class="t" x="480.0" y="124.0" text-anchor="middle">Proofcore</text><text class="s" x="480.0" y="143.0" text-anchor="middle">Rocq が判定を計算する</text>
+          <rect class="pill ok" x="700" y="44" width="220" height="48" rx="24"/><text class="pt ok" x="810.0" y="64" text-anchor="middle">受理</text><text class="s" x="810.0" y="81" text-anchor="middle">その性質は成り立つ</text>
+          <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">拒否</text><text class="s" x="810.0" y="207" text-anchor="middle">証拠のつじつまが合わない</text>
+          </svg>
+      </div>
+      <div class="spine-foot">
         <p>検査器は、証明支援系 Rocq の中で定義され、証明されています。その判定は、証明を検査するカーネル自身に計算させることができます。</p>
         <p class="guards"><b>守るもの</b>検査器そのもののロジックの誤り。証明されているのは規則そのものです。受理したなら、その性質は成り立ちます。</p>
-        <span class="tag">CI で動く</span>
       </div>
-      <div class="card">
-        <div class="n">2</div>
-        <h3>Proofcast</h3>
-        <p class="role">証明から生成した検査器</p>
+    </article>
+    <article class="spine">
+      <header class="spine-head">
+        <span class="n">2</span>
+        <div><h3>Proofcast</h3><p class="role">証明から生成した検査器</p></div>
+        <span class="tag">CI で動く</span>
+      </header>
+      <div class="diagram" role="img" aria-label="証明済みの規則を Rocq から抽出したプログラムが Proofcast で、テスト用のすべてのプログラムの証拠を判定する。">
+          <svg viewBox="0 0 960 262" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="wire" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="wire ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="wire no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="flow" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="flow" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="flow ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="flow no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="head" d="M368 110.5 L373 115 L368 119.5"/>
+          <path class="head" d="M368 134.5 L373 139 L368 143.5"/>
+          <path class="head ok" d="M688 63.5 L693 68 L688 72.5"/>
+          <path class="head no" d="M688 189.5 L693 194 L688 198.5"/>
+          <circle class="dot" cx="250" cy="68" r="3"/>
+          <circle class="dot" cx="250" cy="194" r="3"/>
+          <circle class="dot" cx="580" cy="115" r="3"/>
+          <circle class="dot" cx="580" cy="139" r="3"/>
+          <rect class="node" x="40" y="36" width="210" height="64" rx="10"/><text class="tag" x="42" y="26">PROOFS</text><text class="t" x="145.0" y="65.0" text-anchor="middle">規則</text><text class="s" x="145.0" y="84.0" text-anchor="middle">Rocq で証明済み</text>
+          <rect class="node back" x="50" y="172" width="210" height="64" rx="10"/><rect class="node back" x="45" y="167" width="210" height="64" rx="10"/><rect class="node" x="40" y="162" width="210" height="64" rx="10"/><text class="tag" x="42" y="152">CORPUS</text><text class="t" x="145.0" y="191.0" text-anchor="middle">1,034 本のプログラム</text><text class="s" x="145.0" y="210.0" text-anchor="middle">それぞれの証拠</text>
+          <rect class="halo" x="375" y="80" width="210" height="94" rx="15"/><rect class="node hot" x="380" y="85" width="200" height="84" rx="10"/><text class="tag" x="382" y="75">PROGRAM</text><text class="t" x="480.0" y="124.0" text-anchor="middle">Proofcast</text><text class="s" x="480.0" y="143.0" text-anchor="middle">規則をそのままバイナリに</text>
+          <rect class="pill ok" x="700" y="44" width="220" height="48" rx="24"/><text class="pt ok" x="810.0" y="64" text-anchor="middle">受理</text><text class="s" x="810.0" y="81" text-anchor="middle">1,033 本が完全に認証</text>
+          <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">拒否</text><text class="s" x="810.0" y="207" text-anchor="middle">CI で捕まる</text>
+          <text class="wl" x="282" y="58" text-anchor="middle">抽出</text>
+          </svg>
+      </div>
+      <div class="spine-foot">
         <p>同じ証明済みの検査器を、Rocq の外へ独立したプログラムとして送り出したものです。テスト全体にかけられる速さで動きます。</p>
         <p class="guards"><b>守るもの</b>紙の上だけの証明。証明済みの規則を、テスト用のすべてのプログラムに対して実際に走らせます。</p>
-        <span class="tag">CI で動く</span>
       </div>
-      <div class="card">
-        <div class="n">3</div>
-        <h3>Buildgate</h3>
-        <p class="role">Rust で手書きした検証器</p>
+    </article>
+    <article class="spine">
+      <header class="spine-head">
+        <span class="n">3</span>
+        <div><h3>Buildgate</h3><p class="role">Rust で手書きした検証器</p></div>
+        <span class="tag here">手元のマシンで動く</span>
+      </header>
+      <div class="diagram" role="img" aria-label="コンパイラは Wasm のバイト列と証拠を出力する。別のプログラムである Buildgate が両方を読む。受理すればファイルが書き出され、拒否すれば何も書き出されない。">
+          <svg viewBox="0 0 960 290" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M152 150 H199"/>
+          <path class="wire" d="M338 138 H363 Q373 138 373 128 V86 Q373 76 383 76 H405"/>
+          <path class="wire" d="M338 162 H363 Q373 162 373 172 V214 Q373 224 383 224 H405"/>
+          <path class="wire" d="M572 76 H601 Q611 76 611 86 V128 Q611 138 621 138 H639"/>
+          <path class="wire" d="M572 224 H601 Q611 224 611 214 V172 Q611 162 621 162 H639"/>
+          <path class="wire ok" d="M786 138 H801 Q811 138 811 128 V86 Q811 76 821 76 H829"/>
+          <path class="wire no" d="M786 162 H801 Q811 162 811 172 V214 Q811 224 821 224 H829"/>
+          <path class="flow" d="M152 150 H199"/>
+          <path class="flow" d="M338 138 H363 Q373 138 373 128 V86 Q373 76 383 76 H405"/>
+          <path class="flow" d="M338 162 H363 Q373 162 373 172 V214 Q373 224 383 224 H405"/>
+          <path class="flow" d="M572 76 H601 Q611 76 611 86 V128 Q611 138 621 138 H639"/>
+          <path class="flow" d="M572 224 H601 Q611 224 611 214 V172 Q611 162 621 162 H639"/>
+          <path class="flow ok" d="M786 138 H801 Q811 138 811 128 V86 Q811 76 821 76 H829"/>
+          <path class="flow no" d="M786 162 H801 Q811 162 811 172 V214 Q811 224 821 224 H829"/>
+          <path class="head" d="M194 145.5 L199 150 L194 154.5"/>
+          <path class="head" d="M400 71.5 L405 76 L400 80.5"/>
+          <path class="head" d="M400 219.5 L405 224 L400 228.5"/>
+          <path class="head" d="M634 133.5 L639 138 L634 142.5"/>
+          <path class="head" d="M634 157.5 L639 162 L634 166.5"/>
+          <path class="head ok" d="M824 71.5 L829 76 L824 80.5"/>
+          <path class="head no" d="M824 219.5 L829 224 L824 228.5"/>
+          <circle class="dot" cx="152" cy="150" r="3"/>
+          <circle class="dot" cx="338" cy="138" r="3"/>
+          <circle class="dot" cx="338" cy="162" r="3"/>
+          <circle class="dot" cx="572" cy="76" r="3"/>
+          <circle class="dot" cx="572" cy="224" r="3"/>
+          <circle class="dot" cx="786" cy="138" r="3"/>
+          <circle class="dot" cx="786" cy="162" r="3"/>
+          <rect class="node" x="20" y="118" width="132" height="64" rx="10"/><text class="tag" x="22" y="108">SOURCE</text><text class="t" x="86.0" y="147.0" text-anchor="middle">あなたのコード</text><text class="s" x="86.0" y="166.0" text-anchor="middle">app.almd</text>
+          <rect class="node" x="206" y="118" width="132" height="64" rx="10"/><text class="tag" x="208" y="108">COMPILER</text><text class="t" x="272.0" y="147.0" text-anchor="middle">almide</text><text class="s" x="272.0" y="166.0" text-anchor="middle">信用しない</text>
+          <rect class="node" x="412" y="44" width="160" height="64" rx="10"/><text class="tag" x="414" y="34">OUTPUT</text><text class="t" x="492.0" y="73.0" text-anchor="middle">Wasm のバイト列</text><text class="s" x="492.0" y="92.0" text-anchor="middle">作ったもの</text>
+          <rect class="node" x="412" y="192" width="160" height="64" rx="10"/><text class="tag" x="414" y="182">CLAIMS</text><text class="t" x="492.0" y="221.0" text-anchor="middle">証拠</text><text class="s" x="492.0" y="240.0" text-anchor="middle">やったと主張する内容</text>
+          <rect class="halo" x="641" y="103" width="150" height="94" rx="15"/><rect class="node hot" x="646" y="108" width="140" height="84" rx="10"/><text class="tag" x="648" y="98">CHECKER</text><text class="t" x="716.0" y="147.0" text-anchor="middle">Buildgate</text><text class="s" x="716.0" y="166.0" text-anchor="middle">別のプログラム</text>
+          <rect class="pill ok" x="834" y="52" width="118" height="48" rx="24"/><text class="pt ok" x="893.0" y="72" text-anchor="middle">受理</text><text class="s" x="893.0" y="89" text-anchor="middle">ファイルを書く</text>
+          <rect class="pill no" x="834" y="200" width="118" height="48" rx="24"/><text class="pt no" x="893.0" y="220" text-anchor="middle">拒否</text><text class="s" x="893.0" y="237" text-anchor="middle">何も書かない</text>
+          </svg>
+      </div>
+      <div class="spine-foot">
         <p><code>almide-verify</code>。独立して書いたコードで、証明はされていません。コンパイラと一緒に配布され、あなたのビルドを実際に止めるのはこれです。</p>
         <p class="guards"><b>守るもの</b>悪いビルドがディスクに届くこと。別のファイルについて記録された証拠も、ハッシュで見分けて拒否します。</p>
-        <span class="tag here">手元のマシンで動く</span>
       </div>
-      <div class="card">
-        <div class="n">4</div>
-        <h3>Byteanchor</h3>
-        <p class="role">できあがったファイルを開くツール</p>
+    </article>
+    <article class="spine">
+      <header class="spine-head">
+        <span class="n">4</span>
+        <div><h3>Byteanchor</h3><p class="role">できあがったファイルを開くツール</p></div>
+        <span class="tag">CI で動く</span>
+      </header>
+      <div class="diagram" role="img" aria-label="Byteanchor はできあがった Wasm ファイルをデコードし、記録された操作の一つ一つを、その位置にある命令と比べる。一致すれば通り、指す先のない証拠は通らない。">
+          <svg viewBox="0 0 960 262" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="wire" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="wire ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="wire no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="flow" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="flow" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="flow ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="flow no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="head" d="M368 110.5 L373 115 L368 119.5"/>
+          <path class="head" d="M368 134.5 L373 139 L368 143.5"/>
+          <path class="head ok" d="M688 63.5 L693 68 L688 72.5"/>
+          <path class="head no" d="M688 189.5 L693 194 L688 198.5"/>
+          <circle class="dot" cx="250" cy="68" r="3"/>
+          <circle class="dot" cx="250" cy="194" r="3"/>
+          <circle class="dot" cx="580" cy="115" r="3"/>
+          <circle class="dot" cx="580" cy="139" r="3"/>
+          <rect class="node" x="40" y="36" width="210" height="64" rx="10"/><text class="tag" x="42" y="26">OUTPUT</text><text class="t" x="145.0" y="65.0" text-anchor="middle">app.wasm</text><text class="s" x="145.0" y="84.0" text-anchor="middle">実際に出荷されるファイル</text>
+          <rect class="node" x="40" y="162" width="210" height="64" rx="10"/><text class="tag" x="42" y="152">CLAIMS</text><text class="t" x="145.0" y="191.0" text-anchor="middle">記録された操作</text><text class="s" x="145.0" y="210.0" text-anchor="middle">bounds · init · fields</text>
+          <rect class="halo" x="375" y="80" width="210" height="94" rx="15"/><rect class="node hot" x="380" y="85" width="200" height="84" rx="10"/><text class="tag" x="382" y="75">TOOL</text><text class="t" x="480.0" y="124.0" text-anchor="middle">Byteanchor</text><text class="s" x="480.0" y="143.0" text-anchor="middle">ファイルを開く</text>
+          <rect class="pill ok" x="700" y="44" width="220" height="48" rx="24"/><text class="pt ok" x="810.0" y="64" text-anchor="middle">一致</text><text class="s" x="810.0" y="81" text-anchor="middle">命令がそこにある</text>
+          <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">不一致</text><text class="s" x="810.0" y="207" text-anchor="middle">証拠の指す先がない</text>
+          <text class="wl" x="282" y="58" text-anchor="middle">デコード</text>
+          </svg>
+      </div>
+      <div class="spine-foot">
         <p>最終的な <code>.wasm</code> をデコードし、記録された境界チェック・初期化・フィールド操作の一つ一つを、それが指している命令と突き合わせます。そこにないコードについての証拠は通りません。</p>
         <p class="guards"><b>守るもの</b>そこにないコードについての証拠。記録はされたが実際には出力されなかった境界チェックは、ここで見つかります。</p>
-        <span class="tag">CI で動く</span>
       </div>
-    </div>
+    </article>
   </div>
   <div class="wrap">
     <p>CIでは、Proofcore・Proofcast・Buildgate の3つが、テスト用のすべてのプログラムのすべての証拠について、同じ判定を出さなければなりません。この仕組みでの拒否は、自分のコンパイラの実際のミスコンパイルをすでに1つ捕まえています。</p>
