@@ -158,38 +158,42 @@ certificate and did not accept it (exit 1)
   <div class="wrap">
     <p class="num">04 — そこで考えた</p>
     <h2>検査器にもバグはありえます。だから4つあります。</h2>
-    <p>検査器が1つだけなら、信頼の置き場所が移るだけです。この4つは作り方がそれぞれ違うので、同じ間違いがすべてに入り込むことは起きにくくなっています。</p>
+    <p>検査器が1つだけなら、信頼の置き場所が移るだけです。この4つは作り方がそれぞれ違うので、同じ間違いがすべてに入り込むことは起きにくくなっています。検査される証拠とあわせて、このプロジェクトではこれを Trust Spine（信頼の背骨）と呼んでいます。</p>
   </div>
   <div class="wide">
     <div class="cards">
       <div class="card">
         <div class="n">1</div>
-        <h3>Rocq のカーネル</h3>
+        <h3>Proofcore</h3>
+        <p class="role">Rocq の証明カーネル</p>
         <p>検査器は、証明支援系 Rocq の中で定義され、証明されています。その判定は、証明を検査するカーネル自身に計算させることができます。</p>
         <span class="tag">CI で動く</span>
       </div>
       <div class="card">
         <div class="n">2</div>
-        <h3>証明から生成した検査器</h3>
-        <p>同じ証明済みの検査器を、Rocq から独立したプログラムとして取り出したものです。テスト全体にかけられる速さで動きます。</p>
+        <h3>Proofcast</h3>
+        <p class="role">証明から生成した検査器</p>
+        <p>同じ証明済みの検査器を、Rocq の外へ独立したプログラムとして送り出したものです。テスト全体にかけられる速さで動きます。</p>
         <span class="tag">CI で動く</span>
       </div>
       <div class="card">
         <div class="n">3</div>
-        <h3>Rust で手書きした検証器</h3>
+        <h3>Buildgate</h3>
+        <p class="role">Rust で手書きした検証器</p>
         <p><code>almide-verify</code>。独立して書いたコードで、証明はされていません。コンパイラと一緒に配布され、あなたのビルドを実際に止めるのはこれです。</p>
         <span class="tag here">手元のマシンで動く</span>
       </div>
       <div class="card">
         <div class="n">4</div>
-        <h3>できあがったファイルを開くツール</h3>
+        <h3>Byteanchor</h3>
+        <p class="role">できあがったファイルを開くツール</p>
         <p>最終的な <code>.wasm</code> をデコードし、記録された境界チェックと初期化の一つ一つを、それが指している命令と突き合わせます。そこにないコードについての証拠は通りません。</p>
         <span class="tag">CI で動く</span>
       </div>
     </div>
   </div>
   <div class="wrap">
-    <p>CIでは、最初の3つが、テスト用のすべてのプログラムのすべての証拠について、同じ判定を出さなければなりません。この仕組みでの拒否は、自分のコンパイラの実際のミスコンパイルをすでに1つ捕まえています。</p>
+    <p>CIでは、Proofcore・Proofcast・Buildgate の3つが、テスト用のすべてのプログラムのすべての証拠について、同じ判定を出さなければなりません。この仕組みでの拒否は、自分のコンパイラの実際のミスコンパイルをすでに1つ捕まえています。</p>
     <p class="aside">証明は、リポジトリにある46個のRocqファイルです。対象は検査器とそのモデルで、コンパイラではありません。</p>
   </div>
 </section>

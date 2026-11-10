@@ -139,6 +139,10 @@ pre .g { color: #8fe0b0; }
 /* ---------- cards ---------- */
 .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 30px 0 22px; }
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px 22px 18px; }
+.card h3 { font: 500 25px/1.25 var(--serif); letter-spacing: -.005em; margin-bottom: 4px; }
+.cards.three .card h3 { font: 650 18px/1.4 var(--sans); letter-spacing: 0; margin-bottom: 6px; }
+.card .role { font: 600 12.5px/1.5 var(--mono); letter-spacing: .03em; color: var(--accent); margin: 0 0 12px; }
+.card .yomi { font: 500 15px/1 var(--sans); color: var(--muted); margin-left: 10px; }
 .cards.three { grid-template-columns: repeat(3, 1fr); }
 .cards.three .card p { margin-bottom: 0; }
 .card .n { font: 500 34px/1 var(--serif); color: var(--accent); margin-bottom: 12px; }

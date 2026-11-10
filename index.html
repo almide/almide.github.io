@@ -158,38 +158,42 @@ certificate and did not accept it (exit 1)
   <div class="wrap">
     <p class="num">04 — AND THEN</p>
     <h2>The checker can have bugs too. So there are four.</h2>
-    <p>One checker would just move the trust somewhere else. These four are built in different ways, so the same mistake is unlikely to be in all of them.</p>
+    <p>One checker would just move the trust somewhere else. These four are built in different ways, so the same mistake is unlikely to be in all of them. Together with the evidence they check, the project calls this the Trust Spine.</p>
   </div>
   <div class="wide">
     <div class="cards">
       <div class="card">
         <div class="n">1</div>
-        <h3>The Rocq kernel</h3>
+        <h3>Proofcore</h3>
+        <p class="role">The Rocq proof kernel</p>
         <p>The checker is defined and proven inside the Rocq proof assistant. Its verdict can be computed by the proof kernel itself.</p>
         <span class="tag">runs in CI</span>
       </div>
       <div class="card">
         <div class="n">2</div>
-        <h3>A checker generated from the proofs</h3>
-        <p>The same proven checker, extracted from Rocq into a standalone program so it is fast enough to run over the whole corpus.</p>
+        <h3>Proofcast</h3>
+        <p class="role">A checker generated from the proofs</p>
+        <p>The same proven checker, sent out of Rocq as a standalone program so it is fast enough to run over the whole corpus.</p>
         <span class="tag">runs in CI</span>
       </div>
       <div class="card">
         <div class="n">3</div>
-        <h3>A verifier written by hand in Rust</h3>
+        <h3>Buildgate</h3>
+        <p class="role">A verifier written by hand in Rust</p>
         <p><code>almide-verify</code>. Independent code, not proven. It ships next to the compiler and is the one that stops your build.</p>
         <span class="tag here">runs on your machine</span>
       </div>
       <div class="card">
         <div class="n">4</div>
-        <h3>A tool that opens the finished file</h3>
+        <h3>Byteanchor</h3>
+        <p class="role">A tool that opens the finished file</p>
         <p>It decodes the final <code>.wasm</code> and holds each recorded bounds and initialization event to the instruction it names. Evidence about code that isn't there does not pass.</p>
         <span class="tag">runs in CI</span>
       </div>
     </div>
   </div>
   <div class="wrap">
-    <p>In CI the first three have to reach the same verdict on every piece of evidence, for every program in the test corpus. A rejection from this setup has already caught a real miscompile in my compiler.</p>
+    <p>In CI, Proofcore, Proofcast and Buildgate have to reach the same verdict on every piece of evidence, for every program in the test corpus. A rejection from this setup has already caught a real miscompile in my compiler.</p>
     <p class="aside">The proofs are 46 Rocq files in the repository. They are about the checker and its models, not about the compiler.</p>
   </div>
 </section>
