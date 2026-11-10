@@ -121,118 +121,95 @@ certificate and did not accept it (exit 1)
     <article class="spine overview">
       <header class="spine-head">
         <span class="n all">◆</span>
-        <div><h3>全体像</h3><p class="role">Wasm の経路：あなたのコードから出荷するファイルまで。誰が何を検査するか</p></div>
+        <div><h3>全体像</h3><p class="role">1つのソース、2つのターゲット。誰が何を検査するか</p></div>
       </header>
-      <div class="diagram" role="img" aria-label="全体図。あなたのコードが、信用されていないコンパイラに入る。コンパイラは Wasm のバイト列と証拠を出す。Buildgate はバイト列とディスク上のファイルのあいだに立ち、証拠を読む。受理したときだけファイルが書き出される。Byteanchor は証拠をバイト列に結びつける。Proofcast はすべてのテストプログラムの証拠に規則を当てはめる。Proofcore は規則そのものを守る。">
-          <svg viewBox="0 0 970 416" xmlns="http://www.w3.org/2000/svg">
-          <path class="wire" d="M150 92 H193"/>
-          <path class="wire" d="M340 92 H403"/>
-          <path class="wire" d="M270 124 V252 Q270 262 280 262 H403"/>
-          <path class="wire" d="M560 92 H613"/>
-          <path class="wire" d="M560 262 H730 Q740 262 740 252 V132"/>
-          <path class="wire ok" d="M770 92 H813"/>
-          <path class="wire" d="M380 366 H423"/>
-          <path class="flow" d="M150 92 H193"/>
-          <path class="flow" d="M340 92 H403"/>
-          <path class="flow" d="M270 124 V252 Q270 262 280 262 H403"/>
-          <path class="flow" d="M560 92 H613"/>
-          <path class="flow" d="M560 262 H730 Q740 262 740 252 V132"/>
-          <path class="flow ok" d="M770 92 H813"/>
-          <path class="flow" d="M380 366 H423"/>
-          <path class="head" d="M188 87.5 L193 92 L188 96.5"/>
-          <path class="head" d="M398 87.5 L403 92 L398 96.5"/>
-          <path class="head" d="M398 257.5 L403 262 L398 266.5"/>
-          <path class="head" d="M608 87.5 L613 92 L608 96.5"/>
-          <path class="head ok" d="M808 87.5 L813 92 L808 96.5"/>
-          <path class="head" d="M418 361.5 L423 366 L418 370.5"/>
-          <path class="head" d="M735.5 137 L740 132 L744.5 137"/>
-          <circle class="dot" cx="150" cy="92" r="3"/>
-          <circle class="dot" cx="340" cy="92" r="3"/>
-          <circle class="dot" cx="270" cy="124" r="3"/>
-          <circle class="dot" cx="560" cy="92" r="3"/>
-          <circle class="dot" cx="560" cy="262" r="3"/>
-          <circle class="dot" cx="770" cy="92" r="3"/>
-          <circle class="dot" cx="380" cy="366" r="3"/>
-          <path class="rib" d="M485 124 V230 M485 172 H530"/>
-          <circle class="rdot" cx="485" cy="172" r="3.5"/>
-          <path class="rib" d="M485 336 V294"/>
-          <circle class="rdot" cx="485" cy="294" r="3.5"/>
-          <path class="rib" d="M200 366 H250"/>
-          <circle class="rdot" cx="250" cy="366" r="3.5"/>
-          <rect class="node" x="20" y="60" width="130" height="64" rx="10"/><text class="tag" x="22" y="50">SOURCE</text><text class="t" x="85.0" y="89.0" text-anchor="middle">あなたのコード</text><text class="s" x="85.0" y="108.0" text-anchor="middle">app.almd</text>
-          <rect class="node" x="200" y="60" width="140" height="64" rx="10"/><text class="tag" x="202" y="50">COMPILER</text><text class="t" x="270.0" y="89.0" text-anchor="middle">almide</text><text class="s" x="270.0" y="108.0" text-anchor="middle">信用しない</text>
-          <rect class="node" x="410" y="60" width="150" height="64" rx="10"/><text class="tag" x="412" y="50">OUTPUT</text><text class="t" x="485.0" y="89.0" text-anchor="middle">Wasm のバイト列</text><text class="s" x="485.0" y="108.0" text-anchor="middle">作ったもの</text>
-          <rect class="node" x="410" y="230" width="150" height="64" rx="10"/><text class="tag" x="412" y="220">CLAIMS</text><text class="t" x="485.0" y="259.0" text-anchor="middle">証拠</text><text class="s" x="485.0" y="278.0" text-anchor="middle">やったと主張する内容</text>
-          <rect class="node" x="820" y="60" width="140" height="64" rx="10"/><text class="tag" x="822" y="50">DISK</text><text class="t" x="890.0" y="89.0" text-anchor="middle">app.wasm</text><text class="s" x="890.0" y="108.0" text-anchor="middle">受理されたときだけ</text>
-          <rect class="node" x="250" y="336" width="130" height="60" rx="10"/><text class="tag" x="252" y="326">PROOFS</text><text class="t" x="315.0" y="363.0" text-anchor="middle">規則</text><text class="s" x="315.0" y="382.0" text-anchor="middle">何を安全と呼ぶか</text>
-          <rect class="halo" x="615" y="55" width="160" height="74" rx="15"/><rect class="node hot" x="620" y="60" width="150" height="64" rx="10"/><text class="tag" x="622" y="50">手元のマシン</text><text class="t" x="695.0" y="89.0" text-anchor="middle">Buildgate</text><text class="s" x="695.0" y="108.0" text-anchor="middle">書いてよいか</text>
-          <rect class="halo" x="525" y="137" width="190" height="70" rx="15"/><rect class="node hot" x="530" y="142" width="180" height="60" rx="10"/><text class="tag" x="532" y="132">CI</text><text class="t" x="620.0" y="169.0" text-anchor="middle">Byteanchor</text><text class="s" x="620.0" y="188.0" text-anchor="middle">このバイト列の話か</text>
-          <rect class="halo" x="425" y="331" width="200" height="70" rx="15"/><rect class="node hot" x="430" y="336" width="190" height="60" rx="10"/><text class="tag" x="432" y="326">CI</text><text class="t" x="525.0" y="363.0" text-anchor="middle">Proofcast</text><text class="s" x="525.0" y="382.0" text-anchor="middle">すべてのプログラムが通るか</text>
-          <rect class="halo" x="15" y="331" width="190" height="70" rx="15"/><rect class="node hot" x="20" y="336" width="180" height="60" rx="10"/><text class="tag" x="22" y="326">CI</text><text class="t" x="110.0" y="363.0" text-anchor="middle">Proofcore</text><text class="s" x="110.0" y="382.0" text-anchor="middle">規則は正しいか</text>
+      <div class="diagram" role="img" aria-label="両方のターゲットの全体図。あなたのコードが、信用されていないコンパイラに入り、コンパイラは2つの経路に分かれる。Wasm の経路では、Wasm のバイト列と証拠を出す。Byteanchor が証拠をバイト列に結びつけ、Buildgate がバイト列とディスク上のファイルのあいだに立つ。ファイルは証拠が受理されたときだけ書き出される。Rust の経路では、Rust のソースと証拠を出す。信頼されている rustc が、ソースをネイティブのバイナリにコンパイルする。Buildgate は Rust の証拠を、手元のビルドではなくプロジェクトの検証の中で判定する。バイト列との照合はまだなく、証拠をソースに固定するハッシュだけがある。2つの経路のあいだには、共有されるものがある。規則と、規則が正しいことを確かめる Proofcore と、両方のターゲットの証拠に規則を当てはめる Proofcast である。">
+          <svg viewBox="0 0 990 728" xmlns="http://www.w3.org/2000/svg">
+          <rect class="lane" x="372" y="20" width="608" height="296" rx="16"/><rect class="lane" x="372" y="412" width="608" height="296" rx="16"/>
+          <text class="lanet" x="20" y="72">WASM ターゲット</text><text class="lanes" x="20" y="92">手元のビルドで検査</text>
+          <text class="lanet" x="20" y="664">RUST ターゲット</text><text class="lanes" x="20" y="684">プロジェクトの検証で検査</text>
+          <path class="wire" d="M140 364 H173"/>
+          <path class="wire" d="M310 350 H337 Q347 350 347 340 V90 Q347 80 357 80 H393"/>
+          <path class="wire" d="M347 274 H393"/>
+          <path class="wire" d="M310 378 H337 Q347 378 347 388 V638 Q347 648 357 648 H393"/>
+          <path class="wire" d="M347 454 H393"/>
+          <path class="wire" d="M550 80 H633"/>
+          <path class="wire ok" d="M790 80 H843"/>
+          <path class="wire" d="M550 274 H705 Q715 274 715 264 V120"/>
+          <path class="wire" d="M550 648 H633"/>
+          <path class="wire" d="M790 648 H843"/>
+          <path class="wire" d="M550 454 H633"/>
+          <path class="wire" d="M620 364 H568"/>
+          <path class="flow" d="M140 364 H173"/>
+          <path class="flow" d="M310 350 H337 Q347 350 347 340 V90 Q347 80 357 80 H393"/>
+          <path class="flow" d="M347 274 H393"/>
+          <path class="flow" d="M310 378 H337 Q347 378 347 388 V638 Q347 648 357 648 H393"/>
+          <path class="flow" d="M347 454 H393"/>
+          <path class="flow" d="M550 80 H633"/>
+          <path class="flow ok" d="M790 80 H843"/>
+          <path class="flow" d="M550 274 H705 Q715 274 715 264 V120"/>
+          <path class="flow" d="M550 648 H633"/>
+          <path class="flow" d="M790 648 H843"/>
+          <path class="flow" d="M550 454 H633"/>
+          <path class="flow" d="M620 364 H568"/>
+          <path class="head" d="M168 359.5 L173 364 L168 368.5"/>
+          <path class="head" d="M388 75.5 L393 80 L388 84.5"/>
+          <path class="head" d="M388 269.5 L393 274 L388 278.5"/>
+          <path class="head" d="M388 643.5 L393 648 L388 652.5"/>
+          <path class="head" d="M388 449.5 L393 454 L388 458.5"/>
+          <path class="head" d="M628 75.5 L633 80 L628 84.5"/>
+          <path class="head ok" d="M838 75.5 L843 80 L838 84.5"/>
+          <path class="head" d="M628 643.5 L633 648 L628 652.5"/>
+          <path class="head" d="M838 643.5 L843 648 L838 652.5"/>
+          <path class="head" d="M628 449.5 L633 454 L628 458.5"/>
+          <path class="head" d="M710.5 125 L715 120 L719.5 125"/><path class="head" d="M573 359.5 L568 364 L573 368.5"/>
+          <circle class="dot" cx="140" cy="364" r="3"/>
+          <circle class="dot" cx="310" cy="350" r="3"/>
+          <circle class="dot" cx="310" cy="378" r="3"/>
+          <circle class="dot" cx="347" cy="274" r="3"/>
+          <circle class="dot" cx="347" cy="454" r="3"/>
+          <circle class="dot" cx="550" cy="80" r="3"/>
+          <circle class="dot" cx="790" cy="80" r="3"/>
+          <circle class="dot" cx="550" cy="274" r="3"/>
+          <circle class="dot" cx="550" cy="648" r="3"/>
+          <circle class="dot" cx="790" cy="648" r="3"/>
+          <circle class="dot" cx="550" cy="454" r="3"/>
+          <circle class="dot" cx="620" cy="364" r="3"/>
+          <path class="rib" d="M475 112 V150"/>
+          <path class="rib" d="M475 206 V244"/>
+          <path class="rib" d="M475 304 V336"/>
+          <path class="rib" d="M475 392 V424"/>
+          <path class="rib" d="M475 484 V522"/>
+          <path class="rib" d="M475 578 V616"/>
+          <path class="rib" d="M800 364 H750"/>
+          <circle class="rdot" cx="475" cy="112" r="3.5"/>
+          <circle class="rdot" cx="475" cy="244" r="3.5"/>
+          <circle class="rdot" cx="475" cy="304" r="3.5"/>
+          <circle class="rdot" cx="475" cy="424" r="3.5"/>
+          <circle class="rdot" cx="475" cy="484" r="3.5"/>
+          <circle class="rdot" cx="475" cy="616" r="3.5"/>
+          <circle class="rdot" cx="750" cy="364" r="3.5"/>
+          <rect class="node" x="20" y="332" width="120" height="64" rx="10"/><text class="tag" x="22" y="323">SOURCE</text><text class="t" x="80.0" y="361.0" text-anchor="middle">あなたのコード</text><text class="s" x="80.0" y="379.0" text-anchor="middle">app.almd</text>
+          <rect class="node" x="180" y="332" width="130" height="64" rx="10"/><text class="tag" x="182" y="323">COMPILER</text><text class="t" x="245.0" y="361.0" text-anchor="middle">almide</text><text class="s" x="245.0" y="379.0" text-anchor="middle">信用しない</text>
+          <rect class="node" x="400" y="48" width="150" height="64" rx="10"/><text class="tag" x="402" y="39">OUTPUT</text><text class="t" x="475.0" y="77.0" text-anchor="middle">Wasm のバイト列</text><text class="s" x="475.0" y="95.0" text-anchor="middle">作ったもの</text>
+          <rect class="node" x="850" y="48" width="120" height="64" rx="10"/><text class="tag" x="852" y="39">DISK</text><text class="t" x="910.0" y="77.0" text-anchor="middle">app.wasm</text><text class="s" x="910.0" y="95.0" text-anchor="middle">受理されたときだけ</text>
+          <rect class="node" x="400" y="244" width="150" height="60" rx="10"/><text class="tag" x="402" y="235">CLAIMS</text><text class="t" x="475.0" y="271.0" text-anchor="middle">証拠</text><text class="s" x="475.0" y="289.0" text-anchor="middle">やったと主張する内容</text>
+          <rect class="node" x="400" y="616" width="150" height="64" rx="10"/><text class="tag" x="402" y="607">OUTPUT</text><text class="t" x="475.0" y="645.0" text-anchor="middle">Rust のソース</text><text class="s" x="475.0" y="663.0" text-anchor="middle">描き出したもの</text>
+          <rect class="node" x="640" y="616" width="150" height="64" rx="10"/><text class="tag" x="642" y="607">TRUSTED</text><text class="t" x="715.0" y="645.0" text-anchor="middle">rustc</text><text class="s" x="715.0" y="663.0" text-anchor="middle">コンパイルし drop で解放</text>
+          <rect class="node" x="850" y="616" width="120" height="64" rx="10"/><text class="tag" x="852" y="607">DISK</text><text class="t" x="910.0" y="645.0" text-anchor="middle">app</text><text class="s" x="910.0" y="663.0" text-anchor="middle">ネイティブのバイナリ</text>
+          <rect class="node" x="400" y="424" width="150" height="60" rx="10"/><text class="tag" x="402" y="415">CLAIMS</text><text class="t" x="475.0" y="451.0" text-anchor="middle">証拠</text><text class="s" x="475.0" y="469.0" text-anchor="middle">所有権 · 呼び出しの渡し方</text>
+          <rect class="node" x="620" y="336" width="130" height="56" rx="10"/><text class="tag" x="622" y="327">PROOFS</text><text class="t" x="685.0" y="361.0" text-anchor="middle">規則</text><text class="s" x="685.0" y="379.0" text-anchor="middle">何を安全と呼ぶか</text>
+          <rect class="halo" x="635" y="43" width="160" height="74" rx="15"/><rect class="node hot" x="640" y="48" width="150" height="64" rx="10"/><text class="tag" x="642" y="39">手元のマシン</text><text class="t" x="715.0" y="77.0" text-anchor="middle">Buildgate</text><text class="s" x="715.0" y="95.0" text-anchor="middle">書いてよいか</text>
+          <rect class="halo" x="385" y="145" width="180" height="66" rx="15"/><rect class="node hot" x="390" y="150" width="170" height="56" rx="10"/><text class="tag" x="392" y="141">CI</text><text class="t" x="475.0" y="175.0" text-anchor="middle">Byteanchor</text><text class="s" x="475.0" y="193.0" text-anchor="middle">このバイト列の話か</text>
+          <rect class="halo" x="385" y="331" width="188" height="66" rx="15"/><rect class="node hot" x="390" y="336" width="178" height="56" rx="10"/><text class="tag" x="392" y="327">両方のターゲット</text><text class="t" x="479.0" y="361.0" text-anchor="middle">Proofcast</text><text class="s" x="479.0" y="379.0" text-anchor="middle">すべてのプログラムが通るか</text>
+          <rect class="halo" x="795" y="331" width="180" height="66" rx="15"/><rect class="node hot" x="800" y="336" width="170" height="56" rx="10"/><text class="tag" x="802" y="327">両方のターゲット</text><text class="t" x="885.0" y="361.0" text-anchor="middle">Proofcore</text><text class="s" x="885.0" y="379.0" text-anchor="middle">規則は正しいか</text>
+          <rect class="halo" x="635" y="419" width="180" height="70" rx="15"/><rect class="node hot" x="640" y="424" width="170" height="60" rx="10"/><text class="tag" x="642" y="415">手元のビルドでは動かない</text><text class="t" x="725.0" y="451.0" text-anchor="middle">Buildgate</text><text class="s" x="725.0" y="469.0" text-anchor="middle">検証の中で判定する</text>
+          <rect class="node ghost" x="390" y="522" width="170" height="56" rx="10"/><text class="tag" x="392" y="513">まだない</text><text class="t gt" x="475.0" y="547.0" text-anchor="middle">バイト列との照合なし</text><text class="s" x="475.0" y="565.0" text-anchor="middle">ソースをハッシュで固定</text>
           </svg>
       </div>
       <div class="spine-foot">
-        <p>上の段は、ふつうのビルドです。あなたのコードが入り、ファイルが出てきます。真ん中のコンパイラは、誰も読んでいない部分なので、信用しません。色のついたものはすべて、それを検査するためにあります。</p>
-        <p class="guards"><b>それぞれが立つ場所</b>Buildgate は、あなたのディスクの手前に立ちます。Byteanchor は、証拠をバイト列に結びつけます。Proofcast は、すべてのテストプログラムに規則を走らせます。Proofcore は、規則そのものが正しいことの証明です。下の4枚で、1つずつ見ていきます。</p>
-      </div>
-    </article>
-    <article class="spine overview">
-      <header class="spine-head">
-        <span class="n all">◆</span>
-        <div><h3>Rust の経路</h3><p class="role">ネイティブのビルド：同じ図で、違うところが3つ</p></div>
-      </header>
-      <div class="diagram" role="img" aria-label="Rust の経路。Wasm の経路と同じ配置で描いている。あなたのコードが、信用されていないコンパイラに入る。コンパイラは Rust のソースを描き出し、証拠を記録する。Buildgate が立っていた場所には、信頼されている rustc が立ち、ソースをネイティブのバイナリにコンパイルする。Buildgate は証拠を判定するが、手元のビルドではなくプロジェクトの検証の中で動く。Byteanchor が立っていた場所には、まだバイト列との照合がなく、証拠を Rust のソースに固定するハッシュだけがある。Proofcast と Proofcore は Wasm の経路と同じである。">
-          <svg viewBox="0 0 970 416" xmlns="http://www.w3.org/2000/svg">
-          <path class="wire" d="M150 92 H193"/>
-          <path class="wire" d="M340 92 H403"/>
-          <path class="wire" d="M270 124 V252 Q270 262 280 262 H403"/>
-          <path class="wire" d="M560 92 H613"/>
-          <path class="wire" d="M770 92 H813"/>
-          <path class="wire" d="M560 262 H613"/>
-          <path class="wire" d="M380 366 H423"/>
-          <path class="flow" d="M150 92 H193"/>
-          <path class="flow" d="M340 92 H403"/>
-          <path class="flow" d="M270 124 V252 Q270 262 280 262 H403"/>
-          <path class="flow" d="M560 92 H613"/>
-          <path class="flow" d="M770 92 H813"/>
-          <path class="flow" d="M560 262 H613"/>
-          <path class="flow" d="M380 366 H423"/>
-          <path class="head" d="M188 87.5 L193 92 L188 96.5"/>
-          <path class="head" d="M398 87.5 L403 92 L398 96.5"/>
-          <path class="head" d="M398 257.5 L403 262 L398 266.5"/>
-          <path class="head" d="M608 87.5 L613 92 L608 96.5"/>
-          <path class="head" d="M808 87.5 L813 92 L808 96.5"/>
-          <path class="head" d="M608 257.5 L613 262 L608 266.5"/>
-          <path class="head" d="M418 361.5 L423 366 L418 370.5"/>
-          <circle class="dot" cx="150" cy="92" r="3"/>
-          <circle class="dot" cx="340" cy="92" r="3"/>
-          <circle class="dot" cx="270" cy="124" r="3"/>
-          <circle class="dot" cx="560" cy="92" r="3"/>
-          <circle class="dot" cx="770" cy="92" r="3"/>
-          <circle class="dot" cx="560" cy="262" r="3"/>
-          <circle class="dot" cx="380" cy="366" r="3"/>
-          <path class="rib" d="M485 124 V230 M485 172 H530"/>
-          <circle class="rdot" cx="485" cy="172" r="3.5"/>
-          <path class="rib" d="M485 336 V294"/>
-          <circle class="rdot" cx="485" cy="294" r="3.5"/>
-          <path class="rib" d="M200 366 H250"/>
-          <circle class="rdot" cx="250" cy="366" r="3.5"/>
-          <rect class="node" x="20" y="60" width="130" height="64" rx="10"/><text class="tag" x="22" y="50">SOURCE</text><text class="t" x="85.0" y="89.0" text-anchor="middle">あなたのコード</text><text class="s" x="85.0" y="108.0" text-anchor="middle">app.almd</text>
-          <rect class="node" x="200" y="60" width="140" height="64" rx="10"/><text class="tag" x="202" y="50">COMPILER</text><text class="t" x="270.0" y="89.0" text-anchor="middle">almide</text><text class="s" x="270.0" y="108.0" text-anchor="middle">信用しない</text>
-          <rect class="node" x="410" y="60" width="150" height="64" rx="10"/><text class="tag" x="412" y="50">OUTPUT</text><text class="t" x="485.0" y="89.0" text-anchor="middle">Rust のソース</text><text class="s" x="485.0" y="108.0" text-anchor="middle">描き出したもの</text>
-          <rect class="node" x="410" y="230" width="150" height="64" rx="10"/><text class="tag" x="412" y="220">CLAIMS</text><text class="t" x="485.0" y="259.0" text-anchor="middle">証拠</text><text class="s" x="485.0" y="278.0" text-anchor="middle">所有権 · 呼び出しの渡し方</text>
-          <rect class="node" x="620" y="60" width="150" height="64" rx="10"/><text class="tag" x="622" y="50">TRUSTED</text><text class="t" x="695.0" y="89.0" text-anchor="middle">rustc</text><text class="s" x="695.0" y="108.0" text-anchor="middle">コンパイルし drop で解放</text>
-          <rect class="node" x="820" y="60" width="140" height="64" rx="10"/><text class="tag" x="822" y="50">DISK</text><text class="t" x="890.0" y="89.0" text-anchor="middle">app</text><text class="s" x="890.0" y="108.0" text-anchor="middle">ネイティブのバイナリ</text>
-          <rect class="node" x="250" y="336" width="130" height="60" rx="10"/><text class="tag" x="252" y="326">PROOFS</text><text class="t" x="315.0" y="363.0" text-anchor="middle">規則</text><text class="s" x="315.0" y="382.0" text-anchor="middle">何を安全と呼ぶか</text>
-          <rect class="node ghost" x="530" y="142" width="180" height="60" rx="10"/><text class="tag" x="532" y="132">まだない</text><text class="t gt" x="620.0" y="169.0" text-anchor="middle">バイト列との照合なし</text><text class="s" x="620.0" y="188.0" text-anchor="middle">ソースをハッシュで固定</text>
-          <rect class="halo" x="615" y="225" width="200" height="74" rx="15"/><rect class="node hot" x="620" y="230" width="190" height="64" rx="10"/><text class="tag" x="622" y="220">プロジェクトの検証</text><text class="t" x="715.0" y="259.0" text-anchor="middle">Buildgate</text><text class="s" x="715.0" y="278.0" text-anchor="middle">手元のビルドでは動かない</text>
-          <rect class="halo" x="425" y="331" width="200" height="70" rx="15"/><rect class="node hot" x="430" y="336" width="190" height="60" rx="10"/><text class="tag" x="432" y="326">プロジェクトの検証</text><text class="t" x="525.0" y="363.0" text-anchor="middle">Proofcast</text><text class="s" x="525.0" y="382.0" text-anchor="middle">すべてのプログラムが通るか</text>
-          <rect class="halo" x="15" y="331" width="190" height="70" rx="15"/><rect class="node hot" x="20" y="336" width="180" height="60" rx="10"/><text class="tag" x="22" y="326">プロジェクトの検証</text><text class="t" x="110.0" y="363.0" text-anchor="middle">Proofcore</text><text class="s" x="110.0" y="382.0" text-anchor="middle">規則は正しいか</text>
-          </svg>
-      </div>
-      <div class="spine-foot">
-        <p>ネイティブのビルドは Rust を経由します。コンパイラは Rust のソースを描き出し、描き出したすべての関数について所有権の証拠を記録します。解放は、Rust 自身の drop が行います。規則、Proofcore、Proofcast は、上の図と同じものです。</p>
-        <p class="guards"><b>違うところは3つ</b>Buildgate が立っていた場所には rustc が立ちます。rustc は検査されず、信頼されています。Buildgate は証拠を判定しますが、動くのはプロジェクトの検証の中で、手元のビルドのときではありません。そして、証拠をコンパイル後のバイナリに結びつけるものはまだなく、あるのは Rust のソースのハッシュだけです。今の時点で覆っているのは、1,038 本のテストプログラムのうち 507 本です。残りは通常のコード生成に戻り、証拠を持ちません。</p>
+        <p>コンパイラは1つ、ターゲットは2つです。上の経路が WebAssembly、下の経路が Rust です。あいだにあるのは、両方が共有するものです。規則と、規則が正しいことの証明である Proofcore、そして両方の経路の証拠に規則を走らせる Proofcast です。</p>
+        <p class="guards"><b>2つの経路で違うところ</b>Wasm では、Buildgate があなたのディスクの手前に立ち、Byteanchor が証拠をバイト列に結びつけます。Rust では、その場所に rustc が立ち、rustc は信頼されています。Buildgate が証拠を判定するのは、手元のビルドではなくプロジェクトの検証の中です。証拠をコンパイル後のバイナリに結びつけるものは、まだありません。Rust の経路が今覆っているのは、1,038 本のテストプログラムのうち 507 本です。残りは通常のコード生成に戻り、証拠を持ちません。</p>
       </div>
     </article>
     <article class="spine">

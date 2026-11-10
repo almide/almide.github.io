@@ -237,6 +237,9 @@ pre .g { color: #7fe6b4; }
 .diagram .pt.ok { fill: var(--good); }
 .diagram .pt.no { fill: var(--bad); }
 
+.diagram .lane { fill: color-mix(in srgb, var(--accent) 3%, transparent); stroke: var(--line); stroke-dasharray: 2 6; }
+.diagram .lanet { font: 600 15px var(--mono); letter-spacing: .08em; fill: var(--accent); }
+.diagram .lanes { font: 400 11.5px var(--sans); fill: var(--muted); }
 .diagram .node.ghost { fill: transparent; stroke: var(--faint); stroke-dasharray: 4 5; }
 .diagram .t.gt { fill: var(--muted); font-weight: 500; }
 .diagram .node.back { fill: var(--panel); stroke: var(--line); }

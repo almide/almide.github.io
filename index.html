@@ -121,118 +121,95 @@ certificate and did not accept it (exit 1)
     <article class="spine overview">
       <header class="spine-head">
         <span class="n all">◆</span>
-        <div><h3>The whole picture</h3><p class="role">The Wasm route: from your code to the file you ship, and who checks what</p></div>
+        <div><h3>The whole picture</h3><p class="role">One source, two targets, and who checks what</p></div>
       </header>
-      <div class="diagram" role="img" aria-label="Overview. Your code goes into the compiler, which is not trusted. The compiler produces Wasm bytes and evidence. Buildgate stands between the bytes and the file on disk and reads the evidence; the file is written only if it accepts. Byteanchor ties the evidence to the bytes. Proofcast applies the rule to the evidence of every test program. Proofcore guards the rule itself.">
-          <svg viewBox="0 0 970 416" xmlns="http://www.w3.org/2000/svg">
-          <path class="wire" d="M150 92 H193"/>
-          <path class="wire" d="M340 92 H403"/>
-          <path class="wire" d="M270 124 V252 Q270 262 280 262 H403"/>
-          <path class="wire" d="M560 92 H613"/>
-          <path class="wire" d="M560 262 H730 Q740 262 740 252 V132"/>
-          <path class="wire ok" d="M770 92 H813"/>
-          <path class="wire" d="M380 366 H423"/>
-          <path class="flow" d="M150 92 H193"/>
-          <path class="flow" d="M340 92 H403"/>
-          <path class="flow" d="M270 124 V252 Q270 262 280 262 H403"/>
-          <path class="flow" d="M560 92 H613"/>
-          <path class="flow" d="M560 262 H730 Q740 262 740 252 V132"/>
-          <path class="flow ok" d="M770 92 H813"/>
-          <path class="flow" d="M380 366 H423"/>
-          <path class="head" d="M188 87.5 L193 92 L188 96.5"/>
-          <path class="head" d="M398 87.5 L403 92 L398 96.5"/>
-          <path class="head" d="M398 257.5 L403 262 L398 266.5"/>
-          <path class="head" d="M608 87.5 L613 92 L608 96.5"/>
-          <path class="head ok" d="M808 87.5 L813 92 L808 96.5"/>
-          <path class="head" d="M418 361.5 L423 366 L418 370.5"/>
-          <path class="head" d="M735.5 137 L740 132 L744.5 137"/>
-          <circle class="dot" cx="150" cy="92" r="3"/>
-          <circle class="dot" cx="340" cy="92" r="3"/>
-          <circle class="dot" cx="270" cy="124" r="3"/>
-          <circle class="dot" cx="560" cy="92" r="3"/>
-          <circle class="dot" cx="560" cy="262" r="3"/>
-          <circle class="dot" cx="770" cy="92" r="3"/>
-          <circle class="dot" cx="380" cy="366" r="3"/>
-          <path class="rib" d="M485 124 V230 M485 172 H530"/>
-          <circle class="rdot" cx="485" cy="172" r="3.5"/>
-          <path class="rib" d="M485 336 V294"/>
-          <circle class="rdot" cx="485" cy="294" r="3.5"/>
-          <path class="rib" d="M200 366 H250"/>
-          <circle class="rdot" cx="250" cy="366" r="3.5"/>
-          <rect class="node" x="20" y="60" width="130" height="64" rx="10"/><text class="tag" x="22" y="50">SOURCE</text><text class="t" x="85.0" y="89.0" text-anchor="middle">your code</text><text class="s" x="85.0" y="108.0" text-anchor="middle">app.almd</text>
-          <rect class="node" x="200" y="60" width="140" height="64" rx="10"/><text class="tag" x="202" y="50">COMPILER</text><text class="t" x="270.0" y="89.0" text-anchor="middle">almide</text><text class="s" x="270.0" y="108.0" text-anchor="middle">not trusted</text>
-          <rect class="node" x="410" y="60" width="150" height="64" rx="10"/><text class="tag" x="412" y="50">OUTPUT</text><text class="t" x="485.0" y="89.0" text-anchor="middle">Wasm bytes</text><text class="s" x="485.0" y="108.0" text-anchor="middle">what it built</text>
-          <rect class="node" x="410" y="230" width="150" height="64" rx="10"/><text class="tag" x="412" y="220">CLAIMS</text><text class="t" x="485.0" y="259.0" text-anchor="middle">evidence</text><text class="s" x="485.0" y="278.0" text-anchor="middle">what it says it did</text>
-          <rect class="node" x="820" y="60" width="140" height="64" rx="10"/><text class="tag" x="822" y="50">DISK</text><text class="t" x="890.0" y="89.0" text-anchor="middle">app.wasm</text><text class="s" x="890.0" y="108.0" text-anchor="middle">only if accepted</text>
-          <rect class="node" x="250" y="336" width="130" height="60" rx="10"/><text class="tag" x="252" y="326">PROOFS</text><text class="t" x="315.0" y="363.0" text-anchor="middle">the rule</text><text class="s" x="315.0" y="382.0" text-anchor="middle">what counts as safe</text>
-          <rect class="halo" x="615" y="55" width="160" height="74" rx="15"/><rect class="node hot" x="620" y="60" width="150" height="64" rx="10"/><text class="tag" x="622" y="50">YOUR MACHINE</text><text class="t" x="695.0" y="89.0" text-anchor="middle">Buildgate</text><text class="s" x="695.0" y="108.0" text-anchor="middle">may this be written?</text>
-          <rect class="halo" x="525" y="137" width="190" height="70" rx="15"/><rect class="node hot" x="530" y="142" width="180" height="60" rx="10"/><text class="tag" x="532" y="132">CI</text><text class="t" x="620.0" y="169.0" text-anchor="middle">Byteanchor</text><text class="s" x="620.0" y="188.0" text-anchor="middle">is it about these bytes?</text>
-          <rect class="halo" x="425" y="331" width="200" height="70" rx="15"/><rect class="node hot" x="430" y="336" width="190" height="60" rx="10"/><text class="tag" x="432" y="326">CI</text><text class="t" x="525.0" y="363.0" text-anchor="middle">Proofcast</text><text class="s" x="525.0" y="382.0" text-anchor="middle">does every program pass?</text>
-          <rect class="halo" x="15" y="331" width="190" height="70" rx="15"/><rect class="node hot" x="20" y="336" width="180" height="60" rx="10"/><text class="tag" x="22" y="326">CI</text><text class="t" x="110.0" y="363.0" text-anchor="middle">Proofcore</text><text class="s" x="110.0" y="382.0" text-anchor="middle">is the rule right?</text>
+      <div class="diagram" role="img" aria-label="Overview of both targets. Your code goes into the compiler, which is not trusted, and the compiler forks into two lanes. On the Wasm lane it produces Wasm bytes and evidence. Byteanchor ties the evidence to the bytes, and Buildgate stands between the bytes and the file on disk, which is written only if the evidence is accepted. On the Rust lane it produces Rust source and evidence. rustc, which is trusted, compiles the source into the native binary. Buildgate judges the Rust evidence in the project verification run rather than at your build, and there is no byte check yet, only a hash pinning the evidence to the source. Between the two lanes sits what they share: the rule, Proofcore, which checks that the rule is right, and Proofcast, which applies the rule to the evidence of both targets.">
+          <svg viewBox="0 0 990 728" xmlns="http://www.w3.org/2000/svg">
+          <rect class="lane" x="372" y="20" width="608" height="296" rx="16"/><rect class="lane" x="372" y="412" width="608" height="296" rx="16"/>
+          <text class="lanet" x="20" y="72">WASM TARGET</text><text class="lanes" x="20" y="92">checked at your build</text>
+          <text class="lanet" x="20" y="664">RUST TARGET</text><text class="lanes" x="20" y="684">checked in project verification</text>
+          <path class="wire" d="M140 364 H173"/>
+          <path class="wire" d="M310 350 H337 Q347 350 347 340 V90 Q347 80 357 80 H393"/>
+          <path class="wire" d="M347 274 H393"/>
+          <path class="wire" d="M310 378 H337 Q347 378 347 388 V638 Q347 648 357 648 H393"/>
+          <path class="wire" d="M347 454 H393"/>
+          <path class="wire" d="M550 80 H633"/>
+          <path class="wire ok" d="M790 80 H843"/>
+          <path class="wire" d="M550 274 H705 Q715 274 715 264 V120"/>
+          <path class="wire" d="M550 648 H633"/>
+          <path class="wire" d="M790 648 H843"/>
+          <path class="wire" d="M550 454 H633"/>
+          <path class="wire" d="M620 364 H568"/>
+          <path class="flow" d="M140 364 H173"/>
+          <path class="flow" d="M310 350 H337 Q347 350 347 340 V90 Q347 80 357 80 H393"/>
+          <path class="flow" d="M347 274 H393"/>
+          <path class="flow" d="M310 378 H337 Q347 378 347 388 V638 Q347 648 357 648 H393"/>
+          <path class="flow" d="M347 454 H393"/>
+          <path class="flow" d="M550 80 H633"/>
+          <path class="flow ok" d="M790 80 H843"/>
+          <path class="flow" d="M550 274 H705 Q715 274 715 264 V120"/>
+          <path class="flow" d="M550 648 H633"/>
+          <path class="flow" d="M790 648 H843"/>
+          <path class="flow" d="M550 454 H633"/>
+          <path class="flow" d="M620 364 H568"/>
+          <path class="head" d="M168 359.5 L173 364 L168 368.5"/>
+          <path class="head" d="M388 75.5 L393 80 L388 84.5"/>
+          <path class="head" d="M388 269.5 L393 274 L388 278.5"/>
+          <path class="head" d="M388 643.5 L393 648 L388 652.5"/>
+          <path class="head" d="M388 449.5 L393 454 L388 458.5"/>
+          <path class="head" d="M628 75.5 L633 80 L628 84.5"/>
+          <path class="head ok" d="M838 75.5 L843 80 L838 84.5"/>
+          <path class="head" d="M628 643.5 L633 648 L628 652.5"/>
+          <path class="head" d="M838 643.5 L843 648 L838 652.5"/>
+          <path class="head" d="M628 449.5 L633 454 L628 458.5"/>
+          <path class="head" d="M710.5 125 L715 120 L719.5 125"/><path class="head" d="M573 359.5 L568 364 L573 368.5"/>
+          <circle class="dot" cx="140" cy="364" r="3"/>
+          <circle class="dot" cx="310" cy="350" r="3"/>
+          <circle class="dot" cx="310" cy="378" r="3"/>
+          <circle class="dot" cx="347" cy="274" r="3"/>
+          <circle class="dot" cx="347" cy="454" r="3"/>
+          <circle class="dot" cx="550" cy="80" r="3"/>
+          <circle class="dot" cx="790" cy="80" r="3"/>
+          <circle class="dot" cx="550" cy="274" r="3"/>
+          <circle class="dot" cx="550" cy="648" r="3"/>
+          <circle class="dot" cx="790" cy="648" r="3"/>
+          <circle class="dot" cx="550" cy="454" r="3"/>
+          <circle class="dot" cx="620" cy="364" r="3"/>
+          <path class="rib" d="M475 112 V150"/>
+          <path class="rib" d="M475 206 V244"/>
+          <path class="rib" d="M475 304 V336"/>
+          <path class="rib" d="M475 392 V424"/>
+          <path class="rib" d="M475 484 V522"/>
+          <path class="rib" d="M475 578 V616"/>
+          <path class="rib" d="M800 364 H750"/>
+          <circle class="rdot" cx="475" cy="112" r="3.5"/>
+          <circle class="rdot" cx="475" cy="244" r="3.5"/>
+          <circle class="rdot" cx="475" cy="304" r="3.5"/>
+          <circle class="rdot" cx="475" cy="424" r="3.5"/>
+          <circle class="rdot" cx="475" cy="484" r="3.5"/>
+          <circle class="rdot" cx="475" cy="616" r="3.5"/>
+          <circle class="rdot" cx="750" cy="364" r="3.5"/>
+          <rect class="node" x="20" y="332" width="120" height="64" rx="10"/><text class="tag" x="22" y="323">SOURCE</text><text class="t" x="80.0" y="361.0" text-anchor="middle">your code</text><text class="s" x="80.0" y="379.0" text-anchor="middle">app.almd</text>
+          <rect class="node" x="180" y="332" width="130" height="64" rx="10"/><text class="tag" x="182" y="323">COMPILER</text><text class="t" x="245.0" y="361.0" text-anchor="middle">almide</text><text class="s" x="245.0" y="379.0" text-anchor="middle">not trusted</text>
+          <rect class="node" x="400" y="48" width="150" height="64" rx="10"/><text class="tag" x="402" y="39">OUTPUT</text><text class="t" x="475.0" y="77.0" text-anchor="middle">Wasm bytes</text><text class="s" x="475.0" y="95.0" text-anchor="middle">what it built</text>
+          <rect class="node" x="850" y="48" width="120" height="64" rx="10"/><text class="tag" x="852" y="39">DISK</text><text class="t" x="910.0" y="77.0" text-anchor="middle">app.wasm</text><text class="s" x="910.0" y="95.0" text-anchor="middle">only if accepted</text>
+          <rect class="node" x="400" y="244" width="150" height="60" rx="10"/><text class="tag" x="402" y="235">CLAIMS</text><text class="t" x="475.0" y="271.0" text-anchor="middle">evidence</text><text class="s" x="475.0" y="289.0" text-anchor="middle">what it says it did</text>
+          <rect class="node" x="400" y="616" width="150" height="64" rx="10"/><text class="tag" x="402" y="607">OUTPUT</text><text class="t" x="475.0" y="645.0" text-anchor="middle">Rust source</text><text class="s" x="475.0" y="663.0" text-anchor="middle">what it rendered</text>
+          <rect class="node" x="640" y="616" width="150" height="64" rx="10"/><text class="tag" x="642" y="607">TRUSTED</text><text class="t" x="715.0" y="645.0" text-anchor="middle">rustc</text><text class="s" x="715.0" y="663.0" text-anchor="middle">compiles, frees by drop</text>
+          <rect class="node" x="850" y="616" width="120" height="64" rx="10"/><text class="tag" x="852" y="607">DISK</text><text class="t" x="910.0" y="645.0" text-anchor="middle">app</text><text class="s" x="910.0" y="663.0" text-anchor="middle">native binary</text>
+          <rect class="node" x="400" y="424" width="150" height="60" rx="10"/><text class="tag" x="402" y="415">CLAIMS</text><text class="t" x="475.0" y="451.0" text-anchor="middle">evidence</text><text class="s" x="475.0" y="469.0" text-anchor="middle">ownership · call modes</text>
+          <rect class="node" x="620" y="336" width="130" height="56" rx="10"/><text class="tag" x="622" y="327">PROOFS</text><text class="t" x="685.0" y="361.0" text-anchor="middle">the rule</text><text class="s" x="685.0" y="379.0" text-anchor="middle">what counts as safe</text>
+          <rect class="halo" x="635" y="43" width="160" height="74" rx="15"/><rect class="node hot" x="640" y="48" width="150" height="64" rx="10"/><text class="tag" x="642" y="39">YOUR MACHINE</text><text class="t" x="715.0" y="77.0" text-anchor="middle">Buildgate</text><text class="s" x="715.0" y="95.0" text-anchor="middle">may this be written?</text>
+          <rect class="halo" x="385" y="145" width="180" height="66" rx="15"/><rect class="node hot" x="390" y="150" width="170" height="56" rx="10"/><text class="tag" x="392" y="141">CI</text><text class="t" x="475.0" y="175.0" text-anchor="middle">Byteanchor</text><text class="s" x="475.0" y="193.0" text-anchor="middle">is it about these bytes?</text>
+          <rect class="halo" x="385" y="331" width="188" height="66" rx="15"/><rect class="node hot" x="390" y="336" width="178" height="56" rx="10"/><text class="tag" x="392" y="327">BOTH TARGETS</text><text class="t" x="479.0" y="361.0" text-anchor="middle">Proofcast</text><text class="s" x="479.0" y="379.0" text-anchor="middle">does every program pass?</text>
+          <rect class="halo" x="795" y="331" width="180" height="66" rx="15"/><rect class="node hot" x="800" y="336" width="170" height="56" rx="10"/><text class="tag" x="802" y="327">BOTH TARGETS</text><text class="t" x="885.0" y="361.0" text-anchor="middle">Proofcore</text><text class="s" x="885.0" y="379.0" text-anchor="middle">is the rule right?</text>
+          <rect class="halo" x="635" y="419" width="180" height="70" rx="15"/><rect class="node hot" x="640" y="424" width="170" height="60" rx="10"/><text class="tag" x="642" y="415">NOT AT YOUR BUILD</text><text class="t" x="725.0" y="451.0" text-anchor="middle">Buildgate</text><text class="s" x="725.0" y="469.0" text-anchor="middle">judges it in verification</text>
+          <rect class="node ghost" x="390" y="522" width="170" height="56" rx="10"/><text class="tag" x="392" y="513">NOT YET</text><text class="t gt" x="475.0" y="547.0" text-anchor="middle">no byte check</text><text class="s" x="475.0" y="565.0" text-anchor="middle">source pinned by hash</text>
           </svg>
       </div>
       <div class="spine-foot">
-        <p>The top row is an ordinary build. Your code goes in and a file comes out. The compiler in the middle is the part nobody has read, so it is not trusted. Everything highlighted exists to check it.</p>
-        <p class="guards"><b>Where each one stands</b>Buildgate stands in front of your disk. Byteanchor ties the evidence to the bytes. Proofcast runs the rule over every test program. Proofcore is the proof that the rule itself is right. The four panels below take them one at a time.</p>
-      </div>
-    </article>
-    <article class="spine overview">
-      <header class="spine-head">
-        <span class="n all">◆</span>
-        <div><h3>The Rust route</h3><p class="role">Native builds: the same picture, with three things different</p></div>
-      </header>
-      <div class="diagram" role="img" aria-label="The Rust route, drawn on the same layout as the Wasm route. Your code goes into the compiler, which is not trusted. It renders Rust source and records evidence. rustc, which is trusted, stands where Buildgate stood and compiles the source into the native binary. Buildgate still judges the evidence, but in the project verification run instead of at your build. Where Byteanchor stood there is no byte check yet, only a hash that pins the evidence to the Rust source. Proofcast and Proofcore are the same as on the Wasm route.">
-          <svg viewBox="0 0 970 416" xmlns="http://www.w3.org/2000/svg">
-          <path class="wire" d="M150 92 H193"/>
-          <path class="wire" d="M340 92 H403"/>
-          <path class="wire" d="M270 124 V252 Q270 262 280 262 H403"/>
-          <path class="wire" d="M560 92 H613"/>
-          <path class="wire" d="M770 92 H813"/>
-          <path class="wire" d="M560 262 H613"/>
-          <path class="wire" d="M380 366 H423"/>
-          <path class="flow" d="M150 92 H193"/>
-          <path class="flow" d="M340 92 H403"/>
-          <path class="flow" d="M270 124 V252 Q270 262 280 262 H403"/>
-          <path class="flow" d="M560 92 H613"/>
-          <path class="flow" d="M770 92 H813"/>
-          <path class="flow" d="M560 262 H613"/>
-          <path class="flow" d="M380 366 H423"/>
-          <path class="head" d="M188 87.5 L193 92 L188 96.5"/>
-          <path class="head" d="M398 87.5 L403 92 L398 96.5"/>
-          <path class="head" d="M398 257.5 L403 262 L398 266.5"/>
-          <path class="head" d="M608 87.5 L613 92 L608 96.5"/>
-          <path class="head" d="M808 87.5 L813 92 L808 96.5"/>
-          <path class="head" d="M608 257.5 L613 262 L608 266.5"/>
-          <path class="head" d="M418 361.5 L423 366 L418 370.5"/>
-          <circle class="dot" cx="150" cy="92" r="3"/>
-          <circle class="dot" cx="340" cy="92" r="3"/>
-          <circle class="dot" cx="270" cy="124" r="3"/>
-          <circle class="dot" cx="560" cy="92" r="3"/>
-          <circle class="dot" cx="770" cy="92" r="3"/>
-          <circle class="dot" cx="560" cy="262" r="3"/>
-          <circle class="dot" cx="380" cy="366" r="3"/>
-          <path class="rib" d="M485 124 V230 M485 172 H530"/>
-          <circle class="rdot" cx="485" cy="172" r="3.5"/>
-          <path class="rib" d="M485 336 V294"/>
-          <circle class="rdot" cx="485" cy="294" r="3.5"/>
-          <path class="rib" d="M200 366 H250"/>
-          <circle class="rdot" cx="250" cy="366" r="3.5"/>
-          <rect class="node" x="20" y="60" width="130" height="64" rx="10"/><text class="tag" x="22" y="50">SOURCE</text><text class="t" x="85.0" y="89.0" text-anchor="middle">your code</text><text class="s" x="85.0" y="108.0" text-anchor="middle">app.almd</text>
-          <rect class="node" x="200" y="60" width="140" height="64" rx="10"/><text class="tag" x="202" y="50">COMPILER</text><text class="t" x="270.0" y="89.0" text-anchor="middle">almide</text><text class="s" x="270.0" y="108.0" text-anchor="middle">not trusted</text>
-          <rect class="node" x="410" y="60" width="150" height="64" rx="10"/><text class="tag" x="412" y="50">OUTPUT</text><text class="t" x="485.0" y="89.0" text-anchor="middle">Rust source</text><text class="s" x="485.0" y="108.0" text-anchor="middle">what it rendered</text>
-          <rect class="node" x="410" y="230" width="150" height="64" rx="10"/><text class="tag" x="412" y="220">CLAIMS</text><text class="t" x="485.0" y="259.0" text-anchor="middle">evidence</text><text class="s" x="485.0" y="278.0" text-anchor="middle">ownership · call modes</text>
-          <rect class="node" x="620" y="60" width="150" height="64" rx="10"/><text class="tag" x="622" y="50">TRUSTED</text><text class="t" x="695.0" y="89.0" text-anchor="middle">rustc</text><text class="s" x="695.0" y="108.0" text-anchor="middle">compiles, frees by drop</text>
-          <rect class="node" x="820" y="60" width="140" height="64" rx="10"/><text class="tag" x="822" y="50">DISK</text><text class="t" x="890.0" y="89.0" text-anchor="middle">app</text><text class="s" x="890.0" y="108.0" text-anchor="middle">native binary</text>
-          <rect class="node" x="250" y="336" width="130" height="60" rx="10"/><text class="tag" x="252" y="326">PROOFS</text><text class="t" x="315.0" y="363.0" text-anchor="middle">the rule</text><text class="s" x="315.0" y="382.0" text-anchor="middle">what counts as safe</text>
-          <rect class="node ghost" x="530" y="142" width="180" height="60" rx="10"/><text class="tag" x="532" y="132">NOT YET</text><text class="t gt" x="620.0" y="169.0" text-anchor="middle">no byte check</text><text class="s" x="620.0" y="188.0" text-anchor="middle">source pinned by hash</text>
-          <rect class="halo" x="615" y="225" width="200" height="74" rx="15"/><rect class="node hot" x="620" y="230" width="190" height="64" rx="10"/><text class="tag" x="622" y="220">PROJECT VERIFICATION</text><text class="t" x="715.0" y="259.0" text-anchor="middle">Buildgate</text><text class="s" x="715.0" y="278.0" text-anchor="middle">not at your build</text>
-          <rect class="halo" x="425" y="331" width="200" height="70" rx="15"/><rect class="node hot" x="430" y="336" width="190" height="60" rx="10"/><text class="tag" x="432" y="326">PROJECT VERIFICATION</text><text class="t" x="525.0" y="363.0" text-anchor="middle">Proofcast</text><text class="s" x="525.0" y="382.0" text-anchor="middle">does every program pass?</text>
-          <rect class="halo" x="15" y="331" width="190" height="70" rx="15"/><rect class="node hot" x="20" y="336" width="180" height="60" rx="10"/><text class="tag" x="22" y="326">PROJECT VERIFICATION</text><text class="t" x="110.0" y="363.0" text-anchor="middle">Proofcore</text><text class="s" x="110.0" y="382.0" text-anchor="middle">is the rule right?</text>
-          </svg>
-      </div>
-      <div class="spine-foot">
-        <p>Native builds go through Rust. The compiler renders Rust source and records ownership evidence for every function it rendered. Rust's own drops then do the freeing. The rule, Proofcore and Proofcast are the same ones as above.</p>
-        <p class="guards"><b>Three things differ</b>rustc stands where Buildgate stood, and it is trusted, not checked. Buildgate still judges the evidence, but in the project's verification, not at your build. And nothing ties the evidence to the compiled binary yet, only a hash of the Rust source. Today this covers 507 of the 1,038 test programs. The rest fall back to the standard code generator and carry no evidence.</p>
+        <p>One compiler, two targets. The top lane is WebAssembly and the bottom lane is Rust. Between them is what they share: the rule, Proofcore, which is the proof that the rule is right, and Proofcast, which runs the rule over the evidence from both lanes.</p>
+        <p class="guards"><b>Where the two lanes differ</b>On Wasm, Buildgate stands in front of your disk and Byteanchor ties the evidence to the bytes. On Rust, rustc stands in that place and is trusted. Buildgate judges the evidence in the project's verification instead of at your build, and nothing ties the evidence to the compiled binary yet. The Rust lane covers 507 of the 1,038 test programs today. The rest fall back to the standard code generator and carry no evidence.</p>
       </div>
     </article>
     <article class="spine">
