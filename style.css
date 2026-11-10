@@ -240,12 +240,18 @@ pre .g { color: #7fe6b4; }
 .diagram .node.back { fill: var(--panel); stroke: var(--line); }
 .diagram .wl { font: 500 10px var(--mono); letter-spacing: .12em; fill: var(--accent); text-transform: uppercase; }
 
+.diagram .rib { fill: none; stroke: var(--accent); stroke-width: 1.25; stroke-dasharray: 3 4; stroke-linecap: round; }
+.diagram .rdot { fill: var(--accent); }
+
 /* ---------- trust spine panels ---------- */
 .spine { position: relative; margin: 18px 0; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); overflow: hidden; }
 .spine:first-child { margin-top: 36px; }
 .spine-head { display: flex; align-items: center; gap: 18px; padding: 22px 24px 18px; }
 .spine-head .n { font: 500 12px/1 var(--mono); letter-spacing: .1em; color: var(--accent); border: 1px solid var(--line-2); border-radius: 8px; padding: 9px 10px; }
 .spine-head .n::before { content: "0"; }
+.spine-head .n.all::before { content: ""; }
+.spine.overview { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); box-shadow: 0 30px 80px -50px var(--glow); }
+.spine.overview + .spine { margin-top: 30px; }
 .spine-head h3 { font: 600 25px/1.15 var(--mono); letter-spacing: -.045em; margin: 0 0 5px; }
 .spine-head .role { font: 500 12px/1.4 var(--mono); letter-spacing: .02em; color: var(--muted); margin: 0; }
 .spine-head .tag {

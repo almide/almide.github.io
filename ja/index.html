@@ -118,6 +118,51 @@ certificate and did not accept it (exit 1)
     <p>検査器が1つだけなら、信頼の置き場所が移るだけです。この4つは作り方がそれぞれ違うので、同じ間違いがすべてに入り込むことは起きにくくなっています。検査される証拠とあわせて、このプロジェクトではこれを Trust Spine（信頼の背骨）と呼んでいます。</p>
   </div>
   <div class="wide">
+    <article class="spine overview">
+      <header class="spine-head">
+        <span class="n all">◆</span>
+        <div><h3>背骨の全体</h3><p class="role">4つの問いに、検査器が1つずつ</p></div>
+      </header>
+      <div class="diagram" role="img" aria-label="全体図。規則、証拠、Wasm のバイト列、ディスク上のファイルの4つが横に並ぶ。Proofcore は規則を守る。Proofcast は規則と証拠のあいだに立つ。Byteanchor は証拠とバイト列のあいだに立つ。Buildgate はバイト列とディスク上のファイルのあいだに立つ。">
+          <svg viewBox="0 0 960 346" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M180 176 H273"/>
+          <path class="wire" d="M430 176 H523"/>
+          <path class="wire" d="M680 176 H773"/>
+          <path class="flow" d="M180 176 H273"/>
+          <path class="flow" d="M430 176 H523"/>
+          <path class="flow" d="M680 176 H773"/>
+          <path class="head" d="M268 171.5 L273 176 L268 180.5"/>
+          <path class="head" d="M518 171.5 L523 176 L518 180.5"/>
+          <path class="head" d="M768 171.5 L773 176 L768 180.5"/>
+          <circle class="dot" cx="180" cy="176" r="3"/>
+          <circle class="dot" cx="430" cy="176" r="3"/>
+          <circle class="dot" cx="680" cy="176" r="3"/>
+          <path class="rib" d="M105 92 V144"/>
+          <circle class="rdot" cx="105" cy="144" r="3.5"/>
+          <path class="rib" d="M230 176 V264"/>
+          <circle class="rdot" cx="230" cy="176" r="3.5"/>
+          <path class="rib" d="M480 92 V176"/>
+          <circle class="rdot" cx="480" cy="176" r="3.5"/>
+          <path class="rib" d="M730 176 V264"/>
+          <circle class="rdot" cx="730" cy="176" r="3.5"/>
+          <rect class="node" x="30" y="144" width="150" height="64" rx="10"/><text class="tag" x="32" y="134">PROOFS</text><text class="t" x="105.0" y="173.0" text-anchor="middle">規則</text><text class="s" x="105.0" y="192.0" text-anchor="middle">何を安全と呼ぶか</text>
+          <rect class="node" x="280" y="144" width="150" height="64" rx="10"/><text class="tag" x="282" y="134">CLAIMS</text><text class="t" x="355.0" y="173.0" text-anchor="middle">証拠</text><text class="s" x="355.0" y="192.0" text-anchor="middle">コンパイラの主張</text>
+          <rect class="node" x="530" y="144" width="150" height="64" rx="10"/><text class="tag" x="532" y="134">OUTPUT</text><text class="t" x="605.0" y="173.0" text-anchor="middle">Wasm のバイト列</text><text class="s" x="605.0" y="192.0" text-anchor="middle">作ったもの</text>
+          <rect class="node" x="780" y="144" width="150" height="64" rx="10"/><text class="tag" x="782" y="134">DISK</text><text class="t" x="855.0" y="173.0" text-anchor="middle">app.wasm</text><text class="s" x="855.0" y="192.0" text-anchor="middle">出荷するもの</text>
+          <rect class="halo" x="5" y="27" width="200" height="70" rx="15"/><rect class="node hot" x="10" y="32" width="190" height="60" rx="10"/><text class="tag" x="12" y="22">CI</text><text class="t" x="105.0" y="59.0" text-anchor="middle">Proofcore</text><text class="s" x="105.0" y="78.0" text-anchor="middle">規則は正しいか</text>
+          <rect class="halo" x="130" y="259" width="200" height="70" rx="15"/><rect class="node hot" x="135" y="264" width="190" height="60" rx="10"/><text class="tag" x="137" y="254">CI</text><text class="t" x="230.0" y="291.0" text-anchor="middle">Proofcast</text><text class="s" x="230.0" y="310.0" text-anchor="middle">すべてのプログラムが通るか</text>
+          <rect class="halo" x="380" y="27" width="200" height="70" rx="15"/><rect class="node hot" x="385" y="32" width="190" height="60" rx="10"/><text class="tag" x="387" y="22">CI</text><text class="t" x="480.0" y="59.0" text-anchor="middle">Byteanchor</text><text class="s" x="480.0" y="78.0" text-anchor="middle">証拠はこのバイト列の話か</text>
+          <rect class="halo" x="630" y="259" width="200" height="70" rx="15"/><rect class="node hot" x="635" y="264" width="190" height="60" rx="10"/><text class="tag" x="637" y="254">手元のマシン</text><text class="t" x="730.0" y="291.0" text-anchor="middle">Buildgate</text><text class="s" x="730.0" y="310.0" text-anchor="middle">このファイルを書いてよいか</text>
+          <text class="wl" x="230" y="163" text-anchor="middle">判定</text>
+          <text class="wl" x="480" y="198" text-anchor="middle">説明</text>
+          <text class="wl" x="730" y="163" text-anchor="middle">書き出し</text>
+          </svg>
+      </div>
+      <div class="spine-foot">
+        <p>左から右に読みます。規則は、何を安全と呼ぶかを決めます。規則は証拠を判定します。証拠はバイト列を説明します。バイト列は、あなたが出荷するファイルになります。</p>
+        <p class="guards"><b>それぞれが立つ場所</b>この鎖のつなぎ目は、どこも何かが間違いうる場所です。だから、すべてのつなぎ目に検査器が1つずつ立っています。下の4枚で、1つずつ見ていきます。</p>
+      </div>
+    </article>
     <article class="spine">
       <header class="spine-head">
         <span class="n">1</span>
