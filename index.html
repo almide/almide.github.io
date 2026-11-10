@@ -121,46 +121,59 @@ certificate and did not accept it (exit 1)
     <article class="spine overview">
       <header class="spine-head">
         <span class="n all">◆</span>
-        <div><h3>The whole spine</h3><p class="role">Four questions, one checker each</p></div>
+        <div><h3>The whole picture</h3><p class="role">From your code to the file you ship, and who checks what</p></div>
       </header>
-      <div class="diagram" role="img" aria-label="Overview. Four things sit in a row: the rule, the evidence, the Wasm bytes and the file on disk. Proofcore guards the rule. Proofcast sits between the rule and the evidence. Byteanchor sits between the evidence and the bytes. Buildgate sits between the bytes and the file on disk.">
-          <svg viewBox="0 0 960 346" xmlns="http://www.w3.org/2000/svg">
-          <path class="wire" d="M180 176 H273"/>
-          <path class="wire" d="M430 176 H523"/>
-          <path class="wire" d="M680 176 H773"/>
-          <path class="flow" d="M180 176 H273"/>
-          <path class="flow" d="M430 176 H523"/>
-          <path class="flow" d="M680 176 H773"/>
-          <path class="head" d="M268 171.5 L273 176 L268 180.5"/>
-          <path class="head" d="M518 171.5 L523 176 L518 180.5"/>
-          <path class="head" d="M768 171.5 L773 176 L768 180.5"/>
-          <circle class="dot" cx="180" cy="176" r="3"/>
-          <circle class="dot" cx="430" cy="176" r="3"/>
-          <circle class="dot" cx="680" cy="176" r="3"/>
-          <path class="rib" d="M105 92 V144"/>
-          <circle class="rdot" cx="105" cy="144" r="3.5"/>
-          <path class="rib" d="M230 176 V264"/>
-          <circle class="rdot" cx="230" cy="176" r="3.5"/>
-          <path class="rib" d="M480 92 V176"/>
-          <circle class="rdot" cx="480" cy="176" r="3.5"/>
-          <path class="rib" d="M730 176 V264"/>
-          <circle class="rdot" cx="730" cy="176" r="3.5"/>
-          <rect class="node" x="30" y="144" width="150" height="64" rx="10"/><text class="tag" x="32" y="134">PROOFS</text><text class="t" x="105.0" y="173.0" text-anchor="middle">the rule</text><text class="s" x="105.0" y="192.0" text-anchor="middle">what counts as safe</text>
-          <rect class="node" x="280" y="144" width="150" height="64" rx="10"/><text class="tag" x="282" y="134">CLAIMS</text><text class="t" x="355.0" y="173.0" text-anchor="middle">evidence</text><text class="s" x="355.0" y="192.0" text-anchor="middle">what the compiler claims</text>
-          <rect class="node" x="530" y="144" width="150" height="64" rx="10"/><text class="tag" x="532" y="134">OUTPUT</text><text class="t" x="605.0" y="173.0" text-anchor="middle">Wasm bytes</text><text class="s" x="605.0" y="192.0" text-anchor="middle">what it built</text>
-          <rect class="node" x="780" y="144" width="150" height="64" rx="10"/><text class="tag" x="782" y="134">DISK</text><text class="t" x="855.0" y="173.0" text-anchor="middle">app.wasm</text><text class="s" x="855.0" y="192.0" text-anchor="middle">what you ship</text>
-          <rect class="halo" x="5" y="27" width="200" height="70" rx="15"/><rect class="node hot" x="10" y="32" width="190" height="60" rx="10"/><text class="tag" x="12" y="22">CI</text><text class="t" x="105.0" y="59.0" text-anchor="middle">Proofcore</text><text class="s" x="105.0" y="78.0" text-anchor="middle">is the rule right?</text>
-          <rect class="halo" x="130" y="259" width="200" height="70" rx="15"/><rect class="node hot" x="135" y="264" width="190" height="60" rx="10"/><text class="tag" x="137" y="254">CI</text><text class="t" x="230.0" y="291.0" text-anchor="middle">Proofcast</text><text class="s" x="230.0" y="310.0" text-anchor="middle">does every program pass it?</text>
-          <rect class="halo" x="380" y="27" width="200" height="70" rx="15"/><rect class="node hot" x="385" y="32" width="190" height="60" rx="10"/><text class="tag" x="387" y="22">CI</text><text class="t" x="480.0" y="59.0" text-anchor="middle">Byteanchor</text><text class="s" x="480.0" y="78.0" text-anchor="middle">is it about these bytes?</text>
-          <rect class="halo" x="630" y="259" width="200" height="70" rx="15"/><rect class="node hot" x="635" y="264" width="190" height="60" rx="10"/><text class="tag" x="637" y="254">YOUR MACHINE</text><text class="t" x="730.0" y="291.0" text-anchor="middle">Buildgate</text><text class="s" x="730.0" y="310.0" text-anchor="middle">may this file be written?</text>
-          <text class="wl" x="230" y="163" text-anchor="middle">judges</text>
-          <text class="wl" x="480" y="198" text-anchor="middle">describes</text>
-          <text class="wl" x="730" y="163" text-anchor="middle">becomes</text>
+      <div class="diagram" role="img" aria-label="Overview. Your code goes into the compiler, which is not trusted. The compiler produces Wasm bytes and evidence. Buildgate stands between the bytes and the file on disk and reads the evidence; the file is written only if it accepts. Byteanchor ties the evidence to the bytes. Proofcast applies the rule to the evidence of every test program. Proofcore guards the rule itself.">
+          <svg viewBox="0 0 970 416" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M150 92 H193"/>
+          <path class="wire" d="M340 92 H403"/>
+          <path class="wire" d="M270 124 V252 Q270 262 280 262 H403"/>
+          <path class="wire" d="M560 92 H613"/>
+          <path class="wire" d="M560 262 H730 Q740 262 740 252 V132"/>
+          <path class="wire ok" d="M770 92 H813"/>
+          <path class="wire" d="M380 366 H423"/>
+          <path class="flow" d="M150 92 H193"/>
+          <path class="flow" d="M340 92 H403"/>
+          <path class="flow" d="M270 124 V252 Q270 262 280 262 H403"/>
+          <path class="flow" d="M560 92 H613"/>
+          <path class="flow" d="M560 262 H730 Q740 262 740 252 V132"/>
+          <path class="flow ok" d="M770 92 H813"/>
+          <path class="flow" d="M380 366 H423"/>
+          <path class="head" d="M188 87.5 L193 92 L188 96.5"/>
+          <path class="head" d="M398 87.5 L403 92 L398 96.5"/>
+          <path class="head" d="M398 257.5 L403 262 L398 266.5"/>
+          <path class="head" d="M608 87.5 L613 92 L608 96.5"/>
+          <path class="head ok" d="M808 87.5 L813 92 L808 96.5"/>
+          <path class="head" d="M418 361.5 L423 366 L418 370.5"/>
+          <path class="head" d="M735.5 137 L740 132 L744.5 137"/>
+          <circle class="dot" cx="150" cy="92" r="3"/>
+          <circle class="dot" cx="340" cy="92" r="3"/>
+          <circle class="dot" cx="270" cy="124" r="3"/>
+          <circle class="dot" cx="560" cy="92" r="3"/>
+          <circle class="dot" cx="560" cy="262" r="3"/>
+          <circle class="dot" cx="770" cy="92" r="3"/>
+          <circle class="dot" cx="380" cy="366" r="3"/>
+          <path class="rib" d="M485 124 V230 M485 172 H530"/>
+          <circle class="rdot" cx="485" cy="172" r="3.5"/>
+          <path class="rib" d="M485 336 V294"/>
+          <circle class="rdot" cx="485" cy="294" r="3.5"/>
+          <path class="rib" d="M200 366 H250"/>
+          <circle class="rdot" cx="250" cy="366" r="3.5"/>
+          <rect class="node" x="20" y="60" width="130" height="64" rx="10"/><text class="tag" x="22" y="50">SOURCE</text><text class="t" x="85.0" y="89.0" text-anchor="middle">your code</text><text class="s" x="85.0" y="108.0" text-anchor="middle">app.almd</text>
+          <rect class="node" x="200" y="60" width="140" height="64" rx="10"/><text class="tag" x="202" y="50">COMPILER</text><text class="t" x="270.0" y="89.0" text-anchor="middle">almide</text><text class="s" x="270.0" y="108.0" text-anchor="middle">not trusted</text>
+          <rect class="node" x="410" y="60" width="150" height="64" rx="10"/><text class="tag" x="412" y="50">OUTPUT</text><text class="t" x="485.0" y="89.0" text-anchor="middle">Wasm bytes</text><text class="s" x="485.0" y="108.0" text-anchor="middle">what it built</text>
+          <rect class="node" x="410" y="230" width="150" height="64" rx="10"/><text class="tag" x="412" y="220">CLAIMS</text><text class="t" x="485.0" y="259.0" text-anchor="middle">evidence</text><text class="s" x="485.0" y="278.0" text-anchor="middle">what it says it did</text>
+          <rect class="node" x="820" y="60" width="140" height="64" rx="10"/><text class="tag" x="822" y="50">DISK</text><text class="t" x="890.0" y="89.0" text-anchor="middle">app.wasm</text><text class="s" x="890.0" y="108.0" text-anchor="middle">only if accepted</text>
+          <rect class="node" x="250" y="336" width="130" height="60" rx="10"/><text class="tag" x="252" y="326">PROOFS</text><text class="t" x="315.0" y="363.0" text-anchor="middle">the rule</text><text class="s" x="315.0" y="382.0" text-anchor="middle">what counts as safe</text>
+          <rect class="halo" x="615" y="55" width="160" height="74" rx="15"/><rect class="node hot" x="620" y="60" width="150" height="64" rx="10"/><text class="tag" x="622" y="50">YOUR MACHINE</text><text class="t" x="695.0" y="89.0" text-anchor="middle">Buildgate</text><text class="s" x="695.0" y="108.0" text-anchor="middle">may this be written?</text>
+          <rect class="halo" x="525" y="137" width="190" height="70" rx="15"/><rect class="node hot" x="530" y="142" width="180" height="60" rx="10"/><text class="tag" x="532" y="132">CI</text><text class="t" x="620.0" y="169.0" text-anchor="middle">Byteanchor</text><text class="s" x="620.0" y="188.0" text-anchor="middle">is it about these bytes?</text>
+          <rect class="halo" x="425" y="331" width="200" height="70" rx="15"/><rect class="node hot" x="430" y="336" width="190" height="60" rx="10"/><text class="tag" x="432" y="326">CI</text><text class="t" x="525.0" y="363.0" text-anchor="middle">Proofcast</text><text class="s" x="525.0" y="382.0" text-anchor="middle">does every program pass?</text>
+          <rect class="halo" x="15" y="331" width="190" height="70" rx="15"/><rect class="node hot" x="20" y="336" width="180" height="60" rx="10"/><text class="tag" x="22" y="326">CI</text><text class="t" x="110.0" y="363.0" text-anchor="middle">Proofcore</text><text class="s" x="110.0" y="382.0" text-anchor="middle">is the rule right?</text>
           </svg>
       </div>
       <div class="spine-foot">
-        <p>Read it left to right. A rule says what counts as safe. The rule judges the evidence. The evidence describes the bytes. The bytes become the file you ship.</p>
-        <p class="guards"><b>Where each one stands</b>Every link in that chain is a place where something could be wrong, so every link has a checker standing on it. The four panels below take them one at a time.</p>
+        <p>The top row is an ordinary build. Your code goes in and a file comes out. The compiler in the middle is the part nobody has read, so it is not trusted. Everything highlighted exists to check it.</p>
+        <p class="guards"><b>Where each one stands</b>Buildgate stands in front of your disk. Byteanchor ties the evidence to the bytes. Proofcast runs the rule over every test program. Proofcore is the proof that the rule itself is right. The four panels below take them one at a time.</p>
       </div>
     </article>
     <article class="spine">
