@@ -121,7 +121,7 @@ certificate and did not accept it (exit 1)
     <article class="spine overview">
       <header class="spine-head">
         <span class="n all">◆</span>
-        <div><h3>The whole picture</h3><p class="role">From your code to the file you ship, and who checks what</p></div>
+        <div><h3>The whole picture</h3><p class="role">The Wasm route: from your code to the file you ship, and who checks what</p></div>
       </header>
       <div class="diagram" role="img" aria-label="Overview. Your code goes into the compiler, which is not trusted. The compiler produces Wasm bytes and evidence. Buildgate stands between the bytes and the file on disk and reads the evidence; the file is written only if it accepts. Byteanchor ties the evidence to the bytes. Proofcast applies the rule to the evidence of every test program. Proofcore guards the rule itself.">
           <svg viewBox="0 0 970 416" xmlns="http://www.w3.org/2000/svg">
@@ -174,6 +174,53 @@ certificate and did not accept it (exit 1)
       <div class="spine-foot">
         <p>The top row is an ordinary build. Your code goes in and a file comes out. The compiler in the middle is the part nobody has read, so it is not trusted. Everything highlighted exists to check it.</p>
         <p class="guards"><b>Where each one stands</b>Buildgate stands in front of your disk. Byteanchor ties the evidence to the bytes. Proofcast runs the rule over every test program. Proofcore is the proof that the rule itself is right. The four panels below take them one at a time.</p>
+      </div>
+    </article>
+    <article class="spine overview">
+      <header class="spine-head">
+        <span class="n all">◆</span>
+        <div><h3>The Rust route</h3><p class="role">Native builds: the same evidence, checked in a different place</p></div>
+      </header>
+      <div class="diagram" role="img" aria-label="The Rust route. Your code goes into the compiler, which is not trusted. It renders Rust source and records evidence about ownership and call modes. The evidence is pinned to the Rust source by hash. In the project verification run, Proofcore, Proofcast and Buildgate must all agree on it. rustc, which is trusted, compiles the source into the native binary.">
+          <svg viewBox="0 0 970 320" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M150 92 H193"/>
+          <path class="wire" d="M340 92 H403"/>
+          <path class="wire" d="M270 124 V252 Q270 262 280 262 H403"/>
+          <path class="wire" d="M560 92 H613"/>
+          <path class="wire" d="M770 92 H813"/>
+          <path class="wire" d="M560 262 H613"/>
+          <path class="flow" d="M150 92 H193"/>
+          <path class="flow" d="M340 92 H403"/>
+          <path class="flow" d="M270 124 V252 Q270 262 280 262 H403"/>
+          <path class="flow" d="M560 92 H613"/>
+          <path class="flow" d="M770 92 H813"/>
+          <path class="flow" d="M560 262 H613"/>
+          <path class="head" d="M188 87.5 L193 92 L188 96.5"/>
+          <path class="head" d="M398 87.5 L403 92 L398 96.5"/>
+          <path class="head" d="M398 257.5 L403 262 L398 266.5"/>
+          <path class="head" d="M608 87.5 L613 92 L608 96.5"/>
+          <path class="head" d="M808 87.5 L813 92 L808 96.5"/>
+          <path class="head" d="M608 257.5 L613 262 L608 266.5"/>
+          <circle class="dot" cx="150" cy="92" r="3"/>
+          <circle class="dot" cx="340" cy="92" r="3"/>
+          <circle class="dot" cx="270" cy="124" r="3"/>
+          <circle class="dot" cx="560" cy="92" r="3"/>
+          <circle class="dot" cx="770" cy="92" r="3"/>
+          <circle class="dot" cx="560" cy="262" r="3"/>
+          <path class="rib" d="M485 124 V230"/><circle class="rdot" cx="485" cy="177" r="3.5"/>
+          <text class="wl" x="497" y="181">pinned by hash</text>
+          <rect class="node" x="20" y="60" width="130" height="64" rx="10"/><text class="tag" x="22" y="50">SOURCE</text><text class="t" x="85.0" y="89.0" text-anchor="middle">your code</text><text class="s" x="85.0" y="108.0" text-anchor="middle">app.almd</text>
+          <rect class="node" x="200" y="60" width="140" height="64" rx="10"/><text class="tag" x="202" y="50">COMPILER</text><text class="t" x="270.0" y="89.0" text-anchor="middle">almide</text><text class="s" x="270.0" y="108.0" text-anchor="middle">not trusted</text>
+          <rect class="node" x="410" y="60" width="150" height="64" rx="10"/><text class="tag" x="412" y="50">OUTPUT</text><text class="t" x="485.0" y="89.0" text-anchor="middle">Rust source</text><text class="s" x="485.0" y="108.0" text-anchor="middle">what it rendered</text>
+          <rect class="node" x="620" y="60" width="150" height="64" rx="10"/><text class="tag" x="622" y="50">TRUSTED</text><text class="t" x="695.0" y="89.0" text-anchor="middle">rustc</text><text class="s" x="695.0" y="108.0" text-anchor="middle">compiles it, frees by drop</text>
+          <rect class="node" x="820" y="60" width="140" height="64" rx="10"/><text class="tag" x="822" y="50">DISK</text><text class="t" x="890.0" y="89.0" text-anchor="middle">app</text><text class="s" x="890.0" y="108.0" text-anchor="middle">native binary</text>
+          <rect class="node" x="410" y="230" width="150" height="64" rx="10"/><text class="tag" x="412" y="220">CLAIMS</text><text class="t" x="485.0" y="259.0" text-anchor="middle">evidence</text><text class="s" x="485.0" y="278.0" text-anchor="middle">ownership · call modes</text>
+          <rect class="halo" x="615" y="225" width="350" height="74" rx="15"/><rect class="node hot" x="620" y="230" width="340" height="64" rx="10"/><text class="tag" x="622" y="220">PROJECT VERIFICATION</text><text class="t" x="790.0" y="259.0" text-anchor="middle">Proofcore · Proofcast · Buildgate</text><text class="s" x="790.0" y="278.0" text-anchor="middle">all three must agree</text>
+          </svg>
+      </div>
+      <div class="spine-foot">
+        <p>Native builds go through Rust. The compiler renders Rust source and records ownership evidence for every function it rendered, pinned to that source by hash. Rust's own drops then do the freeing.</p>
+        <p class="guards"><b>What is different here</b>The check runs in the project's verification, not at your build. It covers 507 of the 1,038 test programs at this commit. The rest fall back to the standard code generator and carry no evidence. rustc is trusted, and nothing re-checks the compiled binary against the evidence.</p>
       </div>
     </article>
     <article class="spine">

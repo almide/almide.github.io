@@ -251,7 +251,7 @@ pre .g { color: #7fe6b4; }
 .spine-head .n::before { content: "0"; }
 .spine-head .n.all::before { content: ""; }
 .spine.overview { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); box-shadow: 0 30px 80px -50px var(--glow); }
-.spine.overview + .spine { margin-top: 30px; }
+.spine.overview + .spine:not(.overview) { margin-top: 30px; }
 .spine-head h3 { font: 600 25px/1.15 var(--mono); letter-spacing: -.045em; margin: 0 0 5px; }
 .spine-head .role { font: 500 12px/1.4 var(--mono); letter-spacing: .02em; color: var(--muted); margin: 0; }
 .spine-head .tag {
