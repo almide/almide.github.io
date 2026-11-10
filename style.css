@@ -277,6 +277,31 @@ pre .g { color: #7fe6b4; }
 .spine-foot .guards { color: var(--ink); padding-left: 24px; border-left: 1px dashed var(--line-2); }
 .spine-foot .guards b { display: block; font: 500 10.5px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent-2); margin-bottom: 8px; }
 
+/* ---------- story page ---------- */
+.diagram.plot { padding: 22px 14px 10px; }
+.diagram.plot svg { min-width: 680px; }
+.plot .grid { stroke: var(--line); stroke-width: 1; }
+.plot .axis { font: 500 11px var(--mono); fill: var(--faint); }
+.plot .axis.dim { fill: var(--muted); }
+.plot .area { fill: var(--accent); fill-opacity: .1; }
+.plot .line { fill: none; stroke: var(--accent); stroke-width: 2.25; stroke-linejoin: round; stroke-linecap: round; }
+.plot .pt { fill: var(--bg); stroke: var(--accent); stroke-width: 2; }
+.plot .lab { font: 500 11.5px var(--mono); fill: var(--ink); letter-spacing: -.01em; }
+.plot .bar { fill: var(--accent); fill-opacity: .75; }
+.chapter { padding: 64px 0; }
+.chapter p.quote { border-left: 2px solid var(--accent); padding: 4px 0 4px 20px; margin: 22px 0; color: var(--ink); font: 450 17.5px/1.7 var(--sans); }
+q { quotes: none; font-style: normal; }
+.chapter p.quote q { display: inline; }
+p:not(.quote) q { color: var(--ink); font-weight: 500; }
+p:not(.quote) q::before { content: "\201C"; }
+p:not(.quote) q::after { content: "\201D"; }
+:lang(ja) p:not(.quote) q::before { content: "\300C"; }
+:lang(ja) p:not(.quote) q::after { content: "\300D"; }
+.props.two .prop { grid-template-columns: 180px 1fr; }
+.props.months .prop { grid-template-columns: 80px 1fr 1fr 1fr; }
+ul.plain.hard li::before { content: "\2014"; color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, transparent); background: var(--accent-soft); }
+.btn.ghost[href]::after { content: "→"; }
+
 /* ---------- cards ---------- */
 .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 34px 0 26px; }
 .card {

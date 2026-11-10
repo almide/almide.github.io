@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Almide — 250 days</title>
+<meta name="description" content="From 10,000 lines to 700,000 in 250 days. What was planned, what shipped, and what was thrown away.">
+<meta property="og:title" content="Almide — 250 days">
+<meta property="og:description" content="From 10,000 lines to 700,000 in 250 days. What was planned, what shipped, and what was thrown away.">
+<meta property="og:type" content="article">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../fonts/geist-mono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="../"><img src="../favicon.svg" alt="">Almide</a>
+  <nav aria-label="Site">
+    <a href="https://almide.github.io/playground/">Playground</a>
+    <a href="https://almide.github.io/docs/">Docs</a>
+    <a href="https://github.com/almide/almide">GitHub</a>
+    <a href="./" aria-current="true">Story</a>
+    <a href="../ja/story/" lang="ja">日本語</a>
+  </nav>
+</header>
+
+<main>
+
+<div class="hero-bg">
+<div class="wide">
+  <div class="hero">
+    <p class="eyebrow">Almide · the story so far</p>
+    <h1>250 days, from <em>10,000 lines</em> to 700,000.</h1>
+    <p class="sub">What the README said I was building, what actually shipped, and what got thrown away on the way. <strong>All of it taken from the repository's own history.</strong></p>
+    <div class="facts">
+      <div><b>250</b><span>days since the first commit, March 7 to November 11, 2026</span></div>
+      <div><b>17,044</b><span>commits, on 234 of those 250 days</span></div>
+      <div><b>277</b><span>releases, the first one two days in</span></div>
+      <div><b>69×</b><span>growth in Rust, from 10,128 lines to 698,358</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<section>
+  <div class="wide">
+    <h3 class="subhead" style="margin-top:0">Lines of Rust in the repository, at each milestone</h3>
+    <div class="diagram plot">
+        <svg viewBox="0 0 960 362" xmlns="http://www.w3.org/2000/svg">
+        <line class="grid" x1="70" y1="300.0" x2="900" y2="300.0"/>
+        <text class="axis" x="60" y="304.0" text-anchor="end">0</text>
+        <line class="grid" x1="70" y1="262.9" x2="900" y2="262.9"/>
+        <text class="axis" x="60" y="266.9" text-anchor="end">100k</text>
+        <line class="grid" x1="70" y1="225.7" x2="900" y2="225.7"/>
+        <text class="axis" x="60" y="229.7" text-anchor="end">200k</text>
+        <line class="grid" x1="70" y1="188.6" x2="900" y2="188.6"/>
+        <text class="axis" x="60" y="192.6" text-anchor="end">300k</text>
+        <line class="grid" x1="70" y1="151.4" x2="900" y2="151.4"/>
+        <text class="axis" x="60" y="155.4" text-anchor="end">400k</text>
+        <line class="grid" x1="70" y1="114.3" x2="900" y2="114.3"/>
+        <text class="axis" x="60" y="118.3" text-anchor="end">500k</text>
+        <line class="grid" x1="70" y1="77.1" x2="900" y2="77.1"/>
+        <text class="axis" x="60" y="81.1" text-anchor="end">600k</text>
+        <line class="grid" x1="70" y1="40.0" x2="900" y2="40.0"/>
+        <text class="axis" x="60" y="44.0" text-anchor="end">700k</text>
+        <text class="axis" x="70.0" y="322" text-anchor="middle">Mar</text>
+        <text class="axis" x="153.3" y="322" text-anchor="middle">Apr</text>
+        <text class="axis" x="253.3" y="322" text-anchor="middle">May</text>
+        <text class="axis" x="356.7" y="322" text-anchor="middle">Jun</text>
+        <text class="axis" x="456.7" y="322" text-anchor="middle">Jul</text>
+        <text class="axis" x="560.0" y="322" text-anchor="middle">Aug</text>
+        <text class="axis" x="663.3" y="322" text-anchor="middle">Sep</text>
+        <text class="axis" x="763.3" y="322" text-anchor="middle">Oct</text>
+        <text class="axis" x="866.7" y="322" text-anchor="middle">Nov</text>
+        <polygon class="area" points="70,300 76.7,296.2 83.3,294.1 146.7,272.4 320.0,257.2 506.7,211.2 553.3,217.5 656.7,182.9 886.7,53.9 900.0,40.6 900.0,300"/>
+        <polyline class="line" points="76.7,296.2 83.3,294.1 146.7,272.4 320.0,257.2 506.7,211.2 553.3,217.5 656.7,182.9 886.7,53.9 900.0,40.6"/>
+        <circle class="pt" cx="76.7" cy="296.2" r="4"/>
+        <text class="lab" x="70.7" y="342.2" text-anchor="start">v0.1.0 · 10,128</text>
+        <circle class="pt" cx="83.3" cy="294.1" r="4"/>
+        <circle class="pt" cx="146.7" cy="272.4" r="4"/>
+        <text class="lab" x="154.7" y="260.4" text-anchor="start">v0.10.0 · 74,363</text>
+        <circle class="pt" cx="320.0" cy="257.2" r="4"/>
+        <text class="lab" x="320.0" y="243.2" text-anchor="middle">v0.20.0 · 115,143</text>
+        <circle class="pt" cx="506.7" cy="211.2" r="4"/>
+        <text class="lab" x="498.7" y="197.2" text-anchor="end">v0.30.0 · 239,200</text>
+        <circle class="pt" cx="553.3" cy="217.5" r="4"/>
+        <text class="lab" x="563.3" y="239.5" text-anchor="start">v0.40.0 · 222,211</text>
+        <circle class="pt" cx="656.7" cy="182.9" r="4"/>
+        <text class="lab" x="646.7" y="170.9" text-anchor="end">v0.60.0 · 315,364</text>
+        <circle class="pt" cx="886.7" cy="53.9" r="4"/>
+        <text class="lab" x="874.7" y="47.9" text-anchor="end">v0.69.1 · 662,638</text>
+        <circle class="pt" cx="900.0" cy="40.6" r="4"/>
+        <text class="lab" x="900.0" y="26.6" text-anchor="end">now · 698,358</text>
+        </svg>
+    </div>
+    <p class="cap" style="margin-top:14px">Every .rs file in the repository, comments and blank lines included. It went down once, in late July, when the standard library was rewritten in Almide itself.</p>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">PROLOGUE — MAR 7 TO 9</p>
+    <h2>A language AI can write in the fewest tokens.</h2>
+    <p class="">The first commit is March 7. Two days and 143 commits later, v0.1.0 is out. The README said:</p>
+    <p class="quote"><q>Almide is a language for AI to write code directly and efficiently. The design goal is that LLMs can express intent in the fewest tokens and with the least thinking.</q></p>
+    <p class="">It was 10,000 lines of Rust. A lexer, a parser, a type checker, a formatter, and two outputs: Rust and TypeScript. No proofs, no checkers. The goal was that it be easy to write.</p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">CHAPTER 1 — MAR 9 TO 14</p>
+    <h2>Four releases in one day.</h2>
+    <p class="">v0.2.0, v0.2.1, v0.2.2 and v0.3.0 all shipped on the same day as v0.1.0. Generics and tuples came the next day. v0.5.0, on March 11, brought borrow inference, the first sign of what the language is about now.</p>
+    <p class="">Two habits started that week. v0.5.7 is titled <q>MiniGit survives 40 of 40 trials</q>: I had started counting whether a model's program actually passes. And v0.5.13 began A/B testing syntax across models.</p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">CHAPTER 2 — MAR 17 TO 30</p>
+    <h2>Add it, then throw it away.</h2>
+    <p class="">For two weeks nearly every release removed something. <code>++</code> gave way to <code>+</code>. uuid and crypto left the standard library. The JavaScript output was folded into TypeScript. <code>do</code> blocks left the language. newtype gave way to aliases. Implicit conversion was removed.</p>
+    <p class="">Then v0.9.5: <q>the wasm target reaches full stdlib parity, and the TypeScript target is removed.</q> The outputs had gone from Rust and TypeScript, to three, back to two, and ended as native and WebAssembly. The dual target was not the plan. It is what was left after three weeks of trying.</p>
+    <p class="">By v0.10.0 on March 30 it was 74,000 lines. Seven times bigger in three weeks, and already past what one person reads end to end.</p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">CHAPTER 3 — APRIL TO MAY 21</p>
+    <h2>Making it a tool.</h2>
+    <p class="">The pace dropped. April averaged 30 commits a day, less than half of March. From April 22 to May 1 there are no commits at all, the only gap of three days or more in the whole 250.</p>
+    <p class="">What shipped was for people using it: the compiler split into nine crates, installers that don't need Rust, a loop that tuned diagnostics on recorded model failures, and v0.14.6, <q>the LLM-first release</q>, with copy-pasteable fixes and <code>almide fix</code>. A REPL and an editor server followed.</p>
+    <p class="">There were side roads. An LLVM backend was moved off the main line. A GPU shader target shipped. Copy-on-write went in for every value type, and <code>mut</code> became a keyword.</p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">CHAPTER 4 — MAY 22 TO JUN 10</p>
+    <h2>Four days that set the core.</h2>
+    <p class="">May 23: wasm performance reaches parity with Rust's wasm. May 24: <q>the 336-byte hello world</q>. May 25: Perceus, memory management with no annotations and no GC. May 26: a proof in Lean 4 that every allocation is freed.</p>
+    <p class="">Speed, size, memory, proof, on four consecutive days. The first proof arrived on day 80.</p>
+    <p class="">Then June 8 and 9. v0.26 has 22 patch releases in those two days, one cross-module bug fixed and shipped at a time.</p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">CHAPTER 5 — JUL 5 TO 20</p>
+    <h2>Never emit wrong bytes.</h2>
+    <p class="">No minor release for 25 days. Then v0.28.0: <q>the v1 trust-spine ships as an opt-in verified wasm codegen that never emits wrong bytes.</q> The aim had moved from producing the right output to refusing to produce one that can't be checked.</p>
+    <p class="">Ten days later it became the default. The day after that, v0.30.0's title reads: <q>0.29.0's silent wrong values fixed.</q> It had been made the default and was silently wrong, and the release title says so.</p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">CHAPTER 6 — JUL 24 TO AUG 1</p>
+    <h2>Doubting what was being measured.</h2>
+    <p class="">Seventeen minor releases in nine days. Their titles tell it:</p>
+    <p class="quote"><q>a gate that was measuring the wrong program</q> · <q>green can no longer lie: sixteen gates that measured nothing are re-armed</q> · <q>a CI step that installed nothing reported success</q> · <q>three measurements are retracted</q> · <q>a 4.4x win given back</q></p>
+    <p class="">The checks were green and checking nothing. The speedup was a measuring error. They were found one at a time and taken back in public. This is also the only stretch where the code got smaller.</p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">CHAPTER 7 — AUG 2 TO 30</p>
+    <h2>Redrawing the surface.</h2>
+    <p class="">With the inside settled, the part authors see was redone. Error propagation went from implicit to explicit: the automatic <code>?</code> was deprecated and removed on the same day. The whole <code>try_</code> family of functions was deleted. v0.60.0's title is three words: <q>the structural leg ships.</q></p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">CHAPTER 8 — SEPTEMBER TO NOV 7</p>
+    <h2>It doubles.</h2>
+    <p class="">From v0.60.0 to v0.69.1, Rust went from 315,000 lines to 663,000. Proofs went from 10,000 lines to 24,000. Tests in Rust went from 30,000 to 125,000. Commits per day went from 58 to 184.</p>
+    <p class="">And the README changed its first sentence:</p>
+    <p class="quote"><q>Almide is a statically-typed language for code that AI writes and edits. The claim is not that the model gets it right. It is that when the model is wrong, the compiler says so at author time and names the fix.</q></p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">EPILOGUE — NOV 10 AND 11</p>
+    <h2>Showing it to people.</h2>
+    <p class="">On day 250 I posted it in public for the first time. The post was removed automatically, and the comments it did get were hard ones. <q>Given one of those functions, would you know what it does?</q></p>
+    <p class="">So I measured. Of 18,843 functions, 12 are called by nothing. One 493-line file had been edited three times after nothing included it anymore. 95 files had been cut by size instead of by what they do. Then I added a check so those numbers can only go down.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What the README said it was</h2>
+  </div>
+  <div class="wide">
+    <div class="props two">
+      <div class="prop"><code>March</code><div class="stops">A language AI can write in the fewest tokens</div></div>
+      <div class="prop"><code>March to October</code><div class="stops">A language optimized for AI-generated code</div></div>
+      <div class="prop"><code>November</code><div class="stops">A language that says so when the AI is wrong</div></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="big" style="margin-top:26px">It started as making code easier to write and became catching it when it's wrong. Nearly everything that was thrown away, retracted or retired along the way happened during that turn.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="num">THE HOURS</p>
+    <h2>How many hours a day.</h2>
+    <p>Commit times can answer part of this. On an average day with commits, there was at least one commit in 13.6 different hours of the day. In October and November it was more than 18.</p>
+    <p>That is not my time. 38 days have commits in 20 or more hours of the day, and 784 commits landed between 3 and 5 in the morning. Nobody does that. It is the agents, running while I slept. What the numbers show is how long the work was running, and I don't have a record of how long I was at the desk.</p>
+  </div>
+  <div class="wide">
+    <h3 class="subhead">Commits per day, by month</h3>
+    <div class="diagram plot">
+        <svg viewBox="0 0 960 250" xmlns="http://www.w3.org/2000/svg">
+        <rect class="bar" x="60" y="145.5" width="78" height="54.5" rx="5"/>
+        <text class="lab" x="99.0" y="137.5" text-anchor="middle">69</text>
+        <text class="axis" x="99.0" y="220" text-anchor="middle">Mar</text>
+        <text class="axis dim" x="99.0" y="238" text-anchor="middle">13.0h</text>
+        <rect class="bar" x="158" y="176.3" width="78" height="23.7" rx="5"/>
+        <text class="lab" x="197.0" y="168.3" text-anchor="middle">30</text>
+        <text class="axis" x="197.0" y="220" text-anchor="middle">Apr</text>
+        <text class="axis dim" x="197.0" y="238" text-anchor="middle">8.6h</text>
+        <rect class="bar" x="256" y="181.1" width="78" height="18.9" rx="5"/>
+        <text class="lab" x="295.0" y="173.1" text-anchor="middle">24</text>
+        <text class="axis" x="295.0" y="220" text-anchor="middle">May</text>
+        <text class="axis dim" x="295.0" y="238" text-anchor="middle">8.5h</text>
+        <rect class="bar" x="354" y="159.7" width="78" height="40.3" rx="5"/>
+        <text class="lab" x="393.0" y="151.7" text-anchor="middle">51</text>
+        <text class="axis" x="393.0" y="220" text-anchor="middle">Jun</text>
+        <text class="axis dim" x="393.0" y="238" text-anchor="middle">15.4h</text>
+        <rect class="bar" x="452" y="156.6" width="78" height="43.4" rx="5"/>
+        <text class="lab" x="491.0" y="148.6" text-anchor="middle">55</text>
+        <text class="axis" x="491.0" y="220" text-anchor="middle">Jul</text>
+        <text class="axis dim" x="491.0" y="238" text-anchor="middle">12.9h</text>
+        <rect class="bar" x="550" y="154.2" width="78" height="45.8" rx="5"/>
+        <text class="lab" x="589.0" y="146.2" text-anchor="middle">58</text>
+        <text class="axis" x="589.0" y="220" text-anchor="middle">Aug</text>
+        <text class="axis dim" x="589.0" y="238" text-anchor="middle">14.1h</text>
+        <rect class="bar" x="648" y="130.5" width="78" height="69.5" rx="5"/>
+        <text class="lab" x="687.0" y="122.5" text-anchor="middle">88</text>
+        <text class="axis" x="687.0" y="220" text-anchor="middle">Sep</text>
+        <text class="axis dim" x="687.0" y="238" text-anchor="middle">13.7h</text>
+        <rect class="bar" x="746" y="83.2" width="78" height="116.8" rx="5"/>
+        <text class="lab" x="785.0" y="75.2" text-anchor="middle">148</text>
+        <text class="axis" x="785.0" y="220" text-anchor="middle">Oct</text>
+        <text class="axis dim" x="785.0" y="238" text-anchor="middle">18.5h</text>
+        <rect class="bar" x="844" y="54.7" width="78" height="145.3" rx="5"/>
+        <text class="lab" x="883.0" y="46.7" text-anchor="middle">184</text>
+        <text class="axis" x="883.0" y="220" text-anchor="middle">Nov</text>
+        <text class="axis dim" x="883.0" y="238" text-anchor="middle">18.8h</text>
+        </svg>
+    </div>
+    <p class="cap" style="margin-top:14px">Under each month: the average number of hours of the day that had at least one commit.</p>
+  </div>
+</section>
+
+<section style="border-bottom:0">
+  <div class="wrap">
+    <p class="num">WHAT WAS HARD</p>
+    <h2>The parts that cost the most.</h2>
+    <ul class="plain hard">
+      <li><b>Throwing away working code.</b> The TypeScript target, the JavaScript target, the LLVM backend and the first wasm emitter all worked, and all were removed.</li>
+      <li><b>22 patch releases in two days.</b> Each one a bug somebody would have hit.</li>
+      <li><b>Shipping a default that was silently wrong.</b> And writing that in the release title the next day.</li>
+      <li><b>Finding that green meant nothing.</b> Sixteen checks that passed without checking, and a CI step that reported success after installing nothing.</li>
+      <li><b>Giving back a 4.4x speedup.</b> Because the measurement was wrong, not the code.</li>
+      <li><b>Doubling in two months.</b> Past the point where I can read it, which is the problem the whole design is now about.</li>
+      <li><b>Hearing it from people who write compilers.</b> And finding they were right about some of it.</li>
+    </ul>
+    <p style="margin-top:34px"><a class="btn ghost" href="../">Back to the front page</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wide">
+    <p>Dates, titles and counts are from the repository's tags, releases and commit history at 2d59db6. The text on this page was drafted with an AI assistant and checked against that history.</p>
+  </div>
+</footer>
+
+</body>
+</html>

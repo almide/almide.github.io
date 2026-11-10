@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Almide — 250日</title>
+<meta name="description" content="250日で、1万行から70万行へ。何を作るつもりで、何が出て、何を捨てたか。">
+<meta property="og:title" content="Almide — 250日">
+<meta property="og:description" content="250日で、1万行から70万行へ。何を作るつもりで、何が出て、何を捨てたか。">
+<meta property="og:type" content="article">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../../fonts/geist-mono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../../fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="../"><img src="../../favicon.svg" alt="">Almide</a>
+  <nav aria-label="サイト">
+    <a href="https://almide.github.io/playground/">Playground</a>
+    <a href="https://almide.github.io/docs/">ドキュメント</a>
+    <a href="https://github.com/almide/almide">GitHub</a>
+    <a href="./" aria-current="true">これまで</a>
+    <a href="../../story/" lang="en">EN</a>
+  </nav>
+</header>
+
+<main>
+
+<div class="hero-bg">
+<div class="wide">
+  <div class="hero">
+    <p class="eyebrow">Almide · これまでの話</p>
+    <h1>250日で、<em>1万行</em>から70万行へ。</h1>
+    <p class="sub">README が何を作ると言っていたか、実際に何が出たか、途中で何を捨てたか。<strong>すべて、リポジトリ自身の履歴から取りました。</strong></p>
+    <div class="facts">
+      <div><b>250</b><span>最初のコミットからの日数。2026年3月7日から11月11日まで</span></div>
+      <div><b>17,044</b><span>コミットの数。250日のうち234日にコミットがある</span></div>
+      <div><b>277</b><span>リリースの数。最初の1つは2日目</span></div>
+      <div><b>69倍</b><span>Rust の伸び。10,128行から698,358行へ</span></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<section>
+  <div class="wide">
+    <h3 class="subhead" style="margin-top:0">節目ごとの、リポジトリの中の Rust の行数</h3>
+    <div class="diagram plot">
+        <svg viewBox="0 0 960 362" xmlns="http://www.w3.org/2000/svg">
+        <line class="grid" x1="70" y1="300.0" x2="900" y2="300.0"/>
+        <text class="axis" x="60" y="304.0" text-anchor="end">0</text>
+        <line class="grid" x1="70" y1="262.9" x2="900" y2="262.9"/>
+        <text class="axis" x="60" y="266.9" text-anchor="end">100k</text>
+        <line class="grid" x1="70" y1="225.7" x2="900" y2="225.7"/>
+        <text class="axis" x="60" y="229.7" text-anchor="end">200k</text>
+        <line class="grid" x1="70" y1="188.6" x2="900" y2="188.6"/>
+        <text class="axis" x="60" y="192.6" text-anchor="end">300k</text>
+        <line class="grid" x1="70" y1="151.4" x2="900" y2="151.4"/>
+        <text class="axis" x="60" y="155.4" text-anchor="end">400k</text>
+        <line class="grid" x1="70" y1="114.3" x2="900" y2="114.3"/>
+        <text class="axis" x="60" y="118.3" text-anchor="end">500k</text>
+        <line class="grid" x1="70" y1="77.1" x2="900" y2="77.1"/>
+        <text class="axis" x="60" y="81.1" text-anchor="end">600k</text>
+        <line class="grid" x1="70" y1="40.0" x2="900" y2="40.0"/>
+        <text class="axis" x="60" y="44.0" text-anchor="end">700k</text>
+        <text class="axis" x="70.0" y="322" text-anchor="middle">3月</text>
+        <text class="axis" x="153.3" y="322" text-anchor="middle">4月</text>
+        <text class="axis" x="253.3" y="322" text-anchor="middle">5月</text>
+        <text class="axis" x="356.7" y="322" text-anchor="middle">6月</text>
+        <text class="axis" x="456.7" y="322" text-anchor="middle">7月</text>
+        <text class="axis" x="560.0" y="322" text-anchor="middle">8月</text>
+        <text class="axis" x="663.3" y="322" text-anchor="middle">9月</text>
+        <text class="axis" x="763.3" y="322" text-anchor="middle">10月</text>
+        <text class="axis" x="866.7" y="322" text-anchor="middle">11月</text>
+        <polygon class="area" points="70,300 76.7,296.2 83.3,294.1 146.7,272.4 320.0,257.2 506.7,211.2 553.3,217.5 656.7,182.9 886.7,53.9 900.0,40.6 900.0,300"/>
+        <polyline class="line" points="76.7,296.2 83.3,294.1 146.7,272.4 320.0,257.2 506.7,211.2 553.3,217.5 656.7,182.9 886.7,53.9 900.0,40.6"/>
+        <circle class="pt" cx="76.7" cy="296.2" r="4"/>
+        <text class="lab" x="70.7" y="342.2" text-anchor="start">v0.1.0 · 10,128</text>
+        <circle class="pt" cx="83.3" cy="294.1" r="4"/>
+        <circle class="pt" cx="146.7" cy="272.4" r="4"/>
+        <text class="lab" x="154.7" y="260.4" text-anchor="start">v0.10.0 · 74,363</text>
+        <circle class="pt" cx="320.0" cy="257.2" r="4"/>
+        <text class="lab" x="320.0" y="243.2" text-anchor="middle">v0.20.0 · 115,143</text>
+        <circle class="pt" cx="506.7" cy="211.2" r="4"/>
+        <text class="lab" x="498.7" y="197.2" text-anchor="end">v0.30.0 · 239,200</text>
+        <circle class="pt" cx="553.3" cy="217.5" r="4"/>
+        <text class="lab" x="563.3" y="239.5" text-anchor="start">v0.40.0 · 222,211</text>
+        <circle class="pt" cx="656.7" cy="182.9" r="4"/>
+        <text class="lab" x="646.7" y="170.9" text-anchor="end">v0.60.0 · 315,364</text>
+        <circle class="pt" cx="886.7" cy="53.9" r="4"/>
+        <text class="lab" x="874.7" y="47.9" text-anchor="end">v0.69.1 · 662,638</text>
+        <circle class="pt" cx="900.0" cy="40.6" r="4"/>
+        <text class="lab" x="900.0" y="26.6" text-anchor="end">今 · 698,358</text>
+        </svg>
+    </div>
+    <p class="cap" style="margin-top:14px">リポジトリにあるすべての .rs ファイルの行数です。コメントと空行を含みます。減ったのは7月末の一度だけで、標準ライブラリを Almide 自身で書き直したときです。</p>
+  </div>
+</section>
+
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">序章 — 3月7日〜9日</p>
+    <h2>AI が最少のトークンで書ける言語。</h2>
+    <p class="">最初のコミットは3月7日です。2日後、143件のコミットを経て v0.1.0 が出ます。README はこう言っていました。</p>
+    <p class="quote"><q>Almide は、AI がコードを直接、効率よく書くための言語である。設計の目標は、LLM が最少のトークンと最少の思考で意図を表現できること。</q></p>
+    <p class="">中身は Rust で1万行でした。字句解析、構文解析、型検査、フォーマッタ。出力先は Rust と TypeScript の2つ。証明も検査器もありません。目指していたのは、書きやすいことでした。</p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">第1章 — 3月9日〜14日</p>
+    <h2>1日に4回リリースする。</h2>
+    <p class="">v0.1.0 を出したその日のうちに、v0.2.0、v0.2.1、v0.2.2、v0.3.0 が出ます。翌日にはジェネリクスとタプル。3月11日の v0.5.0 で借用の推論が入ります。いまの中心になっているものが、ここで初めて顔を出しました。</p>
+    <p class="">この週に、習慣が2つ始まります。v0.5.7 の題は <q>MiniGit が40回中40回生き残る</q>。モデルに書かせたプログラムが実際に通るかを、数え始めました。v0.5.13 では、文法の案を複数のモデルで比べる試みが始まります。</p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">第2章 — 3月17日〜30日</p>
+    <h2>足しては、捨てる。</h2>
+    <p class="">この2週間は、ほとんどのリリースで何かが消えています。<code>++</code> は <code>+</code> に。uuid と crypto は標準ライブラリから外れ、JavaScript の出力は TypeScript に統合され、<code>do</code> ブロックは言語から消え、newtype は別名に置き換わり、暗黙の型変換は取り除かれました。</p>
+    <p class="">そして v0.9.5。<q>Wasm ターゲットが標準ライブラリ全体に対応し、TypeScript ターゲットは削除される。</q> 出力先は、Rust と TypeScript で始まり、3つになり、2つに戻り、最後にネイティブと WebAssembly になりました。デュアルターゲットは最初からの計画ではありません。3週間の試行のあとに残った形です。</p>
+    <p class="">3月30日の v0.10.0 で、7万4,000行。3週間で7倍になり、一人が端から端まで読める大きさは、ここで超えました。</p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">第3章 — 4月〜5月21日</p>
+    <h2>道具にする。</h2>
+    <p class="">速度が落ちます。4月の1日あたりのコミットは30件で、3月の半分以下です。4月22日から5月1日までは、コミットが1件もありません。250日のうち、3日以上あいたのはここだけです。</p>
+    <p class="">出たのは、使う人のためのものでした。コンパイラを9つの crate に分割。Rust がなくても入れられるインストーラ。モデルの失敗の記録をもとにエラーメッセージを直す循環。そして v0.14.6、<q>LLM 第一のリリース</q>。そのまま貼れる修正案と <code>almide fix</code> です。REPL とエディタ連携が続きます。</p>
+    <p class="">脇道もありました。LLVM を使う出力は本線から外し、GPU シェーダ向けの出力を出しました。すべての値に「書き込み時にコピー」を入れ、<code>mut</code> をキーワードにしました。</p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">第4章 — 5月22日〜6月10日</p>
+    <h2>芯が入った4日間。</h2>
+    <p class="">5月23日、Wasm の速さが Rust の Wasm に並ぶ。5月24日、<q>336バイトの hello world</q>。5月25日、Perceus。注釈もGCもないメモリ管理。5月26日、確保したものがすべて解放されることを Lean 4 で証明。</p>
+    <p class="">速さ、小ささ、メモリ、証明が、4日続けて出ています。最初の証明が入ったのは、80日目でした。</p>
+    <p class="">そして6月8日と9日。v0.26 は、この2日間で22回のパッチリリースを出しています。モジュールをまたぐバグを、1つ直しては出す、を繰り返しました。</p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">第5章 — 7月5日〜20日</p>
+    <h2>間違ったバイトは出さない。</h2>
+    <p class="">25日間、マイナー版が出ません。そのあとの v0.28.0。<q>v1 の trust spine が、選択式の検証つき Wasm 出力として出荷される。間違ったバイトを決して出さない。</q> 目指すものが、正しい出力を作ることから、確かめられない出力は作らないことへ移りました。</p>
+    <p class="">10日後に、それが既定になります。その翌日の v0.30.0 の題は、<q>0.29.0 が黙って出していた間違った値を直した。</q> 既定にしたものが、黙って間違っていました。リリースの題に、そう書いてあります。</p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">第6章 — 7月24日〜8月1日</p>
+    <h2>測っているものを疑う。</h2>
+    <p class="">9日間で、マイナー版が17個。題が物語っています。</p>
+    <p class="quote"><q>間違ったプログラムを測っていた検査</q> · <q>緑はもう嘘をつけない。何も測っていなかった16個の検査を再び有効にした</q> · <q>何もインストールしていない CI の手順が、成功を報告していた</q> · <q>3つの計測を撤回する</q> · <q>4.4倍の高速化を返上する</q></p>
+    <p class="">検査は緑で、何も確かめていませんでした。高速化は、測り方の誤りでした。1つずつ見つけて、公開の場で取り下げています。コードが小さくなったのも、この時期だけです。</p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">第7章 — 8月2日〜30日</p>
+    <h2>表面を引き直す。</h2>
+    <p class="">内側が固まったので、書き手に見える部分を作り直しました。失敗の伝搬は、暗黙から明示へ。自動の <code>?</code> は、非推奨にしたその日に削除しました。<code>try_</code> で始まる関数の一族は、丸ごと消しました。v0.60.0 の題は、ひとこと。<q>構造的な経路が出荷される。</q></p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">第8章 — 9月〜11月7日</p>
+    <h2>倍になる。</h2>
+    <p class="">v0.60.0 から v0.69.1 のあいだに、Rust は31万5,000行から66万3,000行になりました。証明は1万行から2万4,000行に。Rust のテストは3万行から12万5,000行に。1日のコミットは58件から184件になりました。</p>
+    <p class="">そして、README の最初の一文が変わります。</p>
+    <p class="quote"><q>Almide は、AI が書き、編集するコードのための静的型付きの言語である。主張は、モデルが正しく書くということではない。モデルが間違えたとき、コンパイラが書く時点でそう言い、直し方を名指しするということだ。</q></p>
+  </div>
+</section>
+<section class="chapter">
+  <div class="wrap">
+    <p class="num">終章 — 11月10日・11日</p>
+    <h2>人に見せる。</h2>
+    <p class="">250日目に、初めて公開の場に出しました。投稿は自動で削除され、付いたコメントは厳しいものでした。<q>その関数を1つ渡されたら、何をするものか分かりますか。</q></p>
+    <p class="">それで、測りました。18,843個の関数のうち、どこからも呼ばれていないのは12個。493行のファイルが1つ、どこからも読み込まれなくなったあとも3回編集されていました。95個のファイルが、役割ではなく大きさで切られていました。そして、その数が減る方向にしか動かないように、検査を1つ足しました。</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>README は、自分を何だと言っていたか</h2>
+  </div>
+  <div class="wide">
+    <div class="props two">
+      <div class="prop"><code>3月</code><div class="stops">AI が、最少のトークンで書ける言語</div></div>
+      <div class="prop"><code>3月〜10月</code><div class="stops">AI が生成するコードに最適化された言語</div></div>
+      <div class="prop"><code>11月</code><div class="stops">AI が間違えたとき、そう言う言語</div></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="big" style="margin-top:26px">書きやすくすることから始まり、間違いを捕まえることに変わりました。途中で捨てたもの、撤回したもの、退役させたものは、ほとんどが、この向きの変化のあいだに起きています。</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="num">時間</p>
+    <h2>1日に何時間か。</h2>
+    <p>コミットの時刻から、一部は答えられます。コミットがあった日を平均すると、1日のうち13.6個の時間帯に、少なくとも1件のコミットがありました。10月と11月は18個を超えます。</p>
+    <p>これは、私の時間ではありません。1日のうち20個以上の時間帯にコミットがあった日が38日あり、午前3時から5時のあいだに784件のコミットが入っています。人にはできません。私が寝ているあいだも動いていた、エージェントです。この数字が示すのは作業が動いていた長さで、私が机に向かっていた長さの記録は、手元にありません。</p>
+  </div>
+  <div class="wide">
+    <h3 class="subhead">月ごとの、1日あたりのコミット数</h3>
+    <div class="diagram plot">
+        <svg viewBox="0 0 960 250" xmlns="http://www.w3.org/2000/svg">
+        <rect class="bar" x="60" y="145.5" width="78" height="54.5" rx="5"/>
+        <text class="lab" x="99.0" y="137.5" text-anchor="middle">69</text>
+        <text class="axis" x="99.0" y="220" text-anchor="middle">3月</text>
+        <text class="axis dim" x="99.0" y="238" text-anchor="middle">13.0h</text>
+        <rect class="bar" x="158" y="176.3" width="78" height="23.7" rx="5"/>
+        <text class="lab" x="197.0" y="168.3" text-anchor="middle">30</text>
+        <text class="axis" x="197.0" y="220" text-anchor="middle">4月</text>
+        <text class="axis dim" x="197.0" y="238" text-anchor="middle">8.6h</text>
+        <rect class="bar" x="256" y="181.1" width="78" height="18.9" rx="5"/>
+        <text class="lab" x="295.0" y="173.1" text-anchor="middle">24</text>
+        <text class="axis" x="295.0" y="220" text-anchor="middle">5月</text>
+        <text class="axis dim" x="295.0" y="238" text-anchor="middle">8.5h</text>
+        <rect class="bar" x="354" y="159.7" width="78" height="40.3" rx="5"/>
+        <text class="lab" x="393.0" y="151.7" text-anchor="middle">51</text>
+        <text class="axis" x="393.0" y="220" text-anchor="middle">6月</text>
+        <text class="axis dim" x="393.0" y="238" text-anchor="middle">15.4h</text>
+        <rect class="bar" x="452" y="156.6" width="78" height="43.4" rx="5"/>
+        <text class="lab" x="491.0" y="148.6" text-anchor="middle">55</text>
+        <text class="axis" x="491.0" y="220" text-anchor="middle">7月</text>
+        <text class="axis dim" x="491.0" y="238" text-anchor="middle">12.9h</text>
+        <rect class="bar" x="550" y="154.2" width="78" height="45.8" rx="5"/>
+        <text class="lab" x="589.0" y="146.2" text-anchor="middle">58</text>
+        <text class="axis" x="589.0" y="220" text-anchor="middle">8月</text>
+        <text class="axis dim" x="589.0" y="238" text-anchor="middle">14.1h</text>
+        <rect class="bar" x="648" y="130.5" width="78" height="69.5" rx="5"/>
+        <text class="lab" x="687.0" y="122.5" text-anchor="middle">88</text>
+        <text class="axis" x="687.0" y="220" text-anchor="middle">9月</text>
+        <text class="axis dim" x="687.0" y="238" text-anchor="middle">13.7h</text>
+        <rect class="bar" x="746" y="83.2" width="78" height="116.8" rx="5"/>
+        <text class="lab" x="785.0" y="75.2" text-anchor="middle">148</text>
+        <text class="axis" x="785.0" y="220" text-anchor="middle">10月</text>
+        <text class="axis dim" x="785.0" y="238" text-anchor="middle">18.5h</text>
+        <rect class="bar" x="844" y="54.7" width="78" height="145.3" rx="5"/>
+        <text class="lab" x="883.0" y="46.7" text-anchor="middle">184</text>
+        <text class="axis" x="883.0" y="220" text-anchor="middle">11月</text>
+        <text class="axis dim" x="883.0" y="238" text-anchor="middle">18.8h</text>
+        </svg>
+    </div>
+    <p class="cap" style="margin-top:14px">各月の下の数字は、少なくとも1件のコミットがあった時間帯の、1日あたりの平均です。</p>
+  </div>
+</section>
+
+<section style="border-bottom:0">
+  <div class="wrap">
+    <p class="num">大変だったこと</p>
+    <h2>いちばん高くついたところ。</h2>
+    <ul class="plain hard">
+      <li><b>動いているコードを捨てる。</b>TypeScript の出力、JavaScript の出力、LLVM の経路、最初の Wasm の出力経路。どれも動いていて、どれも消しました。</li>
+      <li><b>2日で22回のパッチリリース。</b>1つ1つが、誰かが踏むはずだったバグです。</li>
+      <li><b>黙って間違っていたものを、既定として出したこと。</b>そして翌日、それをリリースの題に書いたこと。</li>
+      <li><b>緑が何も意味していなかったと分かったこと。</b>確かめずに通っていた16個の検査と、何も入れずに成功を報告していた CI の手順。</li>
+      <li><b>4.4倍の高速化を返上したこと。</b>間違っていたのは、コードではなく測り方でした。</li>
+      <li><b>2か月で倍になったこと。</b>自分で読める大きさを超えました。いまの設計全体が向き合っているのは、その問題です。</li>
+      <li><b>コンパイラを書く人たちに言われたこと。</b>そして、そのいくつかは当たっていたこと。</li>
+    </ul>
+    <p style="margin-top:34px"><a class="btn ghost" href="../">トップページに戻る</a></p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wide">
+    <p>日付、題、数は、リポジトリのタグ、リリース、コミットの履歴（2d59db6 時点）から取りました。このページの文章は、AI アシスタントで下書きし、その履歴と照らして確かめたものです。</p>
+  </div>
+</footer>
+
+</body>
+</html>
