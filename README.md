@@ -10,6 +10,7 @@ Plain HTML and CSS, no build step.
 | `ja/index.html` | Japanese page |
 | `style.css` | Shared styles (light and dark) |
 | `favicon.svg` | Logo, same file as the docs site |
+| `fonts/` | Geist and Geist Mono (variable, Latin subset), self-hosted. SIL Open Font License 1.1, © The Geist Project Authors |
 
 ## Keeping it true
 

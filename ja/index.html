@@ -11,6 +11,8 @@
 <meta property="og:url" content="https://almide.github.io/ja/">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="alternate" hreflang="en" href="https://almide.github.io/">
+<link rel="preload" href="../fonts/geist-mono.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -28,10 +30,11 @@
 
 <main>
 
+<div class="hero-bg">
 <div class="wide">
   <div class="hero">
     <p class="eyebrow">Almide · プログラミング言語 · 1.0 より前</p>
-    <h1><em>AIが書いたコード</em>を、より安全にするために作っている言語。</h1>
+    <h1><em>AIが書いたコード</em>を、より安全にするために作っている言語。<span class="cursor" aria-hidden="true"></span></h1>
     <p class="sub">AIエージェントが書くコードは、もう自分には全部は読めません。だから安全性はコンパイラの側から出したい。<strong>そして、そのコンパイラにも自分の採点はさせません。</strong></p>
     <div class="cta">
       <a class="btn primary" href="https://almide.github.io/playground/">ブラウザで試す</a>
@@ -46,6 +49,7 @@
     </div>
     <p class="asof">数字は公開リポジトリのコミット <code>8ce6254</code>（台帳の日付は 2026-11-08）時点のものです。325 バイトは 0.69.0 で <code>wasm-opt</code> なしの値です。これからも動きます。</p>
   </div>
+</div>
 </div>
 
 <section id="why">
@@ -63,7 +67,7 @@
   <div class="wrap">
     <p class="num">02 — 間違えようがない</p>
     <h2>所有権は書きません。コンパイラが推論します。</h2>
-<pre><code><span class="k">type</span> Order = { id: Int, items: List[String], total: Int }
+<pre data-title="orders.almd"><code><span class="k">type</span> Order = { id: Int, items: List[String], total: Int }
 
 <span class="k">fn</span> large(orders: List[Order]) -> List[Order] =
   orders |> list.filter((o) => o.total > 500)
@@ -79,7 +83,7 @@
     println("${o.id}: ${list.join(o.items, ", ")}")
   }
 }</code></pre>
-<pre><code><span class="c">$ almide run orders.almd --target wasm</span>
+<pre data-title="zsh"><code><span class="c">$ almide run orders.almd --target wasm</span>
 2 orders, 1 large
 1: pen, ink
 2: desk</code></pre>
@@ -101,52 +105,49 @@
 
   <div class="wide">
     <div class="diagram" role="img" aria-label="コンパイラはWasmのバイト列と証拠を出力する。別のプログラムである検証器が両方を読む。受理すればファイルが書き出される。拒否すれば何も書き出されず、ビルドはコンパイラのバグを報告する。">
-      <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="context-stroke"/></marker>
-        </defs>
-        <rect class="box" x="10" y="92" width="130" height="66" rx="10"/>
-        <text class="t" x="75" y="121" text-anchor="middle">ソース</text>
-        <text class="m" x="75" y="142" text-anchor="middle">app.almd</text>
-
-        <path class="arrow" d="M140 125 H186" marker-end="url(#ah)"/>
-
-        <rect class="box" x="190" y="92" width="130" height="66" rx="10"/>
-        <text class="t" x="255" y="121" text-anchor="middle">コンパイラ</text>
-        <text class="s" x="255" y="142" text-anchor="middle">信用しない</text>
-
-        <path class="arrow" d="M320 110 C350 110 350 62 386 62" marker-end="url(#ah)"/>
-        <path class="arrow" d="M320 140 C350 140 350 188 386 188" marker-end="url(#ah)"/>
-
-        <rect class="box" x="390" y="32" width="150" height="60" rx="10"/>
-        <text class="t" x="465" y="58" text-anchor="middle">Wasm のバイト列</text>
-        <text class="s" x="465" y="78" text-anchor="middle">作ったもの</text>
-
-        <rect class="box" x="390" y="158" width="150" height="60" rx="10"/>
-        <text class="t" x="465" y="184" text-anchor="middle">証拠</text>
-        <text class="s" x="465" y="204" text-anchor="middle">やったと主張する内容</text>
-
-        <path class="arrow" d="M540 62 C572 62 572 110 606 110" marker-end="url(#ah)"/>
-        <path class="arrow" d="M540 188 C572 188 572 140 606 140" marker-end="url(#ah)"/>
-
-        <rect class="box hot" x="610" y="92" width="130" height="66" rx="10"/>
-        <text class="t" x="675" y="121" text-anchor="middle">検証器</text>
-        <text class="s" x="675" y="142" text-anchor="middle">別のプログラム</text>
-
-        <path class="okline" d="M740 110 C766 110 766 62 790 62" marker-end="url(#ah)"/>
-        <path class="noline" d="M740 140 C766 140 766 188 790 188" marker-end="url(#ah)"/>
-
-        <text class="t ok" x="798" y="58">受理</text>
-        <text class="s" x="798" y="78">ファイルを書く</text>
-        <text class="t no" x="798" y="184">拒否</text>
-        <text class="s" x="798" y="204">何も書かない</text>
-      </svg>
+      <svg viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg">
+        <path id="w1" class="wire" d="M152 150 H199"/>
+        <path id="w2" class="wire" d="M338 138 H363 Q373 138 373 128 V86 Q373 76 383 76 H405"/>
+        <path id="w3" class="wire" d="M338 162 H363 Q373 162 373 172 V214 Q373 224 383 224 H405"/>
+        <path id="w4" class="wire" d="M572 76 H601 Q611 76 611 86 V128 Q611 138 621 138 H639"/>
+        <path id="w5" class="wire" d="M572 224 H601 Q611 224 611 214 V172 Q611 162 621 162 H639"/>
+        <path id="w6" class="wire ok" d="M786 138 H801 Q811 138 811 128 V86 Q811 76 821 76 H829"/>
+        <path id="w7" class="wire no" d="M786 162 H801 Q811 162 811 172 V214 Q811 224 821 224 H829"/>
+        <path class="flow" d="M152 150 H199"/>
+        <path class="flow" d="M338 138 H363 Q373 138 373 128 V86 Q373 76 383 76 H405"/>
+        <path class="flow" d="M338 162 H363 Q373 162 373 172 V214 Q373 224 383 224 H405"/>
+        <path class="flow" d="M572 76 H601 Q611 76 611 86 V128 Q611 138 621 138 H639"/>
+        <path class="flow" d="M572 224 H601 Q611 224 611 214 V172 Q611 162 621 162 H639"/>
+        <path class="flow ok" d="M786 138 H801 Q811 138 811 128 V86 Q811 76 821 76 H829"/>
+        <path class="flow no" d="M786 162 H801 Q811 162 811 172 V214 Q811 224 821 224 H829"/>
+        <path class="head" d="M194 145.5 L199 150 L194 154.5"/>
+        <path class="head" d="M400 71.5 L405 76 L400 80.5"/>
+        <path class="head" d="M400 219.5 L405 224 L400 228.5"/>
+        <path class="head" d="M634 133.5 L639 138 L634 142.5"/>
+        <path class="head" d="M634 157.5 L639 162 L634 166.5"/>
+        <path class="head ok" d="M824 71.5 L829 76 L824 80.5"/>
+        <path class="head no" d="M824 219.5 L829 224 L824 228.5"/>
+        <circle class="dot" cx="152" cy="150" r="3"/>
+        <circle class="dot" cx="338" cy="138" r="3"/>
+        <circle class="dot" cx="338" cy="162" r="3"/>
+        <circle class="dot" cx="572" cy="76" r="3"/>
+        <circle class="dot" cx="572" cy="224" r="3"/>
+        <circle class="dot" cx="786" cy="138" r="3"/>
+        <circle class="dot" cx="786" cy="162" r="3"/>
+        <rect class="node" x="20" y="118" width="132" height="64" rx="10"/><text class="tag" x="22" y="108">SOURCE</text><text class="t" x="86.0" y="147.0" text-anchor="middle">あなたのコード</text><text class="s" x="86.0" y="166.0" text-anchor="middle">app.almd</text>
+        <rect class="node" x="206" y="118" width="132" height="64" rx="10"/><text class="tag" x="208" y="108">COMPILER</text><text class="t" x="272.0" y="147.0" text-anchor="middle">almide</text><text class="s" x="272.0" y="166.0" text-anchor="middle">信用しない</text>
+        <rect class="node" x="412" y="44" width="160" height="64" rx="10"/><text class="tag" x="414" y="34">OUTPUT</text><text class="t" x="492.0" y="73.0" text-anchor="middle">Wasm のバイト列</text><text class="s" x="492.0" y="92.0" text-anchor="middle">作ったもの</text>
+        <rect class="node" x="412" y="192" width="160" height="64" rx="10"/><text class="tag" x="414" y="182">CLAIMS</text><text class="t" x="492.0" y="221.0" text-anchor="middle">証拠</text><text class="s" x="492.0" y="240.0" text-anchor="middle">やったと主張する内容</text>
+        <rect class="halo" x="641" y="103" width="150" height="94" rx="15"/><rect class="node hot" x="646" y="108" width="140" height="84" rx="10"/><text class="tag" x="648" y="98">CHECKER</text><text class="t" x="716.0" y="147.0" text-anchor="middle">Buildgate</text><text class="s" x="716.0" y="166.0" text-anchor="middle">別のプログラム</text>
+        <rect class="pill ok" x="836" y="54" width="112" height="44" rx="22"/><text class="pt ok" x="892" y="72" text-anchor="middle">受理</text><text class="s" x="892" y="88" text-anchor="middle">ファイルを書く</text>
+        <rect class="pill no" x="836" y="202" width="112" height="44" rx="22"/><text class="pt no" x="892" y="220" text-anchor="middle">拒否</text><text class="s" x="892" y="236" text-anchor="middle">何も書かない</text>
+        </svg>
     </div>
   </div>
 
   <div class="wrap">
     <p>拒否は、あなたのバグではありません。コンパイラのバグです。ビルドはそう報告します。</p>
-<pre><code><span class="e">error[certificate-rejected]</span>: app.almd: almide-verify judged this build's
+<pre data-title="zsh"><code><span class="e">error[certificate-rejected]</span>: app.almd: almide-verify judged this build's
 certificate and did not accept it (exit 1)
   app.wasm was not written: the build's own certificate does not hold,
   which is a compiler bug — please report it</code></pre>
@@ -203,17 +204,17 @@ certificate and did not accept it (exit 1)
     <p class="num">05 — コードが間違っていたとき</p>
     <h2>エラーが、何を直せばいいかを教えます。</h2>
     <p>エージェントは間違えます。大事なのは、そのあと何が起きるかです。ほかの言語を学んだエージェントは <code>items.length</code> と書きます。</p>
-<pre><code><span class="e">error[E013]</span>: no field 'length' on list
+<pre data-title="zsh"><code><span class="e">error[E013]</span>: no field 'length' on list
   --> app.almd:3:14
   in field access .length
   here: println("${items.length}")
   hint: Almide values have no fields — use the `list` stdlib module.
   try: <span class="g">(machine-applicable — `almide fix` applies it)</span>
       list.len(items)</code></pre>
-<pre><code><span class="c">$ almide fix app.almd</span>
+<pre data-title="zsh"><code><span class="c">$ almide fix app.almd</span>
   Applied 1 machine-applicable fix-it(s) from diagnostics: E013 at line 3</code></pre>
     <p>これは機械的に直せるので、ツールが適用します。関数名の打ち間違いは違います。</p>
-<pre><code><span class="e">error[E002]</span>: undefined function 'string.lenn'
+<pre data-title="zsh"><code><span class="e">error[E002]</span>: undefined function 'string.lenn'
   hint: Did you mean `string.len`?
 
 <span class="c">$ almide fix app.almd</span>
@@ -229,7 +230,7 @@ certificate and did not accept it (exit 1)
     <p class="num">06 — 出荷されない間違い</p>
     <h2>場合分けの書き忘れは、コンパイルエラーです。失敗の無視も同じです。</h2>
     <p>エージェントの編集でいちばんよく見る間違いは、型にバリアントを足して、それを処理すべき場所を1つ見落とすことです。</p>
-<pre><code><span class="k">type</span> Shape =
+<pre data-title="shape.almd"><code><span class="k">type</span> Shape =
   | Circle(Float)
   | Rect(Float, Float)
   | Triangle(Float, Float)      <span class="c">// 追加した</span>
@@ -238,16 +239,16 @@ certificate and did not accept it (exit 1)
   Circle(r) => 3.14159 * r * r,
   Rect(w, h) => w * h,
 }                               <span class="c">// 直し忘れた</span></code></pre>
-<pre><code><span class="e">error[E010]</span>: non-exhaustive match: missing Triangle(_, _)
+<pre data-title="zsh"><code><span class="e">error[E010]</span>: non-exhaustive match: missing Triangle(_, _)
   --> shape.almd:6:36
   hint: add arms for Triangle(_, _):
   <span class="g">Triangle(arg1, arg2) => _</span></code></pre>
     <p>失敗の扱いも同じです。失敗しうる呼び出しは Result を返し、それをどうするかを書かなければなりません。黙って捨てるのは、警告ではなくエラーです。</p>
-<pre><code><span class="k">effect fn</span> load(path: String) -> String = {
+<pre data-title="load.almd"><code><span class="k">effect fn</span> load(path: String) -> String = {
   <span class="k">let</span> text = fs.read_text(path)     <span class="c">// 失敗しうるのに、どこにもそう書いていない</span>
   text
 }</code></pre>
-<pre><code><span class="e">error[E041]</span>: implicit propagation of this binding's value was removed —
+<pre data-title="zsh"><code><span class="e">error[E041]</span>: implicit propagation of this binding's value was removed —
 this value is a Result
   --> load.almd:4:14
   hint: Write `expr!` to propagate, or consume the Result as a value
@@ -334,15 +335,15 @@ this value is a Result
     <p class="num">11 — 試す</p>
     <h2>どこで壊れるか、見てください。</h2>
     <p>Playground はブラウザで動き、インストールは要りません。macOS か Linux にコンパイラと検証器を入れるには：</p>
-<pre><code>curl --proto '=https' --tlsv1.2 -fsSL \
+<pre data-title="zsh"><code>curl --proto '=https' --tlsv1.2 -fsSL \
   https://raw.githubusercontent.com/almide/almide/main/tools/install.sh | sh</code></pre>
     <p class="cap">インストーラは、リリースの署名を確かめるために GitHub CLI（<code>gh</code>）を必要とします。Windows とソースからのビルドは <a href="https://github.com/almide/almide#quick-start">README</a> にあります。</p>
   </div>
   <div class="wide">
     <div class="links">
-      <a href="https://almide.github.io/playground/"><b>Playground →</b><span>ブラウザで Almide を書いて実行する。</span></a>
-      <a href="https://github.com/almide/almide"><b>GitHub →</b><span>コンパイラ、証明、テスト、issue。</span></a>
-      <a href="https://almide.github.io/docs/"><b>ドキュメント →</b><span>言語ガイドと標準ライブラリ。</span></a>
+      <a href="https://almide.github.io/playground/"><b>Playground</b><span>ブラウザで Almide を書いて実行する。</span></a>
+      <a href="https://github.com/almide/almide"><b>GitHub</b><span>コンパイラ、証明、テスト、issue。</span></a>
+      <a href="https://almide.github.io/docs/"><b>ドキュメント</b><span>言語ガイドと標準ライブラリ。</span></a>
     </div>
   </div>
 </section>
