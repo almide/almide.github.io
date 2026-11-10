@@ -42,9 +42,9 @@
     </div>
 
     <div class="facts">
-      <div><b>0</b><span>lines of ownership code you write. No lifetimes. No manual free. No garbage collector</span></div>
-      <div><b>4</b><span>separate programs check what the compiler built. The compiler never checks itself</span></div>
+      <div><b>654</b><span>theorems and lemmas proven in Rocq and checked by its kernel. None admitted, no added axioms</span></div>
       <div><b>100%</b><span>of the test corpus builds with machine-checked evidence, on both targets: 1,050 programs on Wasm, 1,055 on Rust</span></div>
+      <div><b>1,324</b><span>standard library functions in 51 modules, written in Almide itself</span></div>
       <div><b>325 B</b><span>hello world as a WebAssembly file. Emitted directly, no LLVM</span></div>
     </div>
     <p class="asof">Counts are from the public repository at commit <code>79cdadd</code> (2026-11-10; the contract count is the ledger stamped 2026-11-08). The 325 bytes is version 0.69.0 without <code>wasm-opt</code>. They move.</p>
@@ -443,7 +443,7 @@ local.set B       <span class="c">;; every store that follows goes through local
   </div>
   <div class="wrap">
     <p>In CI, Proofcore, Proofcast and Buildgate have to reach the same verdict on every piece of evidence, for every program in the test corpus. A rejection from this setup has already caught a real miscompile in my compiler.</p>
-    <p class="aside">The proofs are 46 Rocq files in the repository. They are about the checker and its models, not about the compiler.</p>
+    <p class="aside">The proofs are 46 Rocq files in the repository, 654 theorems and lemmas in about 21,700 lines. They are about the checker and its models, not about the compiler.</p>
   </div>
   <div class="wrap">
     <h3 class="subhead">What the evidence is about</h3>
