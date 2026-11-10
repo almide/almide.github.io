@@ -179,48 +179,60 @@ certificate and did not accept it (exit 1)
     <article class="spine overview">
       <header class="spine-head">
         <span class="n all">◆</span>
-        <div><h3>Rust の経路</h3><p class="role">ネイティブのビルド：同じ証拠を、別の場所で検査する</p></div>
+        <div><h3>Rust の経路</h3><p class="role">ネイティブのビルド：同じ図で、違うところが3つ</p></div>
       </header>
-      <div class="diagram" role="img" aria-label="Rust の経路。あなたのコードが、信用されていないコンパイラに入る。コンパイラは Rust のソースを描き出し、所有権と呼び出しの渡し方についての証拠を記録する。証拠はハッシュで Rust のソースに固定される。プロジェクトの検証では、Proofcore、Proofcast、Buildgate の3つすべてが一致しなければならない。信頼されている rustc が、ソースをネイティブのバイナリにコンパイルする。">
-          <svg viewBox="0 0 970 320" xmlns="http://www.w3.org/2000/svg">
+      <div class="diagram" role="img" aria-label="Rust の経路。Wasm の経路と同じ配置で描いている。あなたのコードが、信用されていないコンパイラに入る。コンパイラは Rust のソースを描き出し、証拠を記録する。Buildgate が立っていた場所には、信頼されている rustc が立ち、ソースをネイティブのバイナリにコンパイルする。Buildgate は証拠を判定するが、手元のビルドではなくプロジェクトの検証の中で動く。Byteanchor が立っていた場所には、まだバイト列との照合がなく、証拠を Rust のソースに固定するハッシュだけがある。Proofcast と Proofcore は Wasm の経路と同じである。">
+          <svg viewBox="0 0 970 416" xmlns="http://www.w3.org/2000/svg">
           <path class="wire" d="M150 92 H193"/>
           <path class="wire" d="M340 92 H403"/>
           <path class="wire" d="M270 124 V252 Q270 262 280 262 H403"/>
           <path class="wire" d="M560 92 H613"/>
           <path class="wire" d="M770 92 H813"/>
           <path class="wire" d="M560 262 H613"/>
+          <path class="wire" d="M380 366 H423"/>
           <path class="flow" d="M150 92 H193"/>
           <path class="flow" d="M340 92 H403"/>
           <path class="flow" d="M270 124 V252 Q270 262 280 262 H403"/>
           <path class="flow" d="M560 92 H613"/>
           <path class="flow" d="M770 92 H813"/>
           <path class="flow" d="M560 262 H613"/>
+          <path class="flow" d="M380 366 H423"/>
           <path class="head" d="M188 87.5 L193 92 L188 96.5"/>
           <path class="head" d="M398 87.5 L403 92 L398 96.5"/>
           <path class="head" d="M398 257.5 L403 262 L398 266.5"/>
           <path class="head" d="M608 87.5 L613 92 L608 96.5"/>
           <path class="head" d="M808 87.5 L813 92 L808 96.5"/>
           <path class="head" d="M608 257.5 L613 262 L608 266.5"/>
+          <path class="head" d="M418 361.5 L423 366 L418 370.5"/>
           <circle class="dot" cx="150" cy="92" r="3"/>
           <circle class="dot" cx="340" cy="92" r="3"/>
           <circle class="dot" cx="270" cy="124" r="3"/>
           <circle class="dot" cx="560" cy="92" r="3"/>
           <circle class="dot" cx="770" cy="92" r="3"/>
           <circle class="dot" cx="560" cy="262" r="3"/>
-          <path class="rib" d="M485 124 V230"/><circle class="rdot" cx="485" cy="177" r="3.5"/>
-          <text class="wl" x="497" y="181">ハッシュで固定</text>
+          <circle class="dot" cx="380" cy="366" r="3"/>
+          <path class="rib" d="M485 124 V230 M485 172 H530"/>
+          <circle class="rdot" cx="485" cy="172" r="3.5"/>
+          <path class="rib" d="M485 336 V294"/>
+          <circle class="rdot" cx="485" cy="294" r="3.5"/>
+          <path class="rib" d="M200 366 H250"/>
+          <circle class="rdot" cx="250" cy="366" r="3.5"/>
           <rect class="node" x="20" y="60" width="130" height="64" rx="10"/><text class="tag" x="22" y="50">SOURCE</text><text class="t" x="85.0" y="89.0" text-anchor="middle">あなたのコード</text><text class="s" x="85.0" y="108.0" text-anchor="middle">app.almd</text>
           <rect class="node" x="200" y="60" width="140" height="64" rx="10"/><text class="tag" x="202" y="50">COMPILER</text><text class="t" x="270.0" y="89.0" text-anchor="middle">almide</text><text class="s" x="270.0" y="108.0" text-anchor="middle">信用しない</text>
           <rect class="node" x="410" y="60" width="150" height="64" rx="10"/><text class="tag" x="412" y="50">OUTPUT</text><text class="t" x="485.0" y="89.0" text-anchor="middle">Rust のソース</text><text class="s" x="485.0" y="108.0" text-anchor="middle">描き出したもの</text>
-          <rect class="node" x="620" y="60" width="150" height="64" rx="10"/><text class="tag" x="622" y="50">TRUSTED</text><text class="t" x="695.0" y="89.0" text-anchor="middle">rustc</text><text class="s" x="695.0" y="108.0" text-anchor="middle">コンパイルし、drop で解放</text>
-          <rect class="node" x="820" y="60" width="140" height="64" rx="10"/><text class="tag" x="822" y="50">DISK</text><text class="t" x="890.0" y="89.0" text-anchor="middle">app</text><text class="s" x="890.0" y="108.0" text-anchor="middle">ネイティブのバイナリ</text>
           <rect class="node" x="410" y="230" width="150" height="64" rx="10"/><text class="tag" x="412" y="220">CLAIMS</text><text class="t" x="485.0" y="259.0" text-anchor="middle">証拠</text><text class="s" x="485.0" y="278.0" text-anchor="middle">所有権 · 呼び出しの渡し方</text>
-          <rect class="halo" x="615" y="225" width="350" height="74" rx="15"/><rect class="node hot" x="620" y="230" width="340" height="64" rx="10"/><text class="tag" x="622" y="220">プロジェクトの検証</text><text class="t" x="790.0" y="259.0" text-anchor="middle">Proofcore · Proofcast · Buildgate</text><text class="s" x="790.0" y="278.0" text-anchor="middle">3つすべてが一致すること</text>
+          <rect class="node" x="620" y="60" width="150" height="64" rx="10"/><text class="tag" x="622" y="50">TRUSTED</text><text class="t" x="695.0" y="89.0" text-anchor="middle">rustc</text><text class="s" x="695.0" y="108.0" text-anchor="middle">コンパイルし drop で解放</text>
+          <rect class="node" x="820" y="60" width="140" height="64" rx="10"/><text class="tag" x="822" y="50">DISK</text><text class="t" x="890.0" y="89.0" text-anchor="middle">app</text><text class="s" x="890.0" y="108.0" text-anchor="middle">ネイティブのバイナリ</text>
+          <rect class="node" x="250" y="336" width="130" height="60" rx="10"/><text class="tag" x="252" y="326">PROOFS</text><text class="t" x="315.0" y="363.0" text-anchor="middle">規則</text><text class="s" x="315.0" y="382.0" text-anchor="middle">何を安全と呼ぶか</text>
+          <rect class="node ghost" x="530" y="142" width="180" height="60" rx="10"/><text class="tag" x="532" y="132">まだない</text><text class="t gt" x="620.0" y="169.0" text-anchor="middle">バイト列との照合なし</text><text class="s" x="620.0" y="188.0" text-anchor="middle">ソースをハッシュで固定</text>
+          <rect class="halo" x="615" y="225" width="200" height="74" rx="15"/><rect class="node hot" x="620" y="230" width="190" height="64" rx="10"/><text class="tag" x="622" y="220">プロジェクトの検証</text><text class="t" x="715.0" y="259.0" text-anchor="middle">Buildgate</text><text class="s" x="715.0" y="278.0" text-anchor="middle">手元のビルドでは動かない</text>
+          <rect class="halo" x="425" y="331" width="200" height="70" rx="15"/><rect class="node hot" x="430" y="336" width="190" height="60" rx="10"/><text class="tag" x="432" y="326">プロジェクトの検証</text><text class="t" x="525.0" y="363.0" text-anchor="middle">Proofcast</text><text class="s" x="525.0" y="382.0" text-anchor="middle">すべてのプログラムが通るか</text>
+          <rect class="halo" x="15" y="331" width="190" height="70" rx="15"/><rect class="node hot" x="20" y="336" width="180" height="60" rx="10"/><text class="tag" x="22" y="326">プロジェクトの検証</text><text class="t" x="110.0" y="363.0" text-anchor="middle">Proofcore</text><text class="s" x="110.0" y="382.0" text-anchor="middle">規則は正しいか</text>
           </svg>
       </div>
       <div class="spine-foot">
-        <p>ネイティブのビルドは Rust を経由します。コンパイラは Rust のソースを描き出し、描き出したすべての関数について所有権の証拠を記録して、ハッシュでそのソースに固定します。解放は、Rust 自身の drop が行います。</p>
-        <p class="guards"><b>ここで違うこと</b>この検査が走るのはプロジェクトの検証の中で、あなたのビルドのときではありません。このコミットの時点で覆っているのは、1,038 本のテストプログラムのうち 507 本です。残りは通常のコード生成に戻り、証拠を持ちません。rustc は信頼しています。コンパイル後のバイナリを証拠と突き合わせるものは、まだありません。</p>
+        <p>ネイティブのビルドは Rust を経由します。コンパイラは Rust のソースを描き出し、描き出したすべての関数について所有権の証拠を記録します。解放は、Rust 自身の drop が行います。規則、Proofcore、Proofcast は、上の図と同じものです。</p>
+        <p class="guards"><b>違うところは3つ</b>Buildgate が立っていた場所には rustc が立ちます。rustc は検査されず、信頼されています。Buildgate は証拠を判定しますが、動くのはプロジェクトの検証の中で、手元のビルドのときではありません。そして、証拠をコンパイル後のバイナリに結びつけるものはまだなく、あるのは Rust のソースのハッシュだけです。今の時点で覆っているのは、1,038 本のテストプログラムのうち 507 本です。残りは通常のコード生成に戻り、証拠を持ちません。</p>
       </div>
     </article>
     <article class="spine">

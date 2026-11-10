@@ -237,6 +237,8 @@ pre .g { color: #7fe6b4; }
 .diagram .pt.ok { fill: var(--good); }
 .diagram .pt.no { fill: var(--bad); }
 
+.diagram .node.ghost { fill: transparent; stroke: var(--faint); stroke-dasharray: 4 5; }
+.diagram .t.gt { fill: var(--muted); font-weight: 500; }
 .diagram .node.back { fill: var(--panel); stroke: var(--line); }
 .diagram .wl { font: 500 10px var(--mono); letter-spacing: .12em; fill: var(--accent); text-transform: uppercase; }
 
