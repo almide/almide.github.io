@@ -42,10 +42,10 @@
     </div>
 
     <div class="facts">
-      <div><b>4</b><span>independent checkers judge the compiler's evidence, built in different ways</span></div>
-      <div><b>1,055 / 1,055</b><span>test programs go through the certified route on Rust, and 1,050 of 1,050 on Wasm</span></div>
-      <div><b>454</b><span>written-down promises about behaviour, each tied to executable evidence</span></div>
-      <div><b>325 B</b><span>hello world as a WebAssembly file, emitted directly with no LLVM</span></div>
+      <div><b>0</b><span>ownership annotations, lifetimes or frees to write. And no garbage collector</span></div>
+      <div><b>4</b><span>independent checkers judge the compiler's work. The compiler is not one of them</span></div>
+      <div><b>100%</b><span>of the test corpus builds with machine-checked evidence, on both targets: 1,050 programs on Wasm, 1,055 on Rust</span></div>
+      <div><b>325 B</b><span>hello world as a WebAssembly file. Emitted directly, no LLVM</span></div>
     </div>
     <p class="asof">Counts are from the public repository at commit <code>79cdadd</code> (2026-11-10; the contract count is the ledger stamped 2026-11-08). The 325 bytes is version 0.69.0 without <code>wasm-opt</code>. They move.</p>
   </div>
