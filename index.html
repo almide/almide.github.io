@@ -168,6 +168,7 @@ certificate and did not accept it (exit 1)
         <h3>Proofcore</h3>
         <p class="role">The Rocq proof kernel</p>
         <p>The checker is defined and proven inside the Rocq proof assistant. Its verdict can be computed by the proof kernel itself.</p>
+        <p class="guards"><b>Guards against</b>The checker's own logic being wrong. What is proven is the rule itself: if it accepts, the property holds.</p>
         <span class="tag">runs in CI</span>
       </div>
       <div class="card">
@@ -175,6 +176,7 @@ certificate and did not accept it (exit 1)
         <h3>Proofcast</h3>
         <p class="role">A checker generated from the proofs</p>
         <p>The same proven checker, sent out of Rocq as a standalone program so it is fast enough to run over the whole corpus.</p>
+        <p class="guards"><b>Guards against</b>A proof that only exists on paper. This is the proven rule actually run, on every program in the corpus.</p>
         <span class="tag">runs in CI</span>
       </div>
       <div class="card">
@@ -182,13 +184,15 @@ certificate and did not accept it (exit 1)
         <h3>Buildgate</h3>
         <p class="role">A verifier written by hand in Rust</p>
         <p><code>almide-verify</code>. Independent code, not proven. It ships next to the compiler and is the one that stops your build.</p>
+        <p class="guards"><b>Guards against</b>A bad build reaching your disk. It also refuses evidence that was recorded for a different file, by hash.</p>
         <span class="tag here">runs on your machine</span>
       </div>
       <div class="card">
         <div class="n">4</div>
         <h3>Byteanchor</h3>
         <p class="role">A tool that opens the finished file</p>
-        <p>It decodes the final <code>.wasm</code> and holds each recorded bounds and initialization event to the instruction it names. Evidence about code that isn't there does not pass.</p>
+        <p>It decodes the final <code>.wasm</code> and holds each recorded bounds, initialization and field event to the instruction it names. Evidence about code that isn't there does not pass.</p>
+        <p class="guards"><b>Guards against</b>Evidence about code that isn't there. A bounds check that was recorded but never emitted is caught here.</p>
         <span class="tag">runs in CI</span>
       </div>
     </div>
@@ -196,6 +200,25 @@ certificate and did not accept it (exit 1)
   <div class="wrap">
     <p>In CI, Proofcore, Proofcast and Buildgate have to reach the same verdict on every piece of evidence, for every program in the test corpus. A rejection from this setup has already caught a real miscompile in my compiler.</p>
     <p class="aside">The proofs are 46 Rocq files in the repository. They are about the checker and its models, not about the compiler.</p>
+  </div>
+  <div class="wrap">
+    <h3 class="subhead">What the evidence is about</h3>
+    <p>The evidence comes in kinds, one per property. Each kind has its own rule, and the rule is what the four checkers apply.</p>
+  </div>
+  <div class="wide">
+    <div class="props">
+      <div class="prop head"><span>kind</span><span>the bug it stops</span><span>accepted only if</span></div>
+      <div class="prop"><code>ownership</code><div class="stops">Double free, leak, use after free</div><div class="iff">every object's reference count never faults and ends at zero</div></div>
+      <div class="prop"><code>bounds</code><div class="stops">Reading or writing past the end of a list</div><div class="iff">every access is preceded, on every path, by a check of that slot</div></div>
+      <div class="prop"><code>init</code><div class="stops">Reading memory that was never written</div><div class="iff">every construction writes every slot of its block, and none past it</div></div>
+      <div class="prop"><code>fields</code><div class="stops">Treating a value as the wrong shape</div><div class="iff">every record, tuple and variant store, and every field access, fits its layout</div></div>
+      <div class="prop"><code>call-modes</code><div class="stops">Caller and callee disagreeing about who owns an argument</div><div class="iff">every call site passes its arguments the way the callee's signature says</div></div>
+      <div class="prop"><code>names</code><div class="stops">A reference to something that doesn't exist</div><div class="iff">every name that is used is defined</div></div>
+      <div class="prop"><code>caps</code><div class="stops">Code touching files or the network without saying so</div><div class="iff">everything a function can reach, directly or through its calls, is in its declaration</div></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="aside">These hold for the code the evidence covers. Byteanchor re-checks the bounds, init and fields events against the bytes. For ownership, that link is still trusted.</p>
   </div>
 </section>
 

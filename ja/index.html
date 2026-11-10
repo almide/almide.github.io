@@ -168,6 +168,7 @@ certificate and did not accept it (exit 1)
         <h3>Proofcore</h3>
         <p class="role">Rocq の証明カーネル</p>
         <p>検査器は、証明支援系 Rocq の中で定義され、証明されています。その判定は、証明を検査するカーネル自身に計算させることができます。</p>
+        <p class="guards"><b>守るもの</b>検査器そのもののロジックの誤り。証明されているのは規則そのものです。受理したなら、その性質は成り立ちます。</p>
         <span class="tag">CI で動く</span>
       </div>
       <div class="card">
@@ -175,6 +176,7 @@ certificate and did not accept it (exit 1)
         <h3>Proofcast</h3>
         <p class="role">証明から生成した検査器</p>
         <p>同じ証明済みの検査器を、Rocq の外へ独立したプログラムとして送り出したものです。テスト全体にかけられる速さで動きます。</p>
+        <p class="guards"><b>守るもの</b>紙の上だけの証明。証明済みの規則を、テスト用のすべてのプログラムに対して実際に走らせます。</p>
         <span class="tag">CI で動く</span>
       </div>
       <div class="card">
@@ -182,13 +184,15 @@ certificate and did not accept it (exit 1)
         <h3>Buildgate</h3>
         <p class="role">Rust で手書きした検証器</p>
         <p><code>almide-verify</code>。独立して書いたコードで、証明はされていません。コンパイラと一緒に配布され、あなたのビルドを実際に止めるのはこれです。</p>
+        <p class="guards"><b>守るもの</b>悪いビルドがディスクに届くこと。別のファイルについて記録された証拠も、ハッシュで見分けて拒否します。</p>
         <span class="tag here">手元のマシンで動く</span>
       </div>
       <div class="card">
         <div class="n">4</div>
         <h3>Byteanchor</h3>
         <p class="role">できあがったファイルを開くツール</p>
-        <p>最終的な <code>.wasm</code> をデコードし、記録された境界チェックと初期化の一つ一つを、それが指している命令と突き合わせます。そこにないコードについての証拠は通りません。</p>
+        <p>最終的な <code>.wasm</code> をデコードし、記録された境界チェック・初期化・フィールド操作の一つ一つを、それが指している命令と突き合わせます。そこにないコードについての証拠は通りません。</p>
+        <p class="guards"><b>守るもの</b>そこにないコードについての証拠。記録はされたが実際には出力されなかった境界チェックは、ここで見つかります。</p>
         <span class="tag">CI で動く</span>
       </div>
     </div>
@@ -196,6 +200,25 @@ certificate and did not accept it (exit 1)
   <div class="wrap">
     <p>CIでは、Proofcore・Proofcast・Buildgate の3つが、テスト用のすべてのプログラムのすべての証拠について、同じ判定を出さなければなりません。この仕組みでの拒否は、自分のコンパイラの実際のミスコンパイルをすでに1つ捕まえています。</p>
     <p class="aside">証明は、リポジトリにある46個のRocqファイルです。対象は検査器とそのモデルで、コンパイラではありません。</p>
+  </div>
+  <div class="wrap">
+    <h3 class="subhead">証拠は何についてのものか</h3>
+    <p>証拠には種類があり、性質ごとに1つずつあります。種類ごとに規則が決まっていて、4つの検査器が当てはめるのはその規則です。</p>
+  </div>
+  <div class="wide">
+    <div class="props">
+      <div class="prop head"><span>種類</span><span>止めるバグ</span><span>受理する条件</span></div>
+      <div class="prop"><code>ownership</code><div class="stops">二重解放、解放漏れ、解放後の使用</div><div class="iff">すべてのオブジェクトの参照カウントが一度も破綻せず、最後にゼロで終わる</div></div>
+      <div class="prop"><code>bounds</code><div class="stops">リストの範囲外の読み書き</div><div class="iff">すべてのアクセスの前に、どの経路でも、その位置の検査がある</div></div>
+      <div class="prop"><code>init</code><div class="stops">一度も書かれていないメモリの読み出し</div><div class="iff">値を作る箇所が、確保した領域のすべての位置を書き、その外には書かない</div></div>
+      <div class="prop"><code>fields</code><div class="stops">値を別の形のものとして扱うこと</div><div class="iff">レコード・タプル・バリアントへの書き込みとフィールドの参照が、すべてレイアウトに合っている</div></div>
+      <div class="prop"><code>call-modes</code><div class="stops">呼ぶ側と呼ばれる側で、引数の持ち主の認識が食い違うこと</div><div class="iff">すべての呼び出しが、呼ばれる側のシグネチャどおりの渡し方をしている</div></div>
+      <div class="prop"><code>names</code><div class="stops">存在しないものへの参照</div><div class="iff">使われている名前がすべて定義されている</div></div>
+      <div class="prop"><code>caps</code><div class="stops">宣言せずにファイルやネットワークに触れるコード</div><div class="iff">関数が直接、または呼び出しを通じて届くものが、すべて宣言の中にある</div></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="aside">これらは、証拠が覆っているコードについて成り立ちます。Byteanchor は bounds・init・fields の証拠を、実際のバイト列と突き合わせます。ownership については、その対応はまだ信頼に置いています。</p>
   </div>
 </section>
 
