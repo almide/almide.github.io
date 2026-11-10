@@ -43,11 +43,11 @@
 
     <div class="facts">
       <div><b>4</b><span>コンパイラの証拠を判定する検査器の数。作り方はそれぞれ別</span></div>
-      <div><b>1033 / 1034</b><span>Wasm のテスト用プログラムのうち、すべての関数が認証つきでビルドされる数</span></div>
+      <div><b>1,055 / 1,055</b><span>Rust で、認証つきの経路を通るテスト用プログラムの数。Wasm は 1,050 / 1,050</span></div>
       <div><b>454</b><span>書き出された振る舞いの約束の数。一つ一つが実行できる証拠に結びついている</span></div>
       <div><b>325 B</b><span>hello world を WebAssembly にしたファイルの大きさ。LLVM を通さず直接出力</span></div>
     </div>
-    <p class="asof">数字は公開リポジトリのコミット <code>8ce6254</code>（台帳の日付は 2026-11-08）時点のものです。325 バイトは 0.69.0 で <code>wasm-opt</code> なしの値です。これからも動きます。</p>
+    <p class="asof">数字は公開リポジトリのコミット <code>79cdadd</code>（2026-11-10）時点のものです。契約の数は 2026-11-08 付の台帳の値です。325 バイトは 0.69.0 で <code>wasm-opt</code> なしの値です。これからも動きます。</p>
   </div>
 </div>
 </div>
@@ -209,7 +209,7 @@ certificate and did not accept it (exit 1)
       </div>
       <div class="spine-foot">
         <p>コンパイラは1つ、ターゲットは2つです。上の経路が WebAssembly、下の経路が Rust です。あいだにあるのは、両方が共有するものです。規則と、規則が正しいことの証明である Proofcore、そして両方の経路の証拠に規則を走らせる Proofcast です。</p>
-        <p class="guards"><b>2つの経路で違うところ</b>Wasm では、Buildgate があなたのディスクの手前に立ち、Byteanchor が証拠をバイト列に結びつけます。Rust では、その場所に rustc が立ち、rustc は信頼されています。Buildgate が証拠を判定するのは、手元のビルドではなくプロジェクトの検証の中です。証拠をコンパイル後のバイナリに結びつけるものは、まだありません。Rust の経路が今覆っているのは、1,038 本のテストプログラムのうち 507 本です。残りは通常のコード生成に戻り、証拠を持ちません。</p>
+        <p class="guards"><b>2つの経路で違うところ</b>Wasm では、Buildgate があなたのディスクの手前に立ち、Byteanchor が証拠をバイト列に結びつけます。Rust では、その場所に rustc が立ち、rustc は信頼されています。Buildgate が証拠を判定するのは、手元のビルドではなくプロジェクトの検証の中です。証拠をコンパイル後のバイナリに結びつけるものは、まだありません。覆っている範囲は、もう違いではありません。ターゲット間で比べるテスト用プログラムは、いまはすべて、両方の経路で認証つきの経路を通ります。Wasm が 1,050 本、Rust が 1,055 本です。Rust のレンダラが扱えないプログラムは、今も通常のコード生成に戻り、証拠を持ちません。</p>
       </div>
     </article>
     <article class="spine">
@@ -273,9 +273,9 @@ certificate and did not accept it (exit 1)
           <circle class="dot" cx="580" cy="115" r="3"/>
           <circle class="dot" cx="580" cy="139" r="3"/>
           <rect class="node" x="40" y="36" width="210" height="64" rx="10"/><text class="tag" x="42" y="26">PROOFS</text><text class="t" x="145.0" y="65.0" text-anchor="middle">規則</text><text class="s" x="145.0" y="84.0" text-anchor="middle">Rocq で証明済み</text>
-          <rect class="node back" x="50" y="172" width="210" height="64" rx="10"/><rect class="node back" x="45" y="167" width="210" height="64" rx="10"/><rect class="node" x="40" y="162" width="210" height="64" rx="10"/><text class="tag" x="42" y="152">CORPUS</text><text class="t" x="145.0" y="191.0" text-anchor="middle">1,034 本のプログラム</text><text class="s" x="145.0" y="210.0" text-anchor="middle">それぞれの証拠</text>
+          <rect class="node back" x="50" y="172" width="210" height="64" rx="10"/><rect class="node back" x="45" y="167" width="210" height="64" rx="10"/><rect class="node" x="40" y="162" width="210" height="64" rx="10"/><text class="tag" x="42" y="152">CORPUS</text><text class="t" x="145.0" y="191.0" text-anchor="middle">1,050 本のプログラム</text><text class="s" x="145.0" y="210.0" text-anchor="middle">それぞれの証拠</text>
           <rect class="halo" x="375" y="80" width="210" height="94" rx="15"/><rect class="node hot" x="380" y="85" width="200" height="84" rx="10"/><text class="tag" x="382" y="75">PROGRAM</text><text class="t" x="480.0" y="124.0" text-anchor="middle">Proofcast</text><text class="s" x="480.0" y="143.0" text-anchor="middle">規則をそのままバイナリに</text>
-          <rect class="pill ok" x="700" y="44" width="220" height="48" rx="24"/><text class="pt ok" x="810.0" y="64" text-anchor="middle">受理</text><text class="s" x="810.0" y="81" text-anchor="middle">1,033 本が完全に認証</text>
+          <rect class="pill ok" x="700" y="44" width="220" height="48" rx="24"/><text class="pt ok" x="810.0" y="64" text-anchor="middle">受理</text><text class="s" x="810.0" y="81" text-anchor="middle">1,050 本すべてが認証</text>
           <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">拒否</text><text class="s" x="810.0" y="207" text-anchor="middle">CI で捕まる</text>
           <text class="wl" x="282" y="58" text-anchor="middle">抽出</text>
           </svg>
@@ -462,7 +462,7 @@ this value is a Result
     <p class="num">07 — 1つのソース、2つのターゲット</p>
     <h2>同じソースからネイティブと WebAssembly を作り、同じ出力を求めます。</h2>
     <p>ネイティブのビルドはRustを経由します。WebAssemblyは、LLVMを挟まずにコンパイラが直接出力します。hello world は 325 バイトの <code>.wasm</code> ファイルになります。</p>
-    <p>バックエンドが2つあれば、食い違うことがあります。だから、外から観測できる約束はすべて「契約」として書き出してあります。今は454個あり、一つ一つが実行できる証拠に結びついています。CIは1,038本のプログラムを両方のターゲットで実行し、標準出力・標準エラー・終了コードを比べます。3つ目の実行系として、コード生成の前の段階でプログラムを実行するインタプリタも判定に加わります。</p>
+    <p>バックエンドが2つあれば、食い違うことがあります。だから、外から観測できる約束はすべて「契約」として書き出してあります。今は454個あり、一つ一つが実行できる証拠に結びついています。CIは1,055本のプログラムを両方のターゲットで実行し、標準出力・標準エラー・終了コードを比べます。3つ目の実行系として、コード生成の前の段階でプログラムを実行するインタプリタも判定に加わります。</p>
     <p class="aside">この比較は、文書に書かれた条件のもとで成り立ちます。乱数、時計、プラットフォームの細部には、それぞれ範囲を区切った契約があります。インタプリタは、実行できない17本については判定を棄権します。</p>
   </div>
 </section>
@@ -508,7 +508,7 @@ this value is a Result
     <h2>完成していません。そこははっきり言っておきます。</h2>
     <ul class="plain">
       <li><b>コンパイラ全体は証明されていません。</b>証明が覆っているのは、検査器とそのモデルです。</li>
-      <li><b>ネイティブのビルドは検証器を実行しません。</b>既定では検証済みのレンダラをまず試し、それがまだ扱えないプログラムは通常のコード生成に戻ります。</li>
+      <li><b>ネイティブのビルドは検証器を実行しません。</b>認証つきのレンダラを通り、テスト用のプログラムは今はすべてそこを通ります。ただし、証拠を判定するのはプロジェクトの検証の中で、手元のビルドのときではありません。レンダラが扱えないプログラムは、今も通常のコード生成に戻ります。</li>
       <li><b>手元のマシンで動くのは、4つの検査器のうち1つだけです。</b>ほかの3つは、CIでテスト用のプログラムに対して動きます。検証器が入っていなければ、Wasmのビルドは検査なしで通ります。</li>
       <li><b>証拠が部分的な場合があります。</b>プログラムの一部しか覆っていない証明書も通します。component 出力はこの方法では検査されません。</li>
       <li><b>所有権の証拠が、生成されたバイト列と対応しているかは、まだ信頼に置いています。</b>境界チェックと初期化の証拠は、バイト列と突き合わせています。所有権はまだです。</li>

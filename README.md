@@ -16,7 +16,7 @@ Plain HTML and CSS, no build step.
 
 Every technical statement on the page is taken from the compiler repository. When one of these changes, the page changes with it:
 
-- The three counts in the hero (checkers, certified Wasm programs, annotations) and the commit they are dated to. The certified count is the header of `crates/almide-wasm/tests/golden/witness-fixtures.txt`.
+- The three counts in the hero (checkers, certified Wasm programs, annotations) and the commit they are dated to. The certified count is the header of `crates/almide-wasm/tests/golden/witness-fixtures.txt`. The Rust count is the header of `proofs/native-verified-floor.txt`. The corpus size is the number of `.almd` files in `spec/wasm_cross/`. Read all three from `origin/develop`, not from a working branch.
 - The diagnostics in section 05 are real compiler output (`almide check`, `almide fix`).
 - The code sample in section 02 must pass `almide check` and print the shown output with `almide run --target wasm`.
 - Section 06 mirrors `docs/contracts/proven-vs-trusted.md` and `docs/design/MEMORY-SAFETY.md`.

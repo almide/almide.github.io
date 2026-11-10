@@ -43,11 +43,11 @@
 
     <div class="facts">
       <div><b>4</b><span>independent checkers judge the compiler's evidence, built in different ways</span></div>
-      <div><b>1033 / 1034</b><span>programs in the Wasm test corpus build with every function certified</span></div>
+      <div><b>1,055 / 1,055</b><span>test programs go through the certified route on Rust, and 1,050 of 1,050 on Wasm</span></div>
       <div><b>454</b><span>written-down promises about behaviour, each tied to executable evidence</span></div>
       <div><b>325 B</b><span>hello world as a WebAssembly file, emitted directly with no LLVM</span></div>
     </div>
-    <p class="asof">Counts are from the public repository at commit <code>8ce6254</code> (ledger dated 2026-11-08). The 325 bytes is version 0.69.0 without <code>wasm-opt</code>. They move.</p>
+    <p class="asof">Counts are from the public repository at commit <code>79cdadd</code> (2026-11-10; the contract count is the ledger stamped 2026-11-08). The 325 bytes is version 0.69.0 without <code>wasm-opt</code>. They move.</p>
   </div>
 </div>
 </div>
@@ -209,7 +209,7 @@ certificate and did not accept it (exit 1)
       </div>
       <div class="spine-foot">
         <p>One compiler, two targets. The top lane is WebAssembly and the bottom lane is Rust. Between them is what they share: the rule, Proofcore, which is the proof that the rule is right, and Proofcast, which runs the rule over the evidence from both lanes.</p>
-        <p class="guards"><b>Where the two lanes differ</b>On Wasm, Buildgate stands in front of your disk and Byteanchor ties the evidence to the bytes. On Rust, rustc stands in that place and is trusted. Buildgate judges the evidence in the project's verification instead of at your build, and nothing ties the evidence to the compiled binary yet. The Rust lane covers 507 of the 1,038 test programs today. The rest fall back to the standard code generator and carry no evidence.</p>
+        <p class="guards"><b>Where the two lanes differ</b>On Wasm, Buildgate stands in front of your disk and Byteanchor ties the evidence to the bytes. On Rust, rustc stands in that place and is trusted. Buildgate judges the evidence in the project's verification instead of at your build, and nothing ties the evidence to the compiled binary yet. Coverage is no longer one of the differences. Every program in the cross-target corpus now goes through the certified route on both lanes, 1,050 on Wasm and 1,055 on Rust. A program outside what the Rust renderer handles still falls back to the standard code generator and carries no evidence.</p>
       </div>
     </article>
     <article class="spine">
@@ -273,9 +273,9 @@ certificate and did not accept it (exit 1)
           <circle class="dot" cx="580" cy="115" r="3"/>
           <circle class="dot" cx="580" cy="139" r="3"/>
           <rect class="node" x="40" y="36" width="210" height="64" rx="10"/><text class="tag" x="42" y="26">PROOFS</text><text class="t" x="145.0" y="65.0" text-anchor="middle">the rule</text><text class="s" x="145.0" y="84.0" text-anchor="middle">proven in Rocq</text>
-          <rect class="node back" x="50" y="172" width="210" height="64" rx="10"/><rect class="node back" x="45" y="167" width="210" height="64" rx="10"/><rect class="node" x="40" y="162" width="210" height="64" rx="10"/><text class="tag" x="42" y="152">CORPUS</text><text class="t" x="145.0" y="191.0" text-anchor="middle">1,034 programs</text><text class="s" x="145.0" y="210.0" text-anchor="middle">evidence from each one</text>
+          <rect class="node back" x="50" y="172" width="210" height="64" rx="10"/><rect class="node back" x="45" y="167" width="210" height="64" rx="10"/><rect class="node" x="40" y="162" width="210" height="64" rx="10"/><text class="tag" x="42" y="152">CORPUS</text><text class="t" x="145.0" y="191.0" text-anchor="middle">1,050 programs</text><text class="s" x="145.0" y="210.0" text-anchor="middle">evidence from each one</text>
           <rect class="halo" x="375" y="80" width="210" height="94" rx="15"/><rect class="node hot" x="380" y="85" width="200" height="84" rx="10"/><text class="tag" x="382" y="75">PROGRAM</text><text class="t" x="480.0" y="124.0" text-anchor="middle">Proofcast</text><text class="s" x="480.0" y="143.0" text-anchor="middle">the rule, as a binary</text>
-          <rect class="pill ok" x="700" y="44" width="220" height="48" rx="24"/><text class="pt ok" x="810.0" y="64" text-anchor="middle">accept</text><text class="s" x="810.0" y="81" text-anchor="middle">1,033 fully certified</text>
+          <rect class="pill ok" x="700" y="44" width="220" height="48" rx="24"/><text class="pt ok" x="810.0" y="64" text-anchor="middle">accept</text><text class="s" x="810.0" y="81" text-anchor="middle">all 1,050 certified</text>
           <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">reject</text><text class="s" x="810.0" y="207" text-anchor="middle">caught in CI</text>
           <text class="wl" x="282" y="58" text-anchor="middle">extract</text>
           </svg>
@@ -462,7 +462,7 @@ this value is a Result
     <p class="num">07 — ONE SOURCE, TWO TARGETS</p>
     <h2>Native and WebAssembly from the same source, held to the same output.</h2>
     <p>Native builds go through Rust. WebAssembly is emitted directly by the compiler, with no LLVM in between. Hello world comes out as a 325-byte <code>.wasm</code> file.</p>
-    <p>Two backends can disagree. So every observable promise is written down as a contract, 454 of them today, each tied to executable evidence. CI runs 1,038 programs on both targets and compares stdout, stderr and the exit code. A third executor, an interpreter that runs the program before any code is generated, votes as well.</p>
+    <p>Two backends can disagree. So every observable promise is written down as a contract, 454 of them today, each tied to executable evidence. CI runs 1,055 programs on both targets and compares stdout, stderr and the exit code. A third executor, an interpreter that runs the program before any code is generated, votes as well.</p>
     <p class="aside">The comparison holds under documented conditions. Randomness, clocks and platform details have their own scoped contracts, and the interpreter abstains on 17 programs it can't run.</p>
   </div>
 </section>
@@ -508,7 +508,7 @@ this value is a Result
     <h2>It is not finished, and I want to be clear about that.</h2>
     <ul class="plain">
       <li><b>The compiler as a whole is not proven.</b> The proofs cover the checker and its models.</li>
-      <li><b>Native builds don't run the verifier.</b> By default they try a verified renderer, and fall back to the standard code generator for programs it can't handle yet.</li>
+      <li><b>Native builds don't run the verifier.</b> They go through a certified renderer, and the whole test corpus now does. But the evidence is judged in the project's verification, not at your build, and a program the renderer can't handle still falls back to the standard code generator.</li>
       <li><b>On your machine only one of the four checkers runs.</b> The other three run in CI, on the test corpus. If the verifier isn't installed, a Wasm build goes through unchecked.</li>
       <li><b>Some evidence is partial.</b> A certificate that covers only part of a program is let through. Component output is not checked this way.</li>
       <li><b>That the ownership evidence matches the generated bytes is still trusted.</b> Bounds and initialization evidence are checked against the bytes. Ownership is not yet.</li>
