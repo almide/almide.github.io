@@ -70,6 +70,8 @@ try {
             const region=page.locator('.diagram').first();
             await region.focus(); await region.press('ArrowRight');
             await page.waitForFunction(()=>document.querySelector('.diagram').scrollLeft>0);
+            assert.ok(await region.evaluate(el=>document.activeElement===el));
+            assert.equal(await page.locator('.skip-link').evaluate(el=>getComputedStyle(el).opacity),'0');
             if (!route.includes('story')) {
               assert.ok(await page.locator('.mobile-label').first().isVisible());
               await page.locator('.props').first().screenshot({path:`${root}/test-results/${name}-table.png`});
@@ -84,6 +86,11 @@ try {
   }
   const page=await browser.newPage({viewport:{width:390,height:844},colorScheme:'light',reducedMotion:'reduce'});
   await page.goto(base+'/');
+  await page.keyboard.press('Tab');
+  assert.ok(await page.locator('.skip-link').evaluate(el=>document.activeElement===el));
+  assert.equal(await page.locator('.skip-link').evaluate(el=>getComputedStyle(el).opacity),'1');
+  await page.keyboard.press('Enter');
+  await page.waitForURL('**/#main-content');
   const toggle=page.locator('.theme-toggle');
   await toggle.click(); assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
   await page.reload(); assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');

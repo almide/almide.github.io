@@ -39,7 +39,7 @@ npx playwright install chromium
 npm run verify
 ```
 
-The dependency-free static tests check all six pages, metadata, local links and assets, preserved Chinese code examples, and theme controls with unavailable storage. Browser verification checks seven widths (320, 360, 375, 390, 768, 1024 and 1440 px) in both themes, JavaScript-disabled navigation, missing assets, theme persistence, language switches, section anchors and Back/Forward. Screenshots are written to `test-results/`. Set `CHROMIUM_PATH` to use an existing Chromium executable.
+The dependency-free static tests check all six pages, metadata, local links and assets, preserved Chinese code examples, and theme controls with unavailable storage. Browser verification checks eight widths (320, 360, 375, 390, 740, 768, 1024 and 1440 px) in both themes, JavaScript-disabled navigation, missing assets, theme persistence, language switches, section anchors and Back/Forward. Screenshots are written to `test-results/`. Set `CHROMIUM_PATH` to use an existing Chromium executable.
 
 The Verify website workflow runs these checks on pull requests and pushes to `main`, and keeps screenshots as an artifact. GitHub Pages continues to publish the static root from `main`; this workflow does not change the deployment source.
 
