@@ -8,37 +8,51 @@
 <meta property="og:title" content="Almide — 250日">
 <meta property="og:description" content="250日で、1万行から70万行へ。何を作るつもりで、何が出て、何を捨てたか。">
 <meta property="og:type" content="article">
+<link rel="canonical" href="https://almide.github.io/ja/story/">
+<link rel="alternate" hreflang="en" href="https://almide.github.io/story/">
+<link rel="alternate" hreflang="ja" href="https://almide.github.io/ja/story/">
+<link rel="alternate" hreflang="zh-Hans" href="https://almide.github.io/zh/story/">
+<link rel="alternate" hreflang="x-default" href="https://almide.github.io/story/">
+<meta property="og:url" content="https://almide.github.io/ja/story/">
+<meta property="og:locale" content="ja_JP">
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
-<link rel="preload" href="../../fonts/geist-mono.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="../../fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../style.css?v=20261111b">
+<link rel="preload" href="../../fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+<script>try { const theme = localStorage.getItem("almide-theme"); if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme; } catch {}</script>
+<script src="../../site.js?v=20261111c" defer></script>
+<link rel="stylesheet" href="../../style.css?v=20261111c">
 </head>
-<body>
+<body id="top" class="story-page">
 
+<a class="skip-link" href="#main-content">本文へ移動</a>
 <header class="top">
-  <a class="brand" href="../"><img src="../../favicon.svg" alt="">Almide</a>
-  <nav aria-label="サイト">
-    <a href="https://almide.github.io/playground/">Playground</a>
-    <a href="https://almide.github.io/docs/">ドキュメント</a>
-    <a href="https://github.com/almide/almide">GitHub</a>
-    <a href="./" aria-current="true">これまで</a>
-    <a href="../../story/" lang="en">EN</a>
-  </nav>
+  <div class="header-inner">
+    <a class="brand" href="../../ja/"><img src="../../favicon.svg" width="28" height="28" alt=""><span>Almide<span class="brand-caption">PRE-1.0</span></span></a>
+    <nav class="primary-nav" aria-label="メインナビゲーション"><a href="../../ja/">概要</a><a href="../../ja/story/" aria-current="page">これまで</a><a href="https://almide.github.io/docs/">ドキュメント</a><a href="https://almide.github.io/playground/">試す<span aria-hidden="true"> ↗</span></a><a href="https://github.com/almide/almide">GitHub<span aria-hidden="true"> ↗</span></a></nav>
+    <div class="header-tools">
+      <nav class="locale-switcher" aria-label="言語"><a href="../../story/" lang="en" hreflang="en">EN</a><a href="../../ja/story/" lang="ja" hreflang="ja" aria-current="true">日本語</a><a href="../../zh/story/" lang="zh-Hans" hreflang="zh-Hans">中文</a></nav>
+      <button class="theme-toggle" type="button" aria-label="配色を切り替え" title="配色を切り替え" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button>
+    </div>
+  </div>
 </header>
 
-<main>
+<main id="main-content">
 
 <div class="hero-bg">
 <div class="wide">
   <div class="hero">
+    <div class="hero-copy">
     <p class="eyebrow">Almide · これまでの話</p>
     <h1>250日で、<em>1万行</em>から70万行へ。</h1>
     <p class="sub">README が何を作ると言っていたか、実際に何が出たか、途中で何を捨てたか。<strong>すべて、リポジトリ自身の履歴から取りました。</strong></p>
+    </div>
+    <div class="hero-evidence">
+    <div class="panel-heading"><span>ALMIDE</span><span>プログラミング言語 / オープンソース</span></div>
     <div class="facts">
       <div><b>250</b><span>最初のコミットからの日数。2026年3月7日から11月11日まで</span></div>
       <div><b>17,044</b><span>コミットの数。250日のうち234日にコミットがある</span></div>
       <div><b>277</b><span>リリースの数。最初の1つは2日目</span></div>
       <div><b>69倍</b><span>Rust の伸び。10,128行から698,358行へ</span></div>
+    </div>
     </div>
   </div>
 </div>
@@ -277,6 +291,7 @@
   <div class="wide">
     <p>日付、題、数は、リポジトリのタグ、リリース、コミットの履歴（2d59db6 時点）から取りました。このページの文章は、AI アシスタントで下書きし、その履歴と照らして確かめたものです。</p>
   </div>
+  <div class="wide footer-end"><a href="../../ja/">Almide</a><a href="#top">ページの先頭へ ↑</a></div>
 </footer>
 
 </body>

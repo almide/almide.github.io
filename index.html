@@ -9,39 +9,49 @@
 <meta property="og:description" content="AI agents write more code than anyone can review. Almide moves the safety into the compiler, and then doesn't let the compiler grade its own work.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://almide.github.io/">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://almide.github.io/">
+<link rel="alternate" hreflang="en" href="https://almide.github.io/">
 <link rel="alternate" hreflang="ja" href="https://almide.github.io/ja/">
-<link rel="preload" href="fonts/geist-mono.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="style.css?v=20261111b">
+<link rel="alternate" hreflang="zh-Hans" href="https://almide.github.io/zh/">
+<link rel="alternate" hreflang="x-default" href="https://almide.github.io/">
+<meta property="og:locale" content="en_US">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="./fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+<script>try { const theme = localStorage.getItem("almide-theme"); if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme; } catch {}</script>
+<script src="./site.js?v=20261111c" defer></script>
+<link rel="stylesheet" href="style.css?v=20261111c">
 </head>
-<body>
+<body id="top">
 
+<a class="skip-link" href="#main-content">Skip to content</a>
 <header class="top">
-  <a class="brand" href="./"><img src="favicon.svg" alt="">Almide</a>
-  <nav aria-label="Site">
-    <a href="https://almide.github.io/playground/">Playground</a>
-    <a href="https://almide.github.io/docs/">Docs</a>
-    <a href="https://github.com/almide/almide">GitHub</a>
-    <a href="story/">Story</a>
-    <a href="./" aria-current="true" lang="en">EN</a>
-    <a href="ja/" lang="ja">日本語</a>
-  </nav>
+  <div class="header-inner">
+    <a class="brand" href="./"><img src="./favicon.svg" width="28" height="28" alt=""><span>Almide<span class="brand-caption">PRE-1.0</span></span></a>
+    <nav class="primary-nav" aria-label="Main navigation"><a href="./" aria-current="page">Overview</a><a href="./story/">Story</a><a href="https://almide.github.io/docs/">Docs</a><a href="https://almide.github.io/playground/">Playground<span aria-hidden="true"> ↗</span></a><a href="https://github.com/almide/almide">GitHub<span aria-hidden="true"> ↗</span></a></nav>
+    <div class="header-tools">
+      <nav class="locale-switcher" aria-label="Language"><a href="./" lang="en" hreflang="en" aria-current="true">EN</a><a href="./ja/" lang="ja" hreflang="ja">日本語</a><a href="./zh/" lang="zh-Hans" hreflang="zh-Hans">中文</a></nav>
+      <button class="theme-toggle" type="button" aria-label="Switch colour scheme" title="Switch colour scheme" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button>
+    </div>
+  </div>
 </header>
 
-<main>
+<main id="main-content">
 
 <div class="hero-bg">
 <div class="wide">
   <div class="hero">
+    <div class="hero-copy">
     <p class="eyebrow">Almide · a programming language · pre-1.0</p>
-    <h1>A language I'm building to make <em>AI-written code</em> safer.<span class="cursor" aria-hidden="true"></span></h1>
+    <h1>A language I'm building to make <em>AI-written code</em> safer.</h1>
     <p class="sub">AI agents write more code than I can read. So I want the safety to come from the compiler. <strong>And then I don't let the compiler grade its own work either.</strong></p>
     <div class="cta">
       <a class="btn primary" href="https://almide.github.io/playground/">Try it in your browser</a>
       <a class="btn ghost" href="https://github.com/almide/almide">Source on GitHub</a>
     </div>
 
+    </div>
+    <div class="hero-evidence">
+    <div class="panel-heading"><span>ALMIDE</span><span>LANGUAGE / OPEN SOURCE</span></div>
     <div class="facts">
       <div><b>654</b><span>theorems and lemmas proven in Rocq and checked by its kernel. None admitted, no added axioms</span></div>
       <div><b>100%</b><span>of the test corpus builds with machine-checked evidence, on both targets: 1,050 programs on Wasm, 1,055 on Rust</span></div>
@@ -49,9 +59,12 @@
       <div><b>325 B</b><span>hello world as a WebAssembly file. Emitted directly, no LLVM</span></div>
     </div>
     <p class="asof">Counts are from the public repository at commit <code>79cdadd</code> (2026-11-10; the contract count is the ledger stamped 2026-11-08). The 325 bytes is version 0.69.0 without <code>wasm-opt</code>. They move.</p>
+    </div>
   </div>
 </div>
 </div>
+
+<nav class="page-index" aria-label="On this page"><div class="wide"><a href="#why"><span>01</span>The idea<span aria-hidden="true">↘</span></a><a href="#evidence"><span>03</span>The evidence<span aria-hidden="true">↘</span></a><a href="#box"><span>08</span>The language<span aria-hidden="true">↘</span></a><a href="#try"><span>11</span>Try it<span aria-hidden="true">↘</span></a></div></nav>
 
 <section id="why">
   <div class="wrap">
@@ -623,6 +636,7 @@ this value is a Result
     <p>Almide is open source. If you try it and something breaks, <a href="https://github.com/almide/almide/issues">an issue</a> is the most useful thing you can send.</p>
     <p>The text on this page was drafted with an AI assistant and checked against the repository.</p>
   </div>
+  <div class="wide footer-end"><a href="./">Almide</a><a href="#top">Back to top ↑</a></div>
 </footer>
 
 </body>

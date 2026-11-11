@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Almide — 我正在开发的一门语言，让 AI 编写的代码更安全</title>
+<meta name="description" content="AI 智能体写出的代码，已经多到无人能全部审查。Almide 把安全保障交给编译器，再让独立工具检查编译器的工作。">
+<meta property="og:title" content="Almide — 我正在开发的一门语言，让 AI 编写的代码更安全">
+<meta property="og:description" content="AI 智能体写出的代码，已经多到无人能全部审查。Almide 把安全保障交给编译器，再让独立工具检查编译器的工作。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://almide.github.io/zh/">
+<link rel="canonical" href="https://almide.github.io/zh/">
+<link rel="alternate" hreflang="en" href="https://almide.github.io/">
+<link rel="alternate" hreflang="ja" href="https://almide.github.io/ja/">
+<link rel="alternate" hreflang="zh-Hans" href="https://almide.github.io/zh/">
+<link rel="alternate" hreflang="x-default" href="https://almide.github.io/">
+<meta property="og:locale" content="zh_CN">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+<script>try { const theme = localStorage.getItem("almide-theme"); if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme; } catch {}</script>
+<script src="../site.js?v=20261111c" defer></script>
+<link rel="stylesheet" href="../style.css?v=20261111c">
+</head>
+<body id="top">
+
+<a class="skip-link" href="#main-content">跳转到正文</a>
+<header class="top">
+  <div class="header-inner">
+    <a class="brand" href="./"><img src="../favicon.svg" width="28" height="28" alt=""><span>Almide<span class="brand-caption">PRE-1.0</span></span></a>
+    <nav class="primary-nav" aria-label="主导航"><a href="./" aria-current="page">概览</a><a href="story/">开发历程</a><a href="https://almide.github.io/docs/">文档</a><a href="https://almide.github.io/playground/">在线试用<span aria-hidden="true"> ↗</span></a><a href="https://github.com/almide/almide">GitHub<span aria-hidden="true"> ↗</span></a></nav>
+    <div class="header-tools">
+      <nav class="locale-switcher" aria-label="语言"><a href="../" lang="en" hreflang="en">EN</a><a href="../ja/" lang="ja" hreflang="ja">日本語</a><a href="./" lang="zh-Hans" hreflang="zh-Hans" aria-current="true">中文</a></nav>
+      <button class="theme-toggle" type="button" aria-label="切换配色" title="切换配色" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+
+<div class="hero-bg">
+<div class="wide">
+  <div class="hero">
+    <div class="hero-copy">
+    <p class="eyebrow">Almide · 一门编程语言 · pre-1.0</p>
+    <h1>我正在开发一门语言，让 <em>AI 编写的代码</em>更安全。</h1>
+    <p class="sub">AI 智能体写出的代码，已经多到我读不过来了。所以，我希望由编译器来提供安全保障。<strong>而编译器自己的工作，也不能由它自己来打分。</strong></p>
+    <div class="cta">
+      <a class="btn primary" href="https://almide.github.io/playground/">在浏览器中试用</a>
+      <a class="btn ghost" href="https://github.com/almide/almide">在 GitHub 查看源码</a>
+    </div>
+
+    </div>
+    <div class="hero-evidence">
+    <div class="panel-heading"><span>ALMIDE</span><span>编程语言 / 开源</span></div>
+    <div class="facts">
+      <div><b>654</b><span>条定理和引理，在 Rocq 中完成证明并由其内核检查。没有跳过证明，也没有添加公理</span></div>
+      <div><b>100%</b><span>的测试集在两个目标平台上都附有经机器检查的证据：Wasm 上 1,050 个程序，Rust 上 1,055 个程序</span></div>
+      <div><b>1,324</b><span>个标准库函数，分布在 51 个模块中，全部用 Almide 自身编写</span></div>
+      <div><b>325 B</b><span>的 Hello world WebAssembly 文件。直接生成，不经过 LLVM</span></div>
+    </div>
+    <p class="asof">数据来自公开仓库的提交 <code>79cdadd</code>（2026-11-10；契约数量来自标注为 2026-11-08 的记录）。325 字节对应 0.69.0 版本，未使用 <code>wasm-opt</code>。这些数字还会变化。</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<nav class="page-index" aria-label="本页目录"><div class="wide"><a href="#why"><span>01</span>设计初衷<span aria-hidden="true">↘</span></a><a href="#evidence"><span>03</span>验证证据<span aria-hidden="true">↘</span></a><a href="#box"><span>08</span>语言特性<span aria-hidden="true">↘</span></a><a href="#try"><span>11</span>试一试<span aria-hidden="true">↘</span></a></div></nav>
+
+<section id="why">
+  <div class="wrap">
+    <p class="num">01 — 为什么要做</p>
+    <h2>我已经读不完智能体写的所有代码了。</h2>
+    <p class="big">现在，我的很多代码都由 AI 智能体编写。我想，很快会有很多人也处于这种状态，而代码审查跟不上这样的规模。</p>
+    <p>所以，我想要一门语言，让安全更多地依靠编译器，而不是依靠某个人仔细阅读。对于不是自己写的代码，我也需要一些可以依赖的保障。</p>
+    <p>我觉得，Rust 是你会希望 AI 使用的语言。但坦白说，我并不擅长 Rust，也一直没能习惯所有权。Almide 是我的一次尝试：保留那样的安全性，却不让任何人或智能体手写所有权相关的部分。</p>
+    <p class="aside">它采用静态类型，通过 Rust 编译为原生代码，也能直接生成 WebAssembly。它提供 Option 和 Result、穷尽模式匹配，以及显式的副作用声明。</p>
+  </div>
+</section>
+
+<section id="ownership">
+  <div class="wrap">
+    <p class="num">02 — 不必手写，就少一处出错</p>
+    <h2>所有权不用你写，由编译器推断。</h2>
+<pre data-title="orders.almd"><code><span class="k">type</span> Order = { id: Int, items: List[String], total: Int }
+
+<span class="k">fn</span> large(orders: List[Order]) -> List[Order] =
+  orders |> list.filter((o) => o.total > 500)
+
+<span class="k">fn</span> main() -> Unit = {
+  <span class="k">let</span> orders: List[Order] = [
+    { id: 1, items: ["pen", "ink"], total: 260 },
+    { id: 2, items: ["desk"], total: 900 },
+  ]
+  <span class="k">let</span> big = large(orders)
+  println("${list.len(orders)} orders, ${list.len(big)} large")
+  <span class="k">for</span> o <span class="k">in</span> orders {
+    println("${o.id}: ${list.join(o.items, ", ")}")
+  }
+}</code></pre>
+<pre data-title="zsh"><code><span class="c">$ almide run orders.almd --target wasm</span>
+2 orders, 1 large
+1: pen, ink
+2: desk</code></pre>
+    <p><code>orders</code> 被传给 <code>large</code>，之后又在循环中使用。源码没有标明移动、借用或复制，没有生命周期，也没有 <code>free</code>。</p>
+    <p>编译器通过 Perceus 风格的推断，确定每个堆上的值在何处创建、共享和消耗。两个目标平台采用不同方式执行这些操作：原生目标输出 Rust，由 Rust 自身的 drop 负责释放；Wasm 使用引用计数。</p>
+    <div class="callout">
+      <p><b>代价。</b>复制和引用计数操作仍然会发生，只是你无法从源码中看出发生在哪里。在 Rust 中，你能看到 <code>.clone()</code>；在这里却看不到。对此，我还没有好的答案。</p>
+    </div>
+  </div>
+</section>
+
+<section id="evidence">
+  <div class="wrap">
+    <p class="num">03 — 我最在意的部分</p>
+    <h2>编译器不能给自己的工作打分。</h2>
+    <p class="big">我不信任自己写的编译器。它是我借助 AI 智能体开发的，我凭什么信任它？</p>
+    <p>每次构建 Wasm 时，编译器都必须记录自己做过什么，并给出证据：每一处值的共享或释放，每一次数组索引检查。另一个独立程序读取这些证据。如果证据不成立，就不生成输出文件。</p>
+
+    <p>被拒绝不是你的代码有 bug，而是编译器出了问题。构建信息会明确说明：</p>
+<pre data-title="zsh"><code><span class="e">error[certificate-rejected]</span>: app.almd: almide-verify judged this build's
+certificate and did not accept it (exit 1)
+  app.wasm was not written: the build's own certificate does not hold,
+  which is a compiler bug — please report it</code></pre>
+    <p class="cap">已节选。验证器自己的报告接在第一行之后。</p>
+  </div>
+</section>
+
+<section id="checkers">
+  <div class="wrap">
+    <p class="num">04 — TRUST SPINE</p>
+    <h2>检查器也会有 bug，所以一共有四个。</h2>
+    <p>只有一个检查器，只是把信任转移到了别处。这四个检查器以不同方式构建，同一个错误同时出现在四者中的可能性因此较低。项目把它们与所检查的证据统称为 Trust Spine。</p>
+  </div>
+  <div class="wide">
+    <article class="spine overview">
+      <header class="spine-head">
+        <span class="n all">◆</span>
+        <div><h3>整体流程</h3><p class="role">一份源码，两个目标，各自由谁检查</p></div>
+      </header>
+      <div class="diagram" role="img" aria-label="两个目标的整体流程。代码进入不受信任的编译器，随后分成两条路径。Wasm 路径生成 Wasm 字节与证据。Byteanchor 将证据与字节关联；Buildgate 位于字节与磁盘文件之间，只有接受证据后才写入文件。Rust 路径生成 Rust 源码与证据，由受信任的 rustc 将源码编译为原生二进制文件。Buildgate 在项目验证中判断 Rust 证据，而非在你的构建中；目前没有字节检查，仅通过哈希将证据绑定到源码。两条路径之间是共用的规则、检查规则正确性的 Proofcore，以及将规则应用于两个目标证据的 Proofcast。">
+          <svg viewBox="0 0 990 728" xmlns="http://www.w3.org/2000/svg">
+          <rect class="lane" x="372" y="20" width="608" height="296" rx="16"/><rect class="lane" x="372" y="412" width="608" height="296" rx="16"/>
+          <text class="lanet" x="20" y="72">WASM 目标</text><text class="lanes" x="20" y="92">在你的构建中检查</text>
+          <text class="lanet" x="20" y="664">RUST 目标</text><text class="lanes" x="20" y="684">在项目验证中检查</text>
+          <path class="wire" d="M140 364 H173"/>
+          <path class="wire" d="M310 350 H337 Q347 350 347 340 V90 Q347 80 357 80 H393"/>
+          <path class="wire" d="M347 274 H393"/>
+          <path class="wire" d="M310 378 H337 Q347 378 347 388 V638 Q347 648 357 648 H393"/>
+          <path class="wire" d="M347 454 H393"/>
+          <path class="wire" d="M550 80 H633"/>
+          <path class="wire ok" d="M790 80 H843"/>
+          <path class="wire" d="M550 274 H705 Q715 274 715 264 V120"/>
+          <path class="wire" d="M550 648 H633"/>
+          <path class="wire" d="M790 648 H843"/>
+          <path class="wire" d="M550 454 H633"/>
+          <path class="wire" d="M620 364 H568"/>
+          <path class="flow" d="M140 364 H173"/>
+          <path class="flow" d="M310 350 H337 Q347 350 347 340 V90 Q347 80 357 80 H393"/>
+          <path class="flow" d="M347 274 H393"/>
+          <path class="flow" d="M310 378 H337 Q347 378 347 388 V638 Q347 648 357 648 H393"/>
+          <path class="flow" d="M347 454 H393"/>
+          <path class="flow" d="M550 80 H633"/>
+          <path class="flow ok" d="M790 80 H843"/>
+          <path class="flow" d="M550 274 H705 Q715 274 715 264 V120"/>
+          <path class="flow" d="M550 648 H633"/>
+          <path class="flow" d="M790 648 H843"/>
+          <path class="flow" d="M550 454 H633"/>
+          <path class="flow" d="M620 364 H568"/>
+          <path class="head" d="M168 359.5 L173 364 L168 368.5"/>
+          <path class="head" d="M388 75.5 L393 80 L388 84.5"/>
+          <path class="head" d="M388 269.5 L393 274 L388 278.5"/>
+          <path class="head" d="M388 643.5 L393 648 L388 652.5"/>
+          <path class="head" d="M388 449.5 L393 454 L388 458.5"/>
+          <path class="head" d="M628 75.5 L633 80 L628 84.5"/>
+          <path class="head ok" d="M838 75.5 L843 80 L838 84.5"/>
+          <path class="head" d="M628 643.5 L633 648 L628 652.5"/>
+          <path class="head" d="M838 643.5 L843 648 L838 652.5"/>
+          <path class="head" d="M628 449.5 L633 454 L628 458.5"/>
+          <path class="head" d="M710.5 125 L715 120 L719.5 125"/><path class="head" d="M573 359.5 L568 364 L573 368.5"/>
+          <circle class="dot" cx="140" cy="364" r="3"/>
+          <circle class="dot" cx="310" cy="350" r="3"/>
+          <circle class="dot" cx="310" cy="378" r="3"/>
+          <circle class="dot" cx="347" cy="274" r="3"/>
+          <circle class="dot" cx="347" cy="454" r="3"/>
+          <circle class="dot" cx="550" cy="80" r="3"/>
+          <circle class="dot" cx="790" cy="80" r="3"/>
+          <circle class="dot" cx="550" cy="274" r="3"/>
+          <circle class="dot" cx="550" cy="648" r="3"/>
+          <circle class="dot" cx="790" cy="648" r="3"/>
+          <circle class="dot" cx="550" cy="454" r="3"/>
+          <circle class="dot" cx="620" cy="364" r="3"/>
+          <path class="rib" d="M475 112 V150"/>
+          <path class="rib" d="M475 206 V244"/>
+          <path class="rib" d="M475 304 V336"/>
+          <path class="rib" d="M475 392 V424"/>
+          <path class="rib" d="M475 484 V522"/>
+          <path class="rib" d="M475 578 V616"/>
+          <path class="rib" d="M800 364 H750"/>
+          <circle class="rdot" cx="475" cy="112" r="3.5"/>
+          <circle class="rdot" cx="475" cy="244" r="3.5"/>
+          <circle class="rdot" cx="475" cy="304" r="3.5"/>
+          <circle class="rdot" cx="475" cy="424" r="3.5"/>
+          <circle class="rdot" cx="475" cy="484" r="3.5"/>
+          <circle class="rdot" cx="475" cy="616" r="3.5"/>
+          <circle class="rdot" cx="750" cy="364" r="3.5"/>
+          <rect class="node" x="20" y="332" width="120" height="64" rx="10"/><text class="tag" x="22" y="323">源码</text><text class="t" x="80.0" y="361.0" text-anchor="middle">你的代码</text><text class="s" x="80.0" y="379.0" text-anchor="middle">app.almd</text>
+          <rect class="node" x="180" y="332" width="130" height="64" rx="10"/><text class="tag" x="182" y="323">编译器</text><text class="t" x="245.0" y="361.0" text-anchor="middle">almide</text><text class="s" x="245.0" y="379.0" text-anchor="middle">不被信任</text>
+          <rect class="node" x="400" y="48" width="150" height="64" rx="10"/><text class="tag" x="402" y="39">输出</text><text class="t" x="475.0" y="77.0" text-anchor="middle">Wasm 字节</text><text class="s" x="475.0" y="95.0" text-anchor="middle">实际构建的内容</text>
+          <rect class="node" x="850" y="48" width="120" height="64" rx="10"/><text class="tag" x="852" y="39">磁盘</text><text class="t" x="910.0" y="77.0" text-anchor="middle">app.wasm</text><text class="s" x="910.0" y="95.0" text-anchor="middle">通过后才写入</text>
+          <rect class="node" x="400" y="244" width="150" height="60" rx="10"/><text class="tag" x="402" y="235">声明</text><text class="t" x="475.0" y="271.0" text-anchor="middle">证据</text><text class="s" x="475.0" y="289.0" text-anchor="middle">声称执行的操作</text>
+          <rect class="node" x="400" y="616" width="150" height="64" rx="10"/><text class="tag" x="402" y="607">输出</text><text class="t" x="475.0" y="645.0" text-anchor="middle">Rust 源码</text><text class="s" x="475.0" y="663.0" text-anchor="middle">渲染出的源码</text>
+          <rect class="node" x="640" y="616" width="150" height="64" rx="10"/><text class="tag" x="642" y="607">受信任</text><text class="t" x="715.0" y="645.0" text-anchor="middle">rustc</text><text class="s" x="715.0" y="663.0" text-anchor="middle">编译，以 drop 释放</text>
+          <rect class="node" x="850" y="616" width="120" height="64" rx="10"/><text class="tag" x="852" y="607">磁盘</text><text class="t" x="910.0" y="645.0" text-anchor="middle">app</text><text class="s" x="910.0" y="663.0" text-anchor="middle">原生二进制文件</text>
+          <rect class="node" x="400" y="424" width="150" height="60" rx="10"/><text class="tag" x="402" y="415">声明</text><text class="t" x="475.0" y="451.0" text-anchor="middle">证据</text><text class="s" x="475.0" y="469.0" text-anchor="middle">所有权 · 调用模式</text>
+          <rect class="node" x="620" y="336" width="130" height="56" rx="10"/><text class="tag" x="622" y="327">证明</text><text class="t" x="685.0" y="361.0" text-anchor="middle">规则</text><text class="s" x="685.0" y="379.0" text-anchor="middle">何种情况算安全</text>
+          <rect class="halo" x="635" y="43" width="160" height="74" rx="15"/><rect class="node hot" x="640" y="48" width="150" height="64" rx="10"/><text class="tag" x="642" y="39">你的电脑</text><text class="t" x="715.0" y="77.0" text-anchor="middle">Buildgate</text><text class="s" x="715.0" y="95.0" text-anchor="middle">能否写入？</text>
+          <rect class="halo" x="385" y="145" width="180" height="66" rx="15"/><rect class="node hot" x="390" y="150" width="170" height="56" rx="10"/><text class="tag" x="392" y="141">CI</text><text class="t" x="475.0" y="175.0" text-anchor="middle">Byteanchor</text><text class="s" x="475.0" y="193.0" text-anchor="middle">对应这些字节吗？</text>
+          <rect class="halo" x="385" y="331" width="188" height="66" rx="15"/><rect class="node hot" x="390" y="336" width="178" height="56" rx="10"/><text class="tag" x="392" y="327">两个目标共用</text><text class="t" x="479.0" y="361.0" text-anchor="middle">Proofcast</text><text class="s" x="479.0" y="379.0" text-anchor="middle">每个程序都通过吗？</text>
+          <rect class="halo" x="795" y="331" width="180" height="66" rx="15"/><rect class="node hot" x="800" y="336" width="170" height="56" rx="10"/><text class="tag" x="802" y="327">两个目标共用</text><text class="t" x="885.0" y="361.0" text-anchor="middle">Proofcore</text><text class="s" x="885.0" y="379.0" text-anchor="middle">规则是否正确？</text>
+          <rect class="halo" x="635" y="419" width="180" height="70" rx="15"/><rect class="node hot" x="640" y="424" width="170" height="60" rx="10"/><text class="tag" x="642" y="415">不在你的构建中</text><text class="t" x="725.0" y="451.0" text-anchor="middle">Buildgate</text><text class="s" x="725.0" y="469.0" text-anchor="middle">在项目验证中判断</text>
+          <rect class="node ghost" x="390" y="522" width="170" height="56" rx="10"/><text class="tag" x="392" y="513">尚未实现</text><text class="t gt" x="475.0" y="547.0" text-anchor="middle">无字节检查</text><text class="s" x="475.0" y="565.0" text-anchor="middle">以哈希绑定源码</text>
+          </svg>
+      </div>
+      <div class="spine-foot">
+        <p>一个编译器，两个目标。上方是 WebAssembly，下方是 Rust。两条路径之间是它们共用的部分：规则本身、证明规则正确的 Proofcore，以及将规则应用于两条路径证据的 Proofcast。</p>
+        <p class="guards"><b>两条路径的区别</b>在 Wasm 路径中，Buildgate 把关文件写入，Byteanchor 将证据与字节关联。在 Rust 路径中，这个位置由受信任的 rustc 占据。Buildgate 在项目验证中判断证据，而不是在你的构建中；证据目前也还没有与编译后的二进制文件绑定。覆盖率已不再是两者的区别：跨目标测试集中的每个程序，如今都在两条路径上经过认证流程，Wasm 为 1,050 个，Rust 为 1,055 个。超出 Rust 渲染器处理范围的程序，仍会回退到标准代码生成器，不附带证据。</p>
+      </div>
+    </article>
+    <article class="spine">
+      <header class="spine-head">
+        <span class="n">1</span>
+        <div><h3>Proofcore</h3><p class="role">Rocq 证明内核</p></div>
+        <span class="tag">在 CI 中运行</span>
+      </header>
+      <div class="diagram" role="img" aria-label="构建产生的证据与已证明的规则一起进入 Proofcore，由 Rocq 内核计算判定：接受意味着性质成立，拒绝意味着证据不成立。">
+          <svg viewBox="0 0 960 262" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="wire" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="wire ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="wire no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="flow" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="flow" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="flow ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="flow no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="head" d="M368 110.5 L373 115 L368 119.5"/>
+          <path class="head" d="M368 134.5 L373 139 L368 143.5"/>
+          <path class="head ok" d="M688 63.5 L693 68 L688 72.5"/>
+          <path class="head no" d="M688 189.5 L693 194 L688 198.5"/>
+          <circle class="dot" cx="250" cy="68" r="3"/>
+          <circle class="dot" cx="250" cy="194" r="3"/>
+          <circle class="dot" cx="580" cy="115" r="3"/>
+          <circle class="dot" cx="580" cy="139" r="3"/>
+          <rect class="node" x="40" y="36" width="210" height="64" rx="10"/><text class="tag" x="42" y="26">声明</text><text class="t" x="145.0" y="65.0" text-anchor="middle">证据</text><text class="s" x="145.0" y="84.0" text-anchor="middle">来自一次构建</text>
+          <rect class="node" x="40" y="162" width="210" height="64" rx="10"/><text class="tag" x="42" y="152">证明</text><text class="t" x="145.0" y="191.0" text-anchor="middle">规则</text><text class="s" x="145.0" y="210.0" text-anchor="middle">已证明：接受 ⇒ 性质成立</text>
+          <rect class="halo" x="375" y="80" width="210" height="94" rx="15"/><rect class="node hot" x="380" y="85" width="200" height="84" rx="10"/><text class="tag" x="382" y="75">内核</text><text class="t" x="480.0" y="124.0" text-anchor="middle">Proofcore</text><text class="s" x="480.0" y="143.0" text-anchor="middle">Rocq 计算判定结果</text>
+          <rect class="pill ok" x="700" y="44" width="220" height="48" rx="24"/><text class="pt ok" x="810.0" y="64" text-anchor="middle">接受</text><text class="s" x="810.0" y="81" text-anchor="middle">性质成立</text>
+          <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">拒绝</text><text class="s" x="810.0" y="207" text-anchor="middle">证据不成立</text>
+          </svg>
+      </div>
+      <div class="spine-real">
+        <p class="real-h">具体来看</p>
+<pre data-title="MemorySafe.v"><code><span class="c">(* proofs/MemorySafe.v *)</span>
+<span class="k">Definition</span> safe_ev (h : Heap) (e : Ev) : Prop :=
+  spatial_ev h e /\ temporal_ev h e /\ init_ev h e /\ type_ev h e.
+
+<span class="k">Definition</span> MemorySafe (t : list Ev) : Prop := holds safe_ev empty_heap t.
+
+<span class="k">Theorem</span> rc_check_gives_temporal : forall t,
+  holds fresh_alloc_ev empty_heap t ->
+  (forall b, check (gproj b t) = true) ->
+  <span class="g">Temporal t</span>.</code></pre>
+        <p class="cap">这就是实际的定义与定理。内存安全由针对每个内存事件的四个条件构成。定理表明：如果引用计数检查接受所有块，就不会访问已释放的内存。Rocq 检查这份证明，无需仅凭信任接受它。</p>
+      </div>
+      <div class="spine-foot">
+        <p>检查器在 Rocq 证明助手中定义并得到证明。证明内核本身就能计算其判定结果。</p>
+        <p class="guards"><b>防范的问题</b>检查器自身的逻辑错误。被证明的是规则本身：若接受证据，则相应性质成立。</p>
+      </div>
+    </article>
+    <article class="spine">
+      <header class="spine-head">
+        <span class="n">2</span>
+        <div><h3>Proofcast</h3><p class="role">从证明中生成的检查器</p></div>
+        <span class="tag">在 CI 中运行</span>
+      </header>
+      <div class="diagram" role="img" aria-label="已证明的规则从 Rocq 提取为 Proofcast 程序，用于判断测试集中每个程序的证据。">
+          <svg viewBox="0 0 960 262" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="wire" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="wire ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="wire no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="flow" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="flow" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="flow ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="flow no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="head" d="M368 110.5 L373 115 L368 119.5"/>
+          <path class="head" d="M368 134.5 L373 139 L368 143.5"/>
+          <path class="head ok" d="M688 63.5 L693 68 L688 72.5"/>
+          <path class="head no" d="M688 189.5 L693 194 L688 198.5"/>
+          <circle class="dot" cx="250" cy="68" r="3"/>
+          <circle class="dot" cx="250" cy="194" r="3"/>
+          <circle class="dot" cx="580" cy="115" r="3"/>
+          <circle class="dot" cx="580" cy="139" r="3"/>
+          <rect class="node" x="40" y="36" width="210" height="64" rx="10"/><text class="tag" x="42" y="26">证明</text><text class="t" x="145.0" y="65.0" text-anchor="middle">规则</text><text class="s" x="145.0" y="84.0" text-anchor="middle">已在 Rocq 中证明</text>
+          <rect class="node back" x="50" y="172" width="210" height="64" rx="10"/><rect class="node back" x="45" y="167" width="210" height="64" rx="10"/><rect class="node" x="40" y="162" width="210" height="64" rx="10"/><text class="tag" x="42" y="152">测试集</text><text class="t" x="145.0" y="191.0" text-anchor="middle">1,050 个程序</text><text class="s" x="145.0" y="210.0" text-anchor="middle">每个程序的证据</text>
+          <rect class="halo" x="375" y="80" width="210" height="94" rx="15"/><rect class="node hot" x="380" y="85" width="200" height="84" rx="10"/><text class="tag" x="382" y="75">程序</text><text class="t" x="480.0" y="124.0" text-anchor="middle">Proofcast</text><text class="s" x="480.0" y="143.0" text-anchor="middle">规则的可执行版本</text>
+          <rect class="pill ok" x="700" y="44" width="220" height="48" rx="24"/><text class="pt ok" x="810.0" y="64" text-anchor="middle">接受</text><text class="s" x="810.0" y="81" text-anchor="middle">全部 1,050 个通过认证</text>
+          <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">拒绝</text><text class="s" x="810.0" y="207" text-anchor="middle">在 CI 中发现</text>
+          <text class="wl" x="282" y="58" text-anchor="middle">提取</text>
+          </svg>
+      </div>
+      <div class="spine-real">
+        <p class="real-h">具体来看</p>
+<pre data-title="orders.bundle"><code><span class="c">witness ownership 8 large</span>
+ibd
+
+im
+
+<span class="c">witness bounds 5 (program)</span>
+e0 a0
+
+<span class="c">witness init 53 (program)</span>
+h12 w4 n2 r1 s0 s1;h12 w4 n2 r0 s0 s1;h12 w4 n1 r0 s0
+
+<span class="c">witness call-modes 25 (program)</span>
+1;1 1;1 1|2 1 1;0 1;1 1 1</code></pre>
+        <p class="cap">这就是前面订单示例产生的证据。它是纯文本：对于所有权，每个值占一行，对其进行的每个操作用一个字母表示。检查器只读取这些内容，不读取源码，也不读取编译器内部状态。</p>
+      </div>
+      <div class="spine-foot">
+        <p>将同一个已证明的检查器从 Rocq 提取为独立程序，使它能以足够快的速度运行整个测试集。</p>
+        <p class="guards"><b>防范的问题</b>证明仅停留在纸面上。这里让已证明的规则真正运行在测试集中的每一个程序上。</p>
+      </div>
+    </article>
+    <article class="spine">
+      <header class="spine-head">
+        <span class="n">3</span>
+        <div><h3>Buildgate</h3><p class="role">用 Rust 独立编写的第二种实现</p></div>
+        <span class="tag here">在你的电脑上运行</span>
+      </header>
+      <div class="diagram" role="img" aria-label="编译器生成 Wasm 字节与证据。独立程序 Buildgate 读取两者。若接受，则写入文件；若拒绝，则不写入任何文件。">
+          <svg viewBox="0 0 960 290" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M152 150 H199"/>
+          <path class="wire" d="M338 138 H363 Q373 138 373 128 V86 Q373 76 383 76 H405"/>
+          <path class="wire" d="M338 162 H363 Q373 162 373 172 V214 Q373 224 383 224 H405"/>
+          <path class="wire" d="M572 76 H601 Q611 76 611 86 V128 Q611 138 621 138 H639"/>
+          <path class="wire" d="M572 224 H601 Q611 224 611 214 V172 Q611 162 621 162 H639"/>
+          <path class="wire ok" d="M786 138 H801 Q811 138 811 128 V86 Q811 76 821 76 H829"/>
+          <path class="wire no" d="M786 162 H801 Q811 162 811 172 V214 Q811 224 821 224 H829"/>
+          <path class="flow" d="M152 150 H199"/>
+          <path class="flow" d="M338 138 H363 Q373 138 373 128 V86 Q373 76 383 76 H405"/>
+          <path class="flow" d="M338 162 H363 Q373 162 373 172 V214 Q373 224 383 224 H405"/>
+          <path class="flow" d="M572 76 H601 Q611 76 611 86 V128 Q611 138 621 138 H639"/>
+          <path class="flow" d="M572 224 H601 Q611 224 611 214 V172 Q611 162 621 162 H639"/>
+          <path class="flow ok" d="M786 138 H801 Q811 138 811 128 V86 Q811 76 821 76 H829"/>
+          <path class="flow no" d="M786 162 H801 Q811 162 811 172 V214 Q811 224 821 224 H829"/>
+          <path class="head" d="M194 145.5 L199 150 L194 154.5"/>
+          <path class="head" d="M400 71.5 L405 76 L400 80.5"/>
+          <path class="head" d="M400 219.5 L405 224 L400 228.5"/>
+          <path class="head" d="M634 133.5 L639 138 L634 142.5"/>
+          <path class="head" d="M634 157.5 L639 162 L634 166.5"/>
+          <path class="head ok" d="M824 71.5 L829 76 L824 80.5"/>
+          <path class="head no" d="M824 219.5 L829 224 L824 228.5"/>
+          <circle class="dot" cx="152" cy="150" r="3"/>
+          <circle class="dot" cx="338" cy="138" r="3"/>
+          <circle class="dot" cx="338" cy="162" r="3"/>
+          <circle class="dot" cx="572" cy="76" r="3"/>
+          <circle class="dot" cx="572" cy="224" r="3"/>
+          <circle class="dot" cx="786" cy="138" r="3"/>
+          <circle class="dot" cx="786" cy="162" r="3"/>
+          <rect class="node" x="20" y="118" width="132" height="64" rx="10"/><text class="tag" x="22" y="108">源码</text><text class="t" x="86.0" y="147.0" text-anchor="middle">你的代码</text><text class="s" x="86.0" y="166.0" text-anchor="middle">app.almd</text>
+          <rect class="node" x="206" y="118" width="132" height="64" rx="10"/><text class="tag" x="208" y="108">编译器</text><text class="t" x="272.0" y="147.0" text-anchor="middle">almide</text><text class="s" x="272.0" y="166.0" text-anchor="middle">不被信任</text>
+          <rect class="node" x="412" y="44" width="160" height="64" rx="10"/><text class="tag" x="414" y="34">输出</text><text class="t" x="492.0" y="73.0" text-anchor="middle">Wasm 字节</text><text class="s" x="492.0" y="92.0" text-anchor="middle">实际构建的内容</text>
+          <rect class="node" x="412" y="192" width="160" height="64" rx="10"/><text class="tag" x="414" y="182">声明</text><text class="t" x="492.0" y="221.0" text-anchor="middle">证据</text><text class="s" x="492.0" y="240.0" text-anchor="middle">声称执行的操作</text>
+          <rect class="halo" x="641" y="103" width="150" height="94" rx="15"/><rect class="node hot" x="646" y="108" width="140" height="84" rx="10"/><text class="tag" x="648" y="98">检查器</text><text class="t" x="716.0" y="147.0" text-anchor="middle">Buildgate</text><text class="s" x="716.0" y="166.0" text-anchor="middle">独立程序</text>
+          <rect class="pill ok" x="834" y="52" width="118" height="48" rx="24"/><text class="pt ok" x="893.0" y="72" text-anchor="middle">接受</text><text class="s" x="893.0" y="89" text-anchor="middle">写入文件</text>
+          <rect class="pill no" x="834" y="200" width="118" height="48" rx="24"/><text class="pt no" x="893.0" y="220" text-anchor="middle">拒绝</text><text class="s" x="893.0" y="237" text-anchor="middle">不写入任何文件</text>
+          </svg>
+      </div>
+      <div class="spine-real">
+        <p class="real-h">具体来看</p>
+<pre data-title="zsh"><code><span class="c">$ almide verify orders.almd --artifact orders.wasm</span>
+ARTIFACT  sha256 8d407d7b…273e9356  orders.wasm: <span class="g">MATCH</span>
+ACCEPT  ownership        large
+ACCEPT  ownership        main
+ACCEPT  call-modes       (program)
+ACCEPT  bounds           (program)
+ACCEPT  init             (program)
+ACCEPT  fields           (program)
+ACCEPT  names            (module:funcs)
+ACCEPT  caps             main
+ACCEPT  caps-transitive  (program)
+<span class="c">  … 35 more lines</span>
+almide-verify 0.2.0: 44 witness(es), 44 accepted, 0 rejected, 0 uncertified -> <span class="g">CERTIFIED</span>
+
+<span class="c"># the same check after flipping one bit of orders.wasm</span>
+ARTIFACT  sha256 99a2b283…e4078e57  orders.wasm: <span class="e">MISMATCH</span> (the bundle names 8d407d7b…)
+almide-verify 0.2.0: 44 witness(es), 44 accepted, 0 rejected, 0 uncertified -> <span class="e">REJECTED</span></code></pre>
+        <p class="cap">这是 16 行订单示例的实际输出，已节选。编译器记录了 44 条证据，全部被接受。将文件中的一个比特翻转，同样的证据就会被拒绝，因为它记录的是另一个文件。</p>
+      </div>
+      <div class="spine-foot">
+        <p><code>almide-verify</code>。独立编写的代码，未经形式化证明。它随编译器一起分发，负责在必要时阻止构建。</p>
+        <p class="guards"><b>防范的问题</b>有问题的构建结果写入磁盘。它还通过哈希拒绝针对其他文件记录的证据。</p>
+      </div>
+    </article>
+    <article class="spine">
+      <header class="spine-head">
+        <span class="n">4</span>
+        <div><h3>Byteanchor</h3><p class="role">打开最终文件进行检查的工具</p></div>
+        <span class="tag">在 CI 中运行</span>
+      </header>
+      <div class="diagram" role="img" aria-label="Byteanchor 解码最终的 Wasm 文件，将每个记录的事件与对应位置的指令比较。匹配则通过，找不到对应指令的证据则失败。">
+          <svg viewBox="0 0 960 262" xmlns="http://www.w3.org/2000/svg">
+          <path class="wire" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="wire" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="wire ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="wire no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="flow" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
+          <path class="flow" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
+          <path class="flow ok" d="M580 115 H625 Q635 115 635 105 V78 Q635 68 645 68 H693"/>
+          <path class="flow no" d="M580 139 H625 Q635 139 635 149 V184 Q635 194 645 194 H693"/>
+          <path class="head" d="M368 110.5 L373 115 L368 119.5"/>
+          <path class="head" d="M368 134.5 L373 139 L368 143.5"/>
+          <path class="head ok" d="M688 63.5 L693 68 L688 72.5"/>
+          <path class="head no" d="M688 189.5 L693 194 L688 198.5"/>
+          <circle class="dot" cx="250" cy="68" r="3"/>
+          <circle class="dot" cx="250" cy="194" r="3"/>
+          <circle class="dot" cx="580" cy="115" r="3"/>
+          <circle class="dot" cx="580" cy="139" r="3"/>
+          <rect class="node" x="40" y="36" width="210" height="64" rx="10"/><text class="tag" x="42" y="26">输出</text><text class="t" x="145.0" y="65.0" text-anchor="middle">app.wasm</text><text class="s" x="145.0" y="84.0" text-anchor="middle">最终交付的文件</text>
+          <rect class="node" x="40" y="162" width="210" height="64" rx="10"/><text class="tag" x="42" y="152">声明</text><text class="t" x="145.0" y="191.0" text-anchor="middle">记录的事件</text><text class="s" x="145.0" y="210.0" text-anchor="middle">边界 · 初始化 · 字段</text>
+          <rect class="halo" x="375" y="80" width="210" height="94" rx="15"/><rect class="node hot" x="380" y="85" width="200" height="84" rx="10"/><text class="tag" x="382" y="75">工具</text><text class="t" x="480.0" y="124.0" text-anchor="middle">Byteanchor</text><text class="s" x="480.0" y="143.0" text-anchor="middle">打开文件</text>
+          <rect class="pill ok" x="700" y="44" width="220" height="48" rx="24"/><text class="pt ok" x="810.0" y="64" text-anchor="middle">匹配</text><text class="s" x="810.0" y="81" text-anchor="middle">对应指令存在</text>
+          <rect class="pill no" x="700" y="170" width="220" height="48" rx="24"/><text class="pt no" x="810.0" y="190" text-anchor="middle">不匹配</text><text class="s" x="810.0" y="207" text-anchor="middle">证据无对应指令</text>
+          <text class="wl" x="282" y="58" text-anchor="middle">解码</text>
+          </svg>
+      </div>
+      <div class="spine-real">
+        <p class="real-h">具体来看</p>
+<pre data-title="rule"><code><span class="c">;; a recorded bounds check must be exactly this, in the file</span>
+i64.ge_u          <span class="c">;; index >= length ?</span>
+<span class="k">if</span>
+  i32.const …     <span class="c">;; the evidence is anchored at this instruction</span>
+  …
+  unreachable     <span class="c">;; abort</span>
+<span class="k">end</span>               <span class="c">;; and the if has no else</span>
+
+<span class="c">;; a recorded allocation must be exactly this</span>
+i32.const N*W
+<span class="k">call</span> $alloc
+local.set B       <span class="c">;; every store that follows goes through local.get B</span></code></pre>
+        <p class="cap">摘自工具自身的源码。它解码最终文件，要求每个记录的事件都对应这样的指令模式。如果记录了一次检查，却没有生成相应指令，就无从对应。</p>
+      </div>
+      <div class="spine-foot">
+        <p>它解码最终的 <code>.wasm</code> 文件，将记录的每个边界、初始化和字段事件与其指向的指令核对。不存在的代码所对应的证据无法通过。</p>
+        <p class="guards"><b>防范的问题</b>针对不存在代码的证据。记录了却没有实际生成的边界检查，会在这里被发现。</p>
+      </div>
+    </article>
+  </div>
+  <div class="wrap">
+    <p>在 CI 中，Proofcore、Proofcast 和 Buildgate 必须对测试集每个程序的每一条证据给出一致的判定。这套机制的一次拒绝，已经在我的编译器中发现过真实的错误编译。</p>
+    <p class="aside">仓库中的证明由 46 个 Rocq 文件构成，约 21,700 行，包含 654 条定理和引理。证明针对检查器及其模型，而不是编译器。</p>
+  </div>
+  <div class="wrap">
+    <h3 class="subhead">证据证明什么</h3>
+    <p>证据按性质分类，每种性质对应一类证据。每类都有自己的规则，四个检查器应用的就是这些规则。</p>
+  </div>
+  <div class="wide">
+    <div class="props">
+      <div class="prop head"><span>类别</span><span>防范的 bug</span><span>接受的必要条件</span></div>
+      <div class="prop"><code>ownership</code><div class="stops">重复释放、内存泄漏、释放后使用</div><div class="iff">每个对象的引用计数始终不出错，最终归零</div></div>
+      <div class="prop"><code>bounds</code><div class="stops">读写超出列表末尾的位置</div><div class="iff">在每条执行路径上，每次访问之前都检查了相应位置</div></div>
+      <div class="prop"><code>init</code><div class="stops">读取从未写入过的内存</div><div class="iff">每次构造都写入所属块的每个位置，且不越界</div></div>
+      <div class="prop"><code>fields</code><div class="stops">将值当成错误的结构来处理</div><div class="iff">每次记录、元组和变体的存储，以及每次字段访问，都符合其布局</div></div>
+      <div class="prop"><code>call-modes</code><div class="stops">调用方与被调用方对参数所有权的理解不一致</div><div class="iff">每个调用点都按照被调用函数签名规定的方式传递参数</div></div>
+      <div class="prop"><code>names</code><div class="stops">引用不存在的对象</div><div class="iff">每个使用的名称都有定义</div></div>
+      <div class="prop"><code>caps</code><div class="stops">代码访问文件或网络却没有声明</div><div class="iff">函数直接或通过调用可触及的所有能力，都在其声明范围内</div></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="aside">这些性质适用于证据覆盖的代码。Byteanchor 将边界、初始化和字段事件与字节重新核对，并把记录的引用计数事件与文件中的调用匹配。无法与指令对应的事件会被计为未定位，而不会悄悄通过。</p>
+  </div>
+</section>
+
+<section id="repair">
+  <div class="wrap">
+    <p class="num">05 — 代码出错时</p>
+    <h2>错误信息会告诉智能体该改哪里。</h2>
+    <p>智能体会犯错，重要的是接下来怎么办。学过其他语言的智能体可能会写出 <code>items.length</code>：</p>
+<pre data-title="zsh"><code><span class="e">error[E013]</span>: no field 'length' on list
+  --> app.almd:3:14
+  in field access .length
+  here: println("${items.length}")
+  hint: Almide values have no fields — use the `list` stdlib module.
+  try: <span class="g">(machine-applicable — `almide fix` applies it)</span>
+      list.len(items)</code></pre>
+<pre data-title="zsh"><code><span class="c">$ almide fix app.almd</span>
+  Applied 1 machine-applicable fix-it(s) from diagnostics: E013 at line 3</code></pre>
+    <p>这种修复是机械性的，因此工具会直接应用。函数名拼写错误则不同：</p>
+<pre data-title="zsh"><code><span class="e">error[E002]</span>: undefined function 'string.lenn'
+  hint: Did you mean `string.len`?
+
+<span class="c">$ almide fix app.almd</span>
+1 diagnostic(s) have `try:` snippets that need manual application:
+  [E002] app.almd:3:14  undefined function 'string.lenn' <span class="g">(maybe-incorrect)</span></code></pre>
+    <p class="cap">0.69.0 版本的编译器输出，已节选。</p>
+    <p>这涉及对作者意图的猜测，所以只保留为建议。我希望工具能清楚区分机械性修复与对意图的判断。</p>
+  </div>
+</section>
+
+<section id="mistakes">
+  <div class="wrap">
+    <p class="num">06 — 不让错误进入成品</p>
+    <h2>遗漏分支会导致编译错误，忽略失败也是。</h2>
+    <p>我最常见到的智能体修改错误是：给类型增加一个变体，却漏掉某个必须处理它的位置。</p>
+<pre data-title="shape.almd"><code><span class="k">type</span> Shape =
+  | Circle(Float)
+  | Rect(Float, Float)
+  | Triangle(Float, Float)      <span class="c">// added</span>
+
+<span class="k">fn</span> area(s: Shape) -> Float = <span class="k">match</span> s {
+  Circle(r) => 3.14159 * r * r,
+  Rect(w, h) => w * h,
+}                               <span class="c">// not updated</span></code></pre>
+<pre data-title="zsh"><code><span class="e">error[E010]</span>: non-exhaustive match: missing Triangle(_, _)
+  --> shape.almd:6:36
+  hint: add arms for Triangle(_, _):
+  <span class="g">Triangle(arg1, arg2) => _</span></code></pre>
+    <p>失败也是如此。可能失败的调用会返回 Result，你必须说明如何处理它。直接丢弃它是错误，不是警告。</p>
+<pre data-title="load.almd"><code><span class="k">effect fn</span> load(path: String) -> String = {
+  <span class="k">let</span> text = fs.read_text(path)     <span class="c">// can fail, and nothing says so</span>
+  text
+}</code></pre>
+<pre data-title="zsh"><code><span class="e">error[E041]</span>: implicit propagation of this binding's value was removed —
+this value is a Result
+  --> load.almd:4:14
+  hint: Write `expr!` to propagate, or consume the Result as a value
+  (`??`, `?`, match ok/err).</code></pre>
+    <p class="cap">0.69.0 版本的编译器输出，已节选。</p>
+    <p>加一个字符就能修复：<code>fs.read_text(path)!</code>。关键在于，作者必须作出决定，而且这个决定在源码中清晰可见。</p>
+  </div>
+</section>
+
+<section id="targets">
+  <div class="wrap">
+    <p class="num">07 — 一份源码，两个目标</p>
+    <h2>同一份源码生成原生程序和 WebAssembly，要求输出一致。</h2>
+    <p>原生构建通过 Rust 完成。WebAssembly 由编译器直接生成，中间不经过 LLVM。Hello world 生成的是一个 325 字节的 <code>.wasm</code> 文件。</p>
+    <p>两个后端可能产生不同结果。因此，每一项可观察行为的承诺都记录为契约，目前共有 454 项，每项都关联可执行的证据。CI 在两个目标上运行 1,055 个程序，比较 stdout、stderr 和退出码。第三个执行器也参与核对：它是一个在生成任何代码之前就运行程序的解释器。</p>
+    <p class="aside">比较在文档规定的条件下成立。随机性、时钟和平台细节各有明确限定范围的契约；解释器对其无法运行的 17 个程序不参与判定。</p>
+  </div>
+</section>
+
+<section id="box">
+  <div class="wrap">
+    <p class="num">08 — 还有什么</p>
+    <h2>这是一门完整的语言，不是演示。</h2>
+  </div>
+  <div class="wide">
+    <div class="cards three">
+      <div class="card">
+        <h3>标准库</h3>
+        <p>51 个模块中的 1,324 个函数，全部用 Almide 自身编写。这是目前最大的 Almide 程序。</p>
+      </div>
+      <div class="card">
+        <h3>一个二进制文件，完整工具链</h3>
+        <p><code>almide test</code>、<code>fmt</code>、<code>check</code>、<code>fix</code> 和 <code>explain</code>。测试直接写在代码旁边的 <code>test</code> 块中。</p>
+      </div>
+      <div class="card">
+        <h3>显式副作用</h3>
+        <p><code>effect fn</code> 标记与外部世界交互的代码。传播失败始终需要显式写出 <code>!</code>。</p>
+      </div>
+      <div class="card">
+        <h3>结构化并发</h3>
+        <p><code>fan</code> 在原生目标上通过线程执行任务，在 Wasm 上保持相同的输出顺序。</p>
+      </div>
+      <div class="card">
+        <h3>可验证的发布包</h3>
+        <p>每个发布资产都有 Sigstore 证明。安装器会核对校验和，缺少证明时拒绝安装。</p>
+      </div>
+      <div class="card">
+        <h3>已经用于实际程序</h3>
+        <p>编程智能体、解析器、2D/3D 渲染器、终端模拟器。2026 年 9 月，144 个公开仓库中包含 Almide 源码。<a href="https://github.com/almide/almide/blob/develop/docs/written-in-almide.md">查看列表</a>。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="limits">
+  <div class="wrap">
+    <p class="num">09 — 尚未完成的部分</p>
+    <h2>它还没完成，我想把这一点说清楚。</h2>
+    <ul class="plain">
+      <li><b>编译器整体未经形式化证明。</b>证明覆盖检查器及其模型。</li>
+      <li><b>原生构建不会运行验证器。</b>它们通过经过认证的渲染器构建，如今整个测试集也都走这条路径。但证据在项目验证中判断，不在你的构建中判断；渲染器无法处理的程序仍会回退到标准代码生成器。</li>
+      <li><b>四个检查器中，只有一个在你的电脑上运行。</b>另外三个在 CI 中针对测试集运行。如果没有安装验证器，Wasm 构建会未经检查而完成。</li>
+      <li><b>部分证据并不完整。</b>只覆盖程序一部分的证书也会放行。Component 输出不采用这种方式检查。</li>
+      <li><b>并非每个记录的事件都已与指令关联。</b>Byteanchor 将无法定位的事件报告为未定位。这个数字并非处处为零。</li>
+      <li><b>程序可以通过所有检查，却仍然算出错误的结果。</b>这些检查都不判断逻辑是否正确。</li>
+      <li><b>我无法证明智能体写 Almide 比写 Rust 或 TypeScript 更好。</b>我第一次测量时，强模型在每种语言上都接近 100%，所以结果无法说明问题。</li>
+      <li><b>目前仍是 pre-1.0。</b>存在已知 bug，也还会发生变化。</li>
+    </ul>
+    <p style="margin-top:26px">哪些已经证明、哪些只是被信任，完整说明在仓库中：<a href="https://github.com/almide/almide/blob/develop/docs/contracts/proven-vs-trusted.md">已证明与受信任的部分</a>。</p>
+  </div>
+</section>
+
+<section id="ai">
+  <div class="wrap">
+    <p class="num">10 — 如何开发</p>
+    <h2>我用 AI 智能体开发了它。这正是重点。</h2>
+    <p>编译器用 Rust 编写，开发时我大量使用了 AI 智能体。我先把这件事说清楚，因为有些人不想看以这种方式开发的项目，这可以理解。</p>
+    <p>但这也解释了项目为何设计成这样。如果编译器由智能体编写，我就不能靠“我读过它”来担保它。因此它必须生成证据，再由其他工具检查证据。每个使用智能体的人，都即将在自己的代码上遇到同样的问题。Almide 是我公开探索这个问题的过程。</p>
+  </div>
+</section>
+
+<section id="try" style="border-bottom:0">
+  <div class="wrap">
+    <p class="num">11 — 试一试</p>
+    <h2>看看它会在哪里出问题。</h2>
+    <p>在线试用环境直接在浏览器中运行，无需安装。在 macOS 或 Linux 上安装编译器和验证器：</p>
+<pre data-title="zsh"><code>curl --proto '=https' --tlsv1.2 -fsSL \
+  https://raw.githubusercontent.com/almide/almide/main/tools/install.sh | sh</code></pre>
+    <p class="cap">安装器需要 GitHub CLI（<code>gh</code>）来验证发布证明。Windows 安装及源码构建说明请参见 <a href="https://github.com/almide/almide#quick-start">README</a>。</p>
+  </div>
+  <div class="wide">
+    <div class="links">
+      <a href="https://almide.github.io/playground/"><b>在线试用</b><span>在浏览器中编写和运行 Almide。</span></a>
+      <a href="https://github.com/almide/almide"><b>GitHub</b><span>编译器、证明、测试和问题跟踪。</span></a>
+      <a href="https://almide.github.io/docs/"><b>文档</b><span>语言指南与标准库。</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wide">
+    <p>Almide 是开源项目。如果你试用时发现问题，提交 <a href="https://github.com/almide/almide/issues">issue</a> 是最有帮助的反馈方式。</p>
+    <p>本页文字由 AI 助手协助起草，并对照仓库核查。</p>
+  </div>
+  <div class="wide footer-end"><a href="./">Almide</a><a href="#top">返回顶部 ↑</a></div>
+</footer>
+
+</body>
+</html>
