@@ -21,7 +21,7 @@ const base = `http://127.0.0.1:${server.address().port}`;
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? {executablePath:process.env.CHROMIUM_PATH} : {});
 await mkdir(`${root}/test-results`, {recursive:true});
 try {
-  for (const width of [320, 360, 375, 390, 768, 1024, 1440]) {
+  for (const width of [320, 360, 375, 390, 740, 768, 1024, 1440]) {
     for (const scheme of ['light','dark']) {
       for (const route of routes) {
         const page = await browser.newPage({viewport:{width,height:1000},colorScheme:scheme,reducedMotion:'reduce'});
@@ -47,6 +47,11 @@ try {
         if (width<=760) {
           assert.ok(measurements.introSize>=16 && measurements.factSize>=13 && measurements.navSize>=12, `Mobile reading sizes at ${route}`);
           assert.ok(await page.locator('.diagram-hint').first().isVisible());
+          if (!route.includes('story')) {
+            assert.equal(await page.locator('.prop.head').isVisible(), false);
+            assert.ok(await page.locator('.mobile-label').first().isVisible());
+            assert.equal(await page.locator('.prop:not(.head)').first().evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length),1);
+          }
         }
         for (const rect of measurements.links) {
           assert.ok(rect.x>=-1 && rect.right<=width+1, `Header out of viewport ${route} ${width}: ${JSON.stringify(rect)}`);
@@ -108,5 +113,5 @@ try {
     await p.close();
   }
   await noJS.close();
-  console.log('PASS: 84 responsive/theme renders; original palette, mobile type and diagram keyboard checks; six no-JS routes; asset, layout, theme, locale, anchor and history checks.');
+  console.log('PASS: 96 responsive/theme renders; original palette, mobile type and diagram keyboard checks; six no-JS routes; asset, layout, theme, locale, anchor and history checks.');
 } finally { await browser.close(); await new Promise(resolve=>server.close(resolve)); }
