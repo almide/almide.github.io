@@ -116,7 +116,7 @@ a:hover { text-decoration-thickness: 2px; }
 .skip-link:focus { transform: translateY(0); }
 .top { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
 .header-inner { max-width: 1440px; margin: auto; min-height: 88px; padding: 0 32px; display: flex; align-items: center; gap: 32px; }
-.brand { display: inline-flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; font: 600 19px/1.1 var(--mono); letter-spacing: -.04em; flex: none; }
+.brand { min-height: 44px; display: inline-flex; align-items: center; gap: 12px; color: var(--ink); text-decoration: none; font: 600 19px/1.1 var(--mono); letter-spacing: -.04em; flex: none; }
 .brand img { width: 28px; height: 28px; }
 .brand-caption { display: block; margin-top: 6px; font: 400 9px/1 var(--mono); letter-spacing: .13em; color: var(--faint); }
 .primary-nav { display: flex; align-items: center; min-width: 0; }

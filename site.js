@@ -31,9 +31,8 @@
   // Matching home sections stay in view when changing language.
   document.querySelectorAll('.locale-switcher a').forEach(link => {
     link.addEventListener('click', () => {
-      if (location.hash && document.getElementById(location.hash.slice(1))) {
-        link.hash = location.hash;
-      }
+      link.hash = location.hash && document.getElementById(location.hash.slice(1))
+        ? location.hash : '';
     });
   });
 })();
