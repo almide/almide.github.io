@@ -19,7 +19,7 @@
 <link rel="preload" href="./fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
 <script>try { const theme = localStorage.getItem("almide-theme"); if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme; } catch {}</script>
 <script src="./site.js?v=20261111c" defer></script>
-<link rel="stylesheet" href="style.css?v=20261111c">
+<link rel="stylesheet" href="style.css?v=20261111d">
 </head>
 <body id="top">
 
@@ -137,7 +137,8 @@ certificate and did not accept it (exit 1)
         <span class="n all">◆</span>
         <div><h3>The whole picture</h3><p class="role">One source, two targets, and who checks what</p></div>
       </header>
-      <div class="diagram" role="img" aria-label="Overview of both targets. Your code goes into the compiler, which is not trusted, and the compiler forks into two lanes. On the Wasm lane it produces Wasm bytes and evidence. Byteanchor ties the evidence to the bytes, and Buildgate stands between the bytes and the file on disk, which is written only if the evidence is accepted. On the Rust lane it produces Rust source and evidence. rustc, which is trusted, compiles the source into the native binary. Buildgate judges the Rust evidence in the project verification run rather than at your build, and there is no byte check yet, only a hash pinning the evidence to the source. Between the two lanes sits what they share: the rule, Proofcore, which checks that the rule is right, and Proofcast, which applies the rule to the evidence of both targets.">
+      <div class="diagram" role="img" aria-label="Overview of both targets. Your code goes into the compiler, which is not trusted, and the compiler forks into two lanes. On the Wasm lane it produces Wasm bytes and evidence. Byteanchor ties the evidence to the bytes, and Buildgate stands between the bytes and the file on disk, which is written only if the evidence is accepted. On the Rust lane it produces Rust source and evidence. rustc, which is trusted, compiles the source into the native binary. Buildgate judges the Rust evidence in the project verification run rather than at your build, and there is no byte check yet, only a hash pinning the evidence to the source. Between the two lanes sits what they share: the rule, Proofcore, which checks that the rule is right, and Proofcast, which applies the rule to the evidence of both targets." tabindex="0" aria-describedby="diagram-hint-1">
+        <p class="diagram-hint" id="diagram-hint-1">↔ Swipe or scroll horizontally to view the full diagram.</p>
           <svg viewBox="0 0 990 728" xmlns="http://www.w3.org/2000/svg">
           <rect class="lane" x="372" y="20" width="608" height="296" rx="16"/><rect class="lane" x="372" y="412" width="608" height="296" rx="16"/>
           <text class="lanet" x="20" y="72">WASM TARGET</text><text class="lanes" x="20" y="92">checked at your build</text>
@@ -232,7 +233,8 @@ certificate and did not accept it (exit 1)
         <div><h3>Proofcore</h3><p class="role">The Rocq proof kernel</p></div>
         <span class="tag">runs in CI</span>
       </header>
-      <div class="diagram" role="img" aria-label="Evidence from a build and the proven rule both go into Proofcore, where the Rocq kernel computes the verdict: accept means the property holds, reject means the evidence does not add up.">
+      <div class="diagram" role="img" aria-label="Evidence from a build and the proven rule both go into Proofcore, where the Rocq kernel computes the verdict: accept means the property holds, reject means the evidence does not add up." tabindex="0" aria-describedby="diagram-hint-2">
+        <p class="diagram-hint" id="diagram-hint-2">↔ Swipe or scroll horizontally to view the full diagram.</p>
           <svg viewBox="0 0 960 262" xmlns="http://www.w3.org/2000/svg">
           <path class="wire" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
           <path class="wire" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
@@ -282,7 +284,8 @@ certificate and did not accept it (exit 1)
         <div><h3>Proofcast</h3><p class="role">A checker generated from the proofs</p></div>
         <span class="tag">runs in CI</span>
       </header>
-      <div class="diagram" role="img" aria-label="The proven rule is extracted from Rocq into the Proofcast program, which judges the evidence from every program in the test corpus.">
+      <div class="diagram" role="img" aria-label="The proven rule is extracted from Rocq into the Proofcast program, which judges the evidence from every program in the test corpus." tabindex="0" aria-describedby="diagram-hint-3">
+        <p class="diagram-hint" id="diagram-hint-3">↔ Swipe or scroll horizontally to view the full diagram.</p>
           <svg viewBox="0 0 960 262" xmlns="http://www.w3.org/2000/svg">
           <path class="wire" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
           <path class="wire" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
@@ -336,7 +339,8 @@ h12 w4 n2 r1 s0 s1;h12 w4 n2 r0 s0 s1;h12 w4 n1 r0 s0
         <div><h3>Buildgate</h3><p class="role">A second implementation, written separately in Rust</p></div>
         <span class="tag here">runs on your machine</span>
       </header>
-      <div class="diagram" role="img" aria-label="The compiler produces Wasm bytes and evidence. Buildgate, a separate program, reads both. If it accepts, the file is written. If it rejects, nothing is written.">
+      <div class="diagram" role="img" aria-label="The compiler produces Wasm bytes and evidence. Buildgate, a separate program, reads both. If it accepts, the file is written. If it rejects, nothing is written." tabindex="0" aria-describedby="diagram-hint-4">
+        <p class="diagram-hint" id="diagram-hint-4">↔ Swipe or scroll horizontally to view the full diagram.</p>
           <svg viewBox="0 0 960 290" xmlns="http://www.w3.org/2000/svg">
           <path class="wire" d="M152 150 H199"/>
           <path class="wire" d="M338 138 H363 Q373 138 373 128 V86 Q373 76 383 76 H405"/>
@@ -407,7 +411,8 @@ almide-verify 0.2.0: 44 witness(es), 44 accepted, 0 rejected, 0 uncertified -> <
         <div><h3>Byteanchor</h3><p class="role">A tool that opens the finished file</p></div>
         <span class="tag">runs in CI</span>
       </header>
-      <div class="diagram" role="img" aria-label="Byteanchor decodes the finished Wasm file and compares each recorded event with the instruction at that place. A match passes. Evidence that points at nothing fails.">
+      <div class="diagram" role="img" aria-label="Byteanchor decodes the finished Wasm file and compares each recorded event with the instruction at that place. A match passes. Evidence that points at nothing fails." tabindex="0" aria-describedby="diagram-hint-5">
+        <p class="diagram-hint" id="diagram-hint-5">↔ Swipe or scroll horizontally to view the full diagram.</p>
           <svg viewBox="0 0 960 262" xmlns="http://www.w3.org/2000/svg">
           <path class="wire" d="M250 68 H305 Q315 68 315 78 V105 Q315 115 325 115 H373"/>
           <path class="wire" d="M250 194 H305 Q315 194 315 184 V149 Q315 139 325 139 H373"/>
@@ -466,13 +471,13 @@ local.set B       <span class="c">;; every store that follows goes through local
   <div class="wide">
     <div class="props">
       <div class="prop head"><span>kind</span><span>the bug it stops</span><span>accepted only if</span></div>
-      <div class="prop"><code>ownership</code><div class="stops">Double free, leak, use after free</div><div class="iff">every object's reference count never faults and ends at zero</div></div>
-      <div class="prop"><code>bounds</code><div class="stops">Reading or writing past the end of a list</div><div class="iff">every access is preceded, on every path, by a check of that slot</div></div>
-      <div class="prop"><code>init</code><div class="stops">Reading memory that was never written</div><div class="iff">every construction writes every slot of its block, and none past it</div></div>
-      <div class="prop"><code>fields</code><div class="stops">Treating a value as the wrong shape</div><div class="iff">every record, tuple and variant store, and every field access, fits its layout</div></div>
-      <div class="prop"><code>call-modes</code><div class="stops">Caller and callee disagreeing about who owns an argument</div><div class="iff">every call site passes its arguments the way the callee's signature says</div></div>
-      <div class="prop"><code>names</code><div class="stops">A reference to something that doesn't exist</div><div class="iff">every name that is used is defined</div></div>
-      <div class="prop"><code>caps</code><div class="stops">Code touching files or the network without saying so</div><div class="iff">everything a function can reach, directly or through its calls, is in its declaration</div></div>
+      <div class="prop"><code>ownership</code><div class="stops"><span class="mobile-label">the bug it stops</span>Double free, leak, use after free</div><div class="iff"><span class="mobile-label">accepted only if</span>every object's reference count never faults and ends at zero</div></div>
+      <div class="prop"><code>bounds</code><div class="stops"><span class="mobile-label">the bug it stops</span>Reading or writing past the end of a list</div><div class="iff"><span class="mobile-label">accepted only if</span>every access is preceded, on every path, by a check of that slot</div></div>
+      <div class="prop"><code>init</code><div class="stops"><span class="mobile-label">the bug it stops</span>Reading memory that was never written</div><div class="iff"><span class="mobile-label">accepted only if</span>every construction writes every slot of its block, and none past it</div></div>
+      <div class="prop"><code>fields</code><div class="stops"><span class="mobile-label">the bug it stops</span>Treating a value as the wrong shape</div><div class="iff"><span class="mobile-label">accepted only if</span>every record, tuple and variant store, and every field access, fits its layout</div></div>
+      <div class="prop"><code>call-modes</code><div class="stops"><span class="mobile-label">the bug it stops</span>Caller and callee disagreeing about who owns an argument</div><div class="iff"><span class="mobile-label">accepted only if</span>every call site passes its arguments the way the callee's signature says</div></div>
+      <div class="prop"><code>names</code><div class="stops"><span class="mobile-label">the bug it stops</span>A reference to something that doesn't exist</div><div class="iff"><span class="mobile-label">accepted only if</span>every name that is used is defined</div></div>
+      <div class="prop"><code>caps</code><div class="stops"><span class="mobile-label">the bug it stops</span>Code touching files or the network without saying so</div><div class="iff"><span class="mobile-label">accepted only if</span>everything a function can reach, directly or through its calls, is in its declaration</div></div>
     </div>
   </div>
   <div class="wrap">

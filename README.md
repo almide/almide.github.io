@@ -4,7 +4,7 @@ The landing page for [Almide](https://github.com/almide/almide), served at <http
 
 Plain HTML and CSS, no build step. A small optional script remembers the colour scheme; every page and language link works without JavaScript.
 
-The layout follows the [O6lvl4 portfolio](https://o6lvl4.github.io/O6lvl4-portfolio/): monochrome surfaces, a red accent, JetBrains Mono, and a compact evidence panel. The complete header stays available on mobile, with navigation separated from language and theme controls.
+The layout follows the [O6lvl4 portfolio](https://o6lvl4.github.io/O6lvl4-portfolio/): JetBrains Mono, a compact evidence panel, and clear navigation. Almide retains its original teal/green palette in both light and dark modes.
 
 | Path | What |
 |---|---|
@@ -39,8 +39,12 @@ npx playwright install chromium
 npm run verify
 ```
 
-The dependency-free static tests check all six pages, metadata, local links and assets, preserved Chinese code examples, and theme controls with unavailable storage. Browser verification checks five widths (320, 390, 768, 1024 and 1440 px) in both themes, JavaScript-disabled navigation, missing assets, theme persistence, language switches, section anchors and Back/Forward. Screenshots are written to `test-results/`. Set `CHROMIUM_PATH` to use an existing Chromium executable.
+The dependency-free static tests check all six pages, metadata, local links and assets, preserved Chinese code examples, and theme controls with unavailable storage. Browser verification checks seven widths (320, 360, 375, 390, 768, 1024 and 1440 px) in both themes, JavaScript-disabled navigation, missing assets, theme persistence, language switches, section anchors and Back/Forward. Screenshots are written to `test-results/`. Set `CHROMIUM_PATH` to use an existing Chromium executable.
 
 The Verify website workflow runs these checks on pull requests and pushes to `main`, and keeps screenshots as an artifact. GitHub Pages continues to publish the static root from `main`; this workflow does not change the deployment source.
 
 When editing shared navigation or content, update English, Japanese and Simplified Chinese together. Language links keep the corresponding Home or Story route, and home-page section anchors stay the same across languages.
+
+## Mobile reading
+
+On phones, navigation stays visible at readable sizes and scrolls with the page, so a fixed header does not cover the article. Small screens use full-width primary links and single-column evidence rows. Diagrams remain horizontally scrollable instead of shrinking their labels, with localized swipe hints and keyboard focus. Stacked comparison rows repeat their column labels.

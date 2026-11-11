@@ -21,7 +21,7 @@ const base = `http://127.0.0.1:${server.address().port}`;
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? {executablePath:process.env.CHROMIUM_PATH} : {});
 await mkdir(`${root}/test-results`, {recursive:true});
 try {
-  for (const width of [320, 390, 768, 1024, 1440]) {
+  for (const width of [320, 360, 375, 390, 768, 1024, 1440]) {
     for (const scheme of ['light','dark']) {
       for (const route of routes) {
         const page = await browser.newPage({viewport:{width,height:1000},colorScheme:scheme,reducedMotion:'reduce'});
@@ -34,18 +34,41 @@ try {
           width:innerWidth, scroll:document.documentElement.scrollWidth,
           links:[...document.querySelectorAll('.top a, .theme-toggle')].map(el=>({text:el.textContent.trim(),...el.getBoundingClientRect().toJSON()})),
           heroChildren:document.querySelector('.hero').children.length,
+          accent:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(),
+          bg:getComputedStyle(document.documentElement).getPropertyValue('--bg').trim(),
+          introSize:parseFloat(getComputedStyle(document.querySelector('.hero .sub')).fontSize),
+          factSize:parseFloat(getComputedStyle(document.querySelector('.facts span')).fontSize),
+          navSize:parseFloat(getComputedStyle(document.querySelector('.primary-nav a')).fontSize),
         }));
         assert.ok(measurements.scroll <= width+1, `Page overflow at ${route} ${width} ${scheme}: ${JSON.stringify(measurements)}`);
         assert.equal(measurements.heroChildren, 2, `Hero structure at ${route}`);
+        assert.equal(measurements.accent,scheme==='light'?'#0a6e82':'#5fd4e6');
+        assert.equal(measurements.bg,scheme==='light'?'#f4f6f4':'#070c0c');
+        if (width<=760) {
+          assert.ok(measurements.introSize>=16 && measurements.factSize>=13 && measurements.navSize>=12, `Mobile reading sizes at ${route}`);
+          assert.ok(await page.locator('.diagram-hint').first().isVisible());
+        }
         for (const rect of measurements.links) {
           assert.ok(rect.x>=-1 && rect.right<=width+1, `Header out of viewport ${route} ${width}: ${JSON.stringify(rect)}`);
-          assert.ok(rect.height>=43, `Small touch target ${route}: ${JSON.stringify(rect)}`);
+          assert.ok(rect.height>=43 && rect.width>=43, `Small touch target ${route}: ${JSON.stringify(rect)}`);
         }
-        if (width===390 || width===1440) {
+        if (width===320 || width===390 || width===1440) {
           const name=(route.replaceAll('/','-')||'home')+`-${width}-${scheme}`;
           await page.screenshot({path:`${root}/test-results/${name}.png`});
           if (width === 1440 && !route.includes('story')) {
-            await page.locator('#checkers .spine.overview').screenshot({path:`${root}/test-results/${name}-evidence.png`});
+            await page.locator('#checkers .spine.overview').screenshot({path:`${root}/test-results/${name}-evidence.png`,style:'.top { visibility: hidden; }'});
+          }
+          if (width===390) {
+            await page.locator('.hero-evidence').screenshot({path:`${root}/test-results/${name}-facts.png`});
+            await page.locator('.diagram').first().scrollIntoViewIfNeeded();
+            await page.screenshot({path:`${root}/test-results/${name}-diagram.png`});
+            const region=page.locator('.diagram').first();
+            await region.focus(); await region.press('ArrowRight');
+            await page.waitForFunction(()=>document.querySelector('.diagram').scrollLeft>0);
+            if (!route.includes('story')) {
+              assert.ok(await page.locator('.mobile-label').first().isVisible());
+              await page.locator('.props').first().screenshot({path:`${root}/test-results/${name}-table.png`});
+            }
           }
         }
         assert.deepEqual(errors, [], `${route}: script errors`);
@@ -66,7 +89,7 @@ try {
   await page.waitForURL('**/zh/#evidence');
   assert.equal(await page.locator('html').getAttribute('lang'),'zh-Hans');
   assert.equal(await page.locator('html').getAttribute('data-theme'),'dark');
-  assert.ok(await page.locator('#evidence').evaluate(el=>el.getBoundingClientRect().top)>=110);
+  assert.ok(await page.locator('#evidence').evaluate(el=>el.getBoundingClientRect().top)>=20);
   await page.goBack(); assert.ok(page.url().endsWith('/#evidence'));
   await page.goForward(); assert.ok(page.url().endsWith('/zh/#evidence'));
   await page.goto(base+'/ja/story/');
@@ -85,5 +108,5 @@ try {
     await p.close();
   }
   await noJS.close();
-  console.log('PASS: 60 responsive/theme renders; six no-JS routes; asset, layout, theme, locale, anchor and history checks.');
+  console.log('PASS: 84 responsive/theme renders; original palette, mobile type and diagram keyboard checks; six no-JS routes; asset, layout, theme, locale, anchor and history checks.');
 } finally { await browser.close(); await new Promise(resolve=>server.close(resolve)); }

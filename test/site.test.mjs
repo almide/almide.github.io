@@ -59,3 +59,25 @@ test('Theme control works repeatedly even when storage is unavailable', async ()
   events.click(); assert.equal(root.dataset.theme, 'dark');
   events.click(); assert.equal(root.dataset.theme, 'light');
 });
+test('Keep the original Almide light and dark palette', async () => {
+  const original=JSON.parse(await read('test/original-palette.json'));
+  const css=await read('style.css');
+  const rootBlock=css.match(/:root \{([^}]+)\}/)[1];
+  const systemDark=css.match(/:root:not\(\[data-theme="light"\]\) \{([^}]+)\}/)[1];
+  const manualDark=css.match(/:root\[data-theme="dark"\] \{([^}]+)\}/)[1];
+  for (const [theme,block] of [['light',rootBlock],['dark',systemDark],['dark',manualDark]]) {
+    const tokens=Object.fromEntries([...block.matchAll(/(--[\w-]+): ([^;]+);/g)].map(m=>[m[1],m[2]]));
+    for (const [name,value] of Object.entries(original[theme])) assert.equal(tokens[name],value,`${theme} ${name}`);
+  }
+});
+test('Mobile diagrams and stacked comparison rows have reading aids in every language',()=>{
+  for (const [file,source] of html) {
+    const diagrams=[...source.matchAll(/<div class="diagram(?: plot)?"[^>]*>/g)];
+    assert.ok(diagrams.length>0);
+    for (const [tag] of diagrams) {
+      assert.match(tag,/tabindex="0"/);
+      assert.match(tag,/aria-describedby="diagram-hint-\d+"/);
+    }
+    if (!file.includes('story')) assert.equal((source.match(/class="mobile-label"/g)||[]).length,14);
+  }
+});

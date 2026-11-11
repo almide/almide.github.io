@@ -19,7 +19,7 @@
 <link rel="preload" href="../fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
 <script>try { const theme = localStorage.getItem("almide-theme"); if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme; } catch {}</script>
 <script src="../site.js?v=20261111c" defer></script>
-<link rel="stylesheet" href="../style.css?v=20261111c">
+<link rel="stylesheet" href="../style.css?v=20261111d">
 </head>
 <body id="top" class="story-page">
 
@@ -61,7 +61,8 @@
 <section>
   <div class="wide">
     <h3 class="subhead" style="margin-top:0">Lines of Rust in the repository, at each milestone</h3>
-    <div class="diagram plot">
+    <div class="diagram plot" tabindex="0" aria-describedby="diagram-hint-1" role="region" aria-label="Scrollable diagram">
+        <p class="diagram-hint" id="diagram-hint-1">↔ Swipe or scroll horizontally to view the full diagram.</p>
         <svg viewBox="0 0 960 362" xmlns="http://www.w3.org/2000/svg">
         <line class="grid" stroke="#8a969244" x1="70" y1="300.0" x2="900" y2="300.0"/>
         <text class="axis" x="60" y="304.0" text-anchor="end">0</text>
@@ -224,7 +225,8 @@
   </div>
   <div class="wide">
     <h3 class="subhead">Commits per day, by month</h3>
-    <div class="diagram plot">
+    <div class="diagram plot" tabindex="0" aria-describedby="diagram-hint-2" role="region" aria-label="Scrollable diagram">
+        <p class="diagram-hint" id="diagram-hint-2">↔ Swipe or scroll horizontally to view the full diagram.</p>
         <svg viewBox="0 0 960 250" xmlns="http://www.w3.org/2000/svg">
         <rect class="bar" fill="#0a6e82" fill-opacity="0.75" x="60" y="145.5" width="78" height="54.5" rx="5"/>
         <text class="lab" x="99.0" y="137.5" text-anchor="middle">69</text>
