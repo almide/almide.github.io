@@ -44,6 +44,9 @@ try {
         if (width===390 || width===1440) {
           const name=(route.replaceAll('/','-')||'home')+`-${width}-${scheme}`;
           await page.screenshot({path:`${root}/test-results/${name}.png`});
+          if (width === 1440 && !route.includes('story')) {
+            await page.locator('#checkers .spine.overview').screenshot({path:`${root}/test-results/${name}-evidence.png`});
+          }
         }
         assert.deepEqual(errors, [], `${route}: script errors`);
         assert.deepEqual(failed, [], `${route}: missing assets`);

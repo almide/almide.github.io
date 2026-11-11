@@ -143,6 +143,7 @@ a:hover { text-decoration-thickness: 2px; }
 .eyebrow::before { content: ""; width: 6px; height: 6px; flex: none; background: var(--accent); }
 .hero h1 { font: 600 clamp(30px, 3.3vw, 44px)/1.23 var(--mono); letter-spacing: -.055em; margin: 0 0 26px; text-wrap: balance; }
 .hero h1 em { color: var(--accent); font-style: normal; }
+:lang(en) .hero h1 em { white-space: nowrap; }
 .hero .sub { font-size: 14px; line-height: 1.9; color: var(--muted); max-width: 43em; margin: 0 0 28px; }
 .hero .sub strong { color: var(--ink); font-weight: 500; }
 .cta { display: flex; gap: 10px; flex-wrap: wrap; }
