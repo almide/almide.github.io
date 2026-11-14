@@ -12,6 +12,7 @@ The layout follows the [O6lvl4 portfolio](https://o6lvl4.github.io/O6lvl4-portfo
 | `ja/index.html` | Japanese page |
 | `zh/index.html` | Simplified Chinese page (`zh-Hans`) |
 | `story/index.html`, `ja/story/index.html`, `zh/story/index.html` | Development history in all three languages |
+| `advent/2026/index.html`, `ja/advent/2026/index.html`, `zh/advent/2026/index.html` | Advent Calendar 2026 index in all three languages. The articles are in Japanese and English; a title becomes a link on the day it is published |
 | `site.js` | Optional theme preference and section-aware language switching |
 | `style.css` | Shared styles (light and dark) |
 | `favicon.svg` | Logo, same file as the docs site |
