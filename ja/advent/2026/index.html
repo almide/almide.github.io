@@ -27,6 +27,10 @@
   The same edit applies to /advent/2026/, /ja/advent/2026/ and /zh/advent/2026/.
 -->
 <style>
+.advent-page .hero { display: block; padding: 56px 0 44px; }
+.advent-page .hero .sub { margin-bottom: 0; }
+.advent-page section { padding-top: 48px; }
+.cal-head { display: none; }
 .days { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; border: 1px solid var(--line); border-radius: 4px; background: var(--line); overflow: hidden; }
 .day { background: var(--panel); padding: 20px 20px 22px; display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: 16px; row-gap: 8px; align-content: start; }
 .day .d { grid-row: span 2; font: 400 27px/1.15 var(--mono); letter-spacing: -.05em; color: var(--faint); font-variant-numeric: tabular-nums; }
@@ -38,9 +42,24 @@
 .day.out a.t:hover { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .day.last { grid-column: 1 / -1; }
 .day.last .t { font-size: 16px; }
+.pad { display: none; }
 .legend { display: flex; gap: 4px 22px; flex-wrap: wrap; font: 400 12px/1.8 var(--mono); color: var(--muted); margin: 0 0 18px; }
 .legend b { color: var(--accent-2); font-weight: 500; }
 .days-note { font: 400 12px/1.8 var(--mono); color: var(--faint); margin: 16px 0 0; }
+@media (min-width: 1000px) {
+  .cal-head { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 1px; border: 1px solid var(--line); border-bottom: 0; border-radius: 4px 4px 0 0; background: var(--line); overflow: hidden; }
+  .cal-head span { background: var(--bg); padding: 10px 14px; font: 500 10px/1.6 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .cal-head span:first-child, .cal-head span:last-child { color: var(--faint); }
+  .days { grid-template-columns: repeat(7, minmax(0, 1fr)); border-radius: 0 0 4px 4px; }
+  .day { display: flex; flex-direction: column; gap: 8px; padding: 14px 14px 18px; min-height: 176px; }
+  .day .d { font-size: 24px; }
+  .day .k { padding-top: 0; }
+  .day .dt { display: none; }
+  .day .t, .day.last .t { font-size: 12.5px; line-height: 1.7; }
+  .day.last { grid-column: auto; box-shadow: inset 0 0 0 1px var(--accent); }
+  .day.last .d { color: var(--accent); }
+  .pad { display: block; background: var(--bg); padding: 14px; font: 400 24px/1.15 var(--mono); letter-spacing: -.05em; color: var(--line-2); font-variant-numeric: tabular-nums; }
+}
 @media (max-width: 760px) {
   .days { grid-template-columns: 1fr; }
   .day { padding: 18px 16px 20px; grid-template-columns: 40px minmax(0, 1fr); column-gap: 12px; }
@@ -68,24 +87,9 @@
 <div class="hero-bg">
 <div class="wide">
   <div class="hero">
-    <div class="hero-copy">
-    <p class="eyebrow">Almide · Advent Calendar 2026</p>
-    <h1>AIが書きやすい言語を、<em>本気で</em>つくる。</h1>
-    <p class="sub">12月1日から25日まで、毎日1本書きます。実際のコードと、測った結果と、設計の理由です。<strong>速い処理だけでなく、遅い処理も、壊れていた検査も載せます。</strong></p>
-    <div class="cta">
-      <a class="btn primary" href="https://almide.github.io/playground/">Playground で試す</a>
-      <a class="btn ghost" href="https://github.com/almide/almide">GitHub</a>
-    </div>
-    </div>
-    <div class="hero-evidence">
-    <div class="panel-heading"><span>ALMIDE</span><span>ADVENT CALENDAR / 2026</span></div>
-    <div class="facts">
-      <div><b>25</b><span>記事の数。12月1日から25日まで毎日1本</span></div>
-      <div><b>12</b><span>紹介と解説の組。奇数日に動かして見せ、翌日に仕組みを書く</span></div>
-      <div><b>2</b><span>記事の言語。日本語と英語</span></div>
-      <div><b>1</b><span>書く人の数</span></div>
-    </div>
-    </div>
+    <p class="eyebrow">2026年12月1日 – 25日</p>
+    <h1>Almide <em>Advent Calendar</em> 2026</h1>
+    <p class="sub">AIが書きやすい言語を、本気でつくる。毎日1本書きます。</p>
   </div>
 </div>
 </div>
@@ -94,32 +98,43 @@
   <div class="wide">
     <p class="num">25日ぶんの予定</p>
     <p class="legend"><span><b>奇数日</b> 動かして見せる回</span><span><b>偶数日</b> 前の日の仕組みを解説する回</span></p>
+    <div class="cal-head" aria-hidden="true"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
     <ol class="days">
-      <li class="day"><span class="d">01</span><span class="k">12月1日 · 紹介</span><span class="t">AIに書かせるためのプログラミング言語</span></li>
-      <li class="day"><span class="d">02</span><span class="k">12月2日 · 解説</span><span class="t">「AIが書きやすい言語」を測ったらどの言語もほぼ満点だった</span></li>
-      <li class="day"><span class="d">03</span><span class="k">12月3日 · 紹介</span><span class="t">Hello World が 325 バイトになる Wasm コンパイラ</span></li>
-      <li class="day"><span class="d">04</span><span class="k">12月4日 · 解説</span><span class="t">wasm-opt を使わずに、4,459 バイトを 325 バイトにした</span></li>
-      <li class="day"><span class="d">05</span><span class="k">12月5日 · 紹介</span><span class="t">所有権を1行も書かない二分木が、Box の Rust より速く走る</span></li>
-      <li class="day"><span class="d">06</span><span class="k">12月6日 · 解説</span><span class="t">純粋な関数だと分かれば、木は一度に捨てられる RegionWindow</span></li>
-      <li class="day"><span class="d">07</span><span class="k">12月7日 · 紹介</span><span class="t">5,000 万行の集計が 0.95 秒で終わる。書くのは素直なコードだけ</span></li>
-      <li class="day"><span class="d">08</span><span class="k">12月8日 · 解説</span><span class="t">無駄なコピーで 33.4 秒かかっていた。ライフタイムを書かせない所有権推論</span></li>
-      <li class="day"><span class="d">09</span><span class="k">12月9日 · 紹介</span><span class="t">スレッドもロックも書かない並列処理の言語機能 fan</span></li>
-      <li class="day"><span class="d">10</span><span class="k">12月10日 · 解説</span><span class="t">非同期の出力順が 10 回で9通りに割れた。そこから決めた fan の実行規則</span></li>
-      <li class="day"><span class="d">11</span><span class="k">12月11日 · 紹介</span><span class="t">例外も null もない。失敗する呼び出しには必ず印を付ける</span></li>
-      <li class="day"><span class="d">12</span><span class="k">12月12日 · 解説</span><span class="t">同じ式が置く場所で動いたり落ちたりした、暗黙のエラー伝播を廃止する</span></li>
-      <li class="day"><span class="d">13</span><span class="k">12月13日 · 紹介</span><span class="t">コンパイラの CIレーンの仕組みをそのコンパイラの言語で書く</span></li>
-      <li class="day"><span class="d">14</span><span class="k">12月14日 · 解説</span><span class="t">AIは古い構文で書いてくる。言語の破壊的変更をどう届けるか</span></li>
-      <li class="day"><span class="d">15</span><span class="k">12月15日 · 紹介</span><span class="t">コンパイラを信用せずにビルドした Wasm を検査する</span></li>
-      <li class="day"><span class="d">16</span><span class="k">12月16日 · 解説</span><span class="t">証明した検査器が間違ったプログラムを5回も受理した</span></li>
-      <li class="day"><span class="d">17</span><span class="k">12月17日 · 紹介</span><span class="t">同じソースから各社のクラウド実行基盤で動かす</span></li>
-      <li class="day"><span class="d">18</span><span class="k">12月18日 · 解説</span><span class="t">Wasm バックエンドを3回書き直した</span></li>
-      <li class="day"><span class="d">19</span><span class="k">12月19日 · 紹介</span><span class="t">ネイティブとWasmのそれぞれの出力で最後まで同じバイト観測値を出す</span></li>
-      <li class="day"><span class="d">20</span><span class="k">12月20日 · 解説</span><span class="t">全員一致は正しさの証明にならない。第三の判定器</span></li>
-      <li class="day"><span class="d">21</span><span class="k">12月21日 · 紹介</span><span class="t">AIはテストを消して「通りました」と言うのでAlmide はそれを通さない</span></li>
-      <li class="day"><span class="d">22</span><span class="k">12月22日 · 解説</span><span class="t">エラーメッセージをそのまま適用できる修正にする</span></li>
-      <li class="day"><span class="d">23</span><span class="k">12月23日 · 紹介</span><span class="t">Almideの向く処理・向かない処理でRust との比較を全部載せてみる</span></li>
-      <li class="day"><span class="d">24</span><span class="k">12月24日 · 解説</span><span class="t">AIが書くコンパイラの検査を検査する</span></li>
-      <li class="day last"><span class="d">25</span><span class="k">12月25日 · 最終日</span><span class="t">人間がコードを読まなくなる日のためのAlmide</span></li>
+      <li class="pad" aria-hidden="true"></li>
+      <li class="pad" aria-hidden="true"></li>
+      <li class="day"><span class="d">01</span><span class="k"><span class="dt">12月1日（火） · </span>紹介</span><span class="t">AIに書かせるためのプログラミング言語</span></li>
+      <li class="day"><span class="d">02</span><span class="k"><span class="dt">12月2日（水） · </span>解説</span><span class="t">「AIが書きやすい言語」を測ったらどの言語もほぼ満点だった</span></li>
+      <li class="day"><span class="d">03</span><span class="k"><span class="dt">12月3日（木） · </span>紹介</span><span class="t">Hello World が 325 バイトになる Wasm コンパイラ</span></li>
+      <li class="day"><span class="d">04</span><span class="k"><span class="dt">12月4日（金） · </span>解説</span><span class="t">wasm-opt を使わずに、4,459 バイトを 325 バイトにした</span></li>
+      <li class="day"><span class="d">05</span><span class="k"><span class="dt">12月5日（土） · </span>紹介</span><span class="t">所有権を1行も書かない二分木が、Box の Rust より速く走る</span></li>
+      <li class="day"><span class="d">06</span><span class="k"><span class="dt">12月6日（日） · </span>解説</span><span class="t">純粋な関数だと分かれば、木は一度に捨てられる RegionWindow</span></li>
+      <li class="day"><span class="d">07</span><span class="k"><span class="dt">12月7日（月） · </span>紹介</span><span class="t">5,000 万行の集計が 0.95 秒で終わる。書くのは素直なコードだけ</span></li>
+      <li class="day"><span class="d">08</span><span class="k"><span class="dt">12月8日（火） · </span>解説</span><span class="t">無駄なコピーで 33.4 秒かかっていた。ライフタイムを書かせない所有権推論</span></li>
+      <li class="day"><span class="d">09</span><span class="k"><span class="dt">12月9日（水） · </span>紹介</span><span class="t">スレッドもロックも書かない並列処理の言語機能 fan</span></li>
+      <li class="day"><span class="d">10</span><span class="k"><span class="dt">12月10日（木） · </span>解説</span><span class="t">非同期の出力順が 10 回で9通りに割れた。そこから決めた fan の実行規則</span></li>
+      <li class="day"><span class="d">11</span><span class="k"><span class="dt">12月11日（金） · </span>紹介</span><span class="t">例外も null もない。失敗する呼び出しには必ず印を付ける</span></li>
+      <li class="day"><span class="d">12</span><span class="k"><span class="dt">12月12日（土） · </span>解説</span><span class="t">同じ式が置く場所で動いたり落ちたりした、暗黙のエラー伝播を廃止する</span></li>
+      <li class="day"><span class="d">13</span><span class="k"><span class="dt">12月13日（日） · </span>紹介</span><span class="t">コンパイラの CIレーンの仕組みをそのコンパイラの言語で書く</span></li>
+      <li class="day"><span class="d">14</span><span class="k"><span class="dt">12月14日（月） · </span>解説</span><span class="t">AIは古い構文で書いてくる。言語の破壊的変更をどう届けるか</span></li>
+      <li class="day"><span class="d">15</span><span class="k"><span class="dt">12月15日（火） · </span>紹介</span><span class="t">コンパイラを信用せずにビルドした Wasm を検査する</span></li>
+      <li class="day"><span class="d">16</span><span class="k"><span class="dt">12月16日（水） · </span>解説</span><span class="t">証明した検査器が間違ったプログラムを5回も受理した</span></li>
+      <li class="day"><span class="d">17</span><span class="k"><span class="dt">12月17日（木） · </span>紹介</span><span class="t">同じソースから各社のクラウド実行基盤で動かす</span></li>
+      <li class="day"><span class="d">18</span><span class="k"><span class="dt">12月18日（金） · </span>解説</span><span class="t">Wasm バックエンドを3回書き直した</span></li>
+      <li class="day"><span class="d">19</span><span class="k"><span class="dt">12月19日（土） · </span>紹介</span><span class="t">ネイティブとWasmのそれぞれの出力で最後まで同じバイト観測値を出す</span></li>
+      <li class="day"><span class="d">20</span><span class="k"><span class="dt">12月20日（日） · </span>解説</span><span class="t">全員一致は正しさの証明にならない。第三の判定器</span></li>
+      <li class="day"><span class="d">21</span><span class="k"><span class="dt">12月21日（月） · </span>紹介</span><span class="t">AIはテストを消して「通りました」と言うのでAlmide はそれを通さない</span></li>
+      <li class="day"><span class="d">22</span><span class="k"><span class="dt">12月22日（火） · </span>解説</span><span class="t">エラーメッセージをそのまま適用できる修正にする</span></li>
+      <li class="day"><span class="d">23</span><span class="k"><span class="dt">12月23日（水） · </span>紹介</span><span class="t">Almideの向く処理・向かない処理でRust との比較を全部載せてみる</span></li>
+      <li class="day"><span class="d">24</span><span class="k"><span class="dt">12月24日（木） · </span>解説</span><span class="t">AIが書くコンパイラの検査を検査する</span></li>
+      <li class="day last"><span class="d">25</span><span class="k"><span class="dt">12月25日（金） · </span>最終日</span><span class="t">人間がコードを読まなくなる日のためのAlmide</span></li>
+      <li class="pad" aria-hidden="true">26</li>
+      <li class="pad" aria-hidden="true">27</li>
+      <li class="pad" aria-hidden="true">28</li>
+      <li class="pad" aria-hidden="true">29</li>
+      <li class="pad" aria-hidden="true">30</li>
+      <li class="pad" aria-hidden="true">31</li>
+      <li class="pad" aria-hidden="true"></li>
+      <li class="pad" aria-hidden="true"></li>
     </ol>
     <p class="days-note">題は公開された日からリンクになります。</p>
   </div>

@@ -27,6 +27,10 @@
   The same edit applies to /advent/2026/, /ja/advent/2026/ and /zh/advent/2026/.
 -->
 <style>
+.advent-page .hero { display: block; padding: 56px 0 44px; }
+.advent-page .hero .sub { margin-bottom: 0; }
+.advent-page section { padding-top: 48px; }
+.cal-head { display: none; }
 .days { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; border: 1px solid var(--line); border-radius: 4px; background: var(--line); overflow: hidden; }
 .day { background: var(--panel); padding: 20px 20px 22px; display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: 16px; row-gap: 8px; align-content: start; }
 .day .d { grid-row: span 2; font: 400 27px/1.15 var(--mono); letter-spacing: -.05em; color: var(--faint); font-variant-numeric: tabular-nums; }
@@ -38,9 +42,24 @@
 .day.out a.t:hover { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 .day.last { grid-column: 1 / -1; }
 .day.last .t { font-size: 16px; }
+.pad { display: none; }
 .legend { display: flex; gap: 4px 22px; flex-wrap: wrap; font: 400 12px/1.8 var(--mono); color: var(--muted); margin: 0 0 18px; }
 .legend b { color: var(--accent-2); font-weight: 500; }
 .days-note { font: 400 12px/1.8 var(--mono); color: var(--faint); margin: 16px 0 0; }
+@media (min-width: 1000px) {
+  .cal-head { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 1px; border: 1px solid var(--line); border-bottom: 0; border-radius: 4px 4px 0 0; background: var(--line); overflow: hidden; }
+  .cal-head span { background: var(--bg); padding: 10px 14px; font: 500 10px/1.6 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .cal-head span:first-child, .cal-head span:last-child { color: var(--faint); }
+  .days { grid-template-columns: repeat(7, minmax(0, 1fr)); border-radius: 0 0 4px 4px; }
+  .day { display: flex; flex-direction: column; gap: 8px; padding: 14px 14px 18px; min-height: 176px; }
+  .day .d { font-size: 24px; }
+  .day .k { padding-top: 0; }
+  .day .dt { display: none; }
+  .day .t, .day.last .t { font-size: 12.5px; line-height: 1.7; }
+  .day.last { grid-column: auto; box-shadow: inset 0 0 0 1px var(--accent); }
+  .day.last .d { color: var(--accent); }
+  .pad { display: block; background: var(--bg); padding: 14px; font: 400 24px/1.15 var(--mono); letter-spacing: -.05em; color: var(--line-2); font-variant-numeric: tabular-nums; }
+}
 @media (max-width: 760px) {
   .days { grid-template-columns: 1fr; }
   .day { padding: 18px 16px 20px; grid-template-columns: 40px minmax(0, 1fr); column-gap: 12px; }
@@ -68,24 +87,9 @@
 <div class="hero-bg">
 <div class="wide">
   <div class="hero">
-    <div class="hero-copy">
-    <p class="eyebrow">Almide · Advent Calendar 2026</p>
-    <h1>Taking “a language for AI to write” <em>seriously</em>.</h1>
-    <p class="sub">One article a day from December 1 to 25: real code, what I measured, and why it is designed this way. <strong>Not only the fast cases. The slow ones and the checks that were broken are in here too.</strong></p>
-    <div class="cta">
-      <a class="btn primary" href="https://almide.github.io/playground/">Try the playground</a>
-      <a class="btn ghost" href="https://github.com/almide/almide">GitHub</a>
-    </div>
-    </div>
-    <div class="hero-evidence">
-    <div class="panel-heading"><span>ALMIDE</span><span>ADVENT CALENDAR / 2026</span></div>
-    <div class="facts">
-      <div><b>25</b><span>articles, one a day from December 1 to 25</span></div>
-      <div><b>12</b><span>pairs: an odd day shows it running, the next day explains how</span></div>
-      <div><b>2</b><span>languages the articles are written in, Japanese and English</span></div>
-      <div><b>1</b><span>author</span></div>
-    </div>
-    </div>
+    <p class="eyebrow">December 1 – 25, 2026</p>
+    <h1>Almide <em>Advent Calendar</em> 2026</h1>
+    <p class="sub">Taking “a language for AI to write” seriously. One article a day.</p>
   </div>
 </div>
 </div>
@@ -94,32 +98,43 @@
   <div class="wide">
     <p class="num">The 25 days</p>
     <p class="legend"><span><b>Odd days</b> show it running</span><span><b>Even days</b> explain how the day before works</span></p>
+    <div class="cal-head" aria-hidden="true"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
     <ol class="days">
-      <li class="day"><span class="d">01</span><span class="k">Dec 1 · Show</span><span class="t">I'm building a programming language for AI to write</span></li>
-      <li class="day"><span class="d">02</span><span class="k">Dec 2 · How</span><span class="t">I measured “easy for AI to write” and every language scored near 100%</span></li>
-      <li class="day"><span class="d">03</span><span class="k">Dec 3 · Show</span><span class="t">A Wasm compiler where Hello World is 325 bytes</span></li>
-      <li class="day"><span class="d">04</span><span class="k">Dec 4 · How</span><span class="t">From 4,459 bytes to 325 without wasm-opt</span></li>
-      <li class="day"><span class="d">05</span><span class="k">Dec 5 · Show</span><span class="t">A binary tree with no ownership annotations outruns Box-based Rust</span></li>
-      <li class="day"><span class="d">06</span><span class="k">Dec 6 · How</span><span class="t">Once a function is known to be pure, its trees can be freed all at once: RegionWindow</span></li>
-      <li class="day"><span class="d">07</span><span class="k">Dec 7 · Show</span><span class="t">50 million rows aggregated in 0.95 seconds, written as plain code</span></li>
-      <li class="day"><span class="d">08</span><span class="k">Dec 8 · How</span><span class="t">Needless copies made it take 33.4 seconds: ownership inference with no lifetimes to write</span></li>
-      <li class="day"><span class="d">09</span><span class="k">Dec 9 · Show</span><span class="t">fan: a language feature for parallelism with no threads or locks to write</span></li>
-      <li class="day"><span class="d">10</span><span class="k">Dec 10 · How</span><span class="t">Ten runs, nine different output orders: how that set fan's execution rules</span></li>
-      <li class="day"><span class="d">11</span><span class="k">Dec 11 · Show</span><span class="t">No exceptions, no null: every call that can fail is marked</span></li>
-      <li class="day"><span class="d">12</span><span class="k">Dec 12 · How</span><span class="t">The same expression worked in one place and aborted in another: removing implicit error propagation</span></li>
-      <li class="day"><span class="d">13</span><span class="k">Dec 13 · Show</span><span class="t">Writing the compiler's CI lanes in the language it compiles</span></li>
-      <li class="day"><span class="d">14</span><span class="k">Dec 14 · How</span><span class="t">AI writes yesterday's syntax: how to deliver a language's breaking changes</span></li>
-      <li class="day"><span class="d">15</span><span class="k">Dec 15 · Show</span><span class="t">Checking a Wasm build without trusting the compiler</span></li>
-      <li class="day"><span class="d">16</span><span class="k">Dec 16 · How</span><span class="t">My proven checker accepted wrong programs five times</span></li>
-      <li class="day"><span class="d">17</span><span class="k">Dec 17 · Show</span><span class="t">One source, running on each vendor's cloud runtime</span></li>
-      <li class="day"><span class="d">18</span><span class="k">Dec 18 · How</span><span class="t">I rewrote the Wasm backend three times</span></li>
-      <li class="day"><span class="d">19</span><span class="k">Dec 19 · Show</span><span class="t">Native and Wasm, the same observable bytes down to the last one</span></li>
-      <li class="day"><span class="d">20</span><span class="k">Dec 20 · How</span><span class="t">Unanimous agreement doesn't prove correctness: the third judge</span></li>
-      <li class="day"><span class="d">21</span><span class="k">Dec 21 · Show</span><span class="t">The AI deletes the test and says “it passes.” Almide doesn't let that through</span></li>
-      <li class="day"><span class="d">22</span><span class="k">Dec 22 · How</span><span class="t">Error messages that are fixes you can apply as-is</span></li>
-      <li class="day"><span class="d">23</span><span class="k">Dec 23 · Show</span><span class="t">Where Almide fits and where it doesn't: every comparison with Rust, published</span></li>
-      <li class="day"><span class="d">24</span><span class="k">Dec 24 · How</span><span class="t">Checking the checks on a compiler written by AI</span></li>
-      <li class="day last"><span class="d">25</span><span class="k">Dec 25 · Last day</span><span class="t">Almide, for the day humans stop reading code</span></li>
+      <li class="pad" aria-hidden="true"></li>
+      <li class="pad" aria-hidden="true"></li>
+      <li class="day"><span class="d">01</span><span class="k"><span class="dt">Tue, Dec 1 · </span>Show</span><span class="t">I'm building a programming language for AI to write</span></li>
+      <li class="day"><span class="d">02</span><span class="k"><span class="dt">Wed, Dec 2 · </span>How</span><span class="t">I measured “easy for AI to write” and every language scored near 100%</span></li>
+      <li class="day"><span class="d">03</span><span class="k"><span class="dt">Thu, Dec 3 · </span>Show</span><span class="t">A Wasm compiler where Hello World is 325 bytes</span></li>
+      <li class="day"><span class="d">04</span><span class="k"><span class="dt">Fri, Dec 4 · </span>How</span><span class="t">From 4,459 bytes to 325 without wasm-opt</span></li>
+      <li class="day"><span class="d">05</span><span class="k"><span class="dt">Sat, Dec 5 · </span>Show</span><span class="t">A binary tree with no ownership annotations outruns Box-based Rust</span></li>
+      <li class="day"><span class="d">06</span><span class="k"><span class="dt">Sun, Dec 6 · </span>How</span><span class="t">Once a function is known to be pure, its trees can be freed all at once: RegionWindow</span></li>
+      <li class="day"><span class="d">07</span><span class="k"><span class="dt">Mon, Dec 7 · </span>Show</span><span class="t">50 million rows aggregated in 0.95 seconds, written as plain code</span></li>
+      <li class="day"><span class="d">08</span><span class="k"><span class="dt">Tue, Dec 8 · </span>How</span><span class="t">Needless copies made it take 33.4 seconds: ownership inference with no lifetimes to write</span></li>
+      <li class="day"><span class="d">09</span><span class="k"><span class="dt">Wed, Dec 9 · </span>Show</span><span class="t">fan: a language feature for parallelism with no threads or locks to write</span></li>
+      <li class="day"><span class="d">10</span><span class="k"><span class="dt">Thu, Dec 10 · </span>How</span><span class="t">Ten runs, nine different output orders: how that set fan's execution rules</span></li>
+      <li class="day"><span class="d">11</span><span class="k"><span class="dt">Fri, Dec 11 · </span>Show</span><span class="t">No exceptions, no null: every call that can fail is marked</span></li>
+      <li class="day"><span class="d">12</span><span class="k"><span class="dt">Sat, Dec 12 · </span>How</span><span class="t">The same expression worked in one place and aborted in another: removing implicit error propagation</span></li>
+      <li class="day"><span class="d">13</span><span class="k"><span class="dt">Sun, Dec 13 · </span>Show</span><span class="t">Writing the compiler's CI lanes in the language it compiles</span></li>
+      <li class="day"><span class="d">14</span><span class="k"><span class="dt">Mon, Dec 14 · </span>How</span><span class="t">AI writes yesterday's syntax: how to deliver a language's breaking changes</span></li>
+      <li class="day"><span class="d">15</span><span class="k"><span class="dt">Tue, Dec 15 · </span>Show</span><span class="t">Checking a Wasm build without trusting the compiler</span></li>
+      <li class="day"><span class="d">16</span><span class="k"><span class="dt">Wed, Dec 16 · </span>How</span><span class="t">My proven checker accepted wrong programs five times</span></li>
+      <li class="day"><span class="d">17</span><span class="k"><span class="dt">Thu, Dec 17 · </span>Show</span><span class="t">One source, running on each vendor's cloud runtime</span></li>
+      <li class="day"><span class="d">18</span><span class="k"><span class="dt">Fri, Dec 18 · </span>How</span><span class="t">I rewrote the Wasm backend three times</span></li>
+      <li class="day"><span class="d">19</span><span class="k"><span class="dt">Sat, Dec 19 · </span>Show</span><span class="t">Native and Wasm, the same observable bytes down to the last one</span></li>
+      <li class="day"><span class="d">20</span><span class="k"><span class="dt">Sun, Dec 20 · </span>How</span><span class="t">Unanimous agreement doesn't prove correctness: the third judge</span></li>
+      <li class="day"><span class="d">21</span><span class="k"><span class="dt">Mon, Dec 21 · </span>Show</span><span class="t">The AI deletes the test and says “it passes.” Almide doesn't let that through</span></li>
+      <li class="day"><span class="d">22</span><span class="k"><span class="dt">Tue, Dec 22 · </span>How</span><span class="t">Error messages that are fixes you can apply as-is</span></li>
+      <li class="day"><span class="d">23</span><span class="k"><span class="dt">Wed, Dec 23 · </span>Show</span><span class="t">Where Almide fits and where it doesn't: every comparison with Rust, published</span></li>
+      <li class="day"><span class="d">24</span><span class="k"><span class="dt">Thu, Dec 24 · </span>How</span><span class="t">Checking the checks on a compiler written by AI</span></li>
+      <li class="day last"><span class="d">25</span><span class="k"><span class="dt">Fri, Dec 25 · </span>Last day</span><span class="t">Almide, for the day humans stop reading code</span></li>
+      <li class="pad" aria-hidden="true">26</li>
+      <li class="pad" aria-hidden="true">27</li>
+      <li class="pad" aria-hidden="true">28</li>
+      <li class="pad" aria-hidden="true">29</li>
+      <li class="pad" aria-hidden="true">30</li>
+      <li class="pad" aria-hidden="true">31</li>
+      <li class="pad" aria-hidden="true"></li>
+      <li class="pad" aria-hidden="true"></li>
     </ol>
     <p class="days-note">Each title becomes a link on the day it is published.</p>
   </div>
